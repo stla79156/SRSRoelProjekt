@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="SRSRoelProjekt.Core/SRSRoelProjekt.Core.csproj" Id="9602a7ab-4556-49c3-954a-6bb54d250519" />
   <Project Path="SRSRoelProjekt/SRSRoelProjekt.csproj" />
 </Solution>
