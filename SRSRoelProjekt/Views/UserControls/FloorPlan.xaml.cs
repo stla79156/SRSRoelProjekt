@@ -18,7 +18,7 @@ namespace SRSRoelProjekt.Views.UserControls
     /// <summary>
     /// Interaction logic for FloorPlan.xaml
     /// </summary>
-    public partial class FloorPlan : UserControl
+    public partial class FloorPlan  
     {
         private List<Rack> selectedRack = new();
         private List<Button> selectedButtons = new();
@@ -26,7 +26,7 @@ namespace SRSRoelProjekt.Views.UserControls
 
 
         private readonly Dictionary<Button, Rack> rackMap =
-            new Dictionary<Button, Rack>();
+              new Dictionary<Button, Rack>();
 
         public string SelectedRenter { get; set; }
         public FloorPlan()

@@ -87,5 +87,12 @@ namespace SRSRoelProjekt.Views.UserControls
 
             floorPlan.HighlightRenterShelves(renterName);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+           
+
+        }
     }
 }

@@ -8,26 +8,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SRSRoelProjekt.Views.UserControls
+
+namespace SRSRoelProjekt.Views
 {
     /// <summary>
-    /// Interaction logic for HeaderBar.xaml
+    /// Interaction logic for AddRenterWindow.xaml
     /// </summary>
-    public partial class HeaderBar : UserControl
+    public partial class AddRenterWindow : Window
     {
-        public HeaderBar()
+        public AddRenterWindow()
         {
             InitializeComponent();
-
-        }
-        private void Menu_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-
         }
     }
 }

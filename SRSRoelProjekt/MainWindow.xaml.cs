@@ -17,6 +17,9 @@ namespace SRSRoelProjekt
     /// </summary>
     public partial class MainWindow : Window
     {
+
+
+        private FloorPlan MyFloorPlan;
         public MainWindow()
         {
             InitializeComponent();

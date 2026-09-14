@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SRSRoelProjekt.Core.Models
 {
-    internal class RackType
+    public class RackType
     {
     }
 }

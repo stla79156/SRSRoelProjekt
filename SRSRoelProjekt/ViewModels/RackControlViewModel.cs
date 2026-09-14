@@ -1,10 +1,18 @@
-﻿using System;
+﻿using SRSRoelProjekt.Commands;
+using SRSRoelProjekt.Core.Models;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace SRSRoelProjekt.ViewModels
 {
-    internal class RackControlViewModel
+    public  class RackControlViewModel
     {
+
+        
+
+
+
     }
 }

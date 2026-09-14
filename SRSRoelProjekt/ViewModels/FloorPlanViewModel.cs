@@ -1,10 +1,19 @@
-﻿using System;
+﻿using SRSRoelProjekt.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Controls;
 
 namespace SRSRoelProjekt.ViewModels
 {
-    internal class FloorPlanViewModel
+    public class FloorPlanViewModel: ViewModelBase
     {
+
+        
+
+
+
+
+
     }
 }

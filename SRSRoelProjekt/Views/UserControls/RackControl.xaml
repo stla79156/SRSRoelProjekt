@@ -24,7 +24,7 @@
 
             
             
-            <Button Grid.Row="1" Content="Tilføj Ny Lejer" FontWeight="Bold" Width="150" Height="30" Background="Lightgray" BorderBrush="Black" FontFamily="Cambria"/>
+            <Button Click="Button_Click"  Grid.Row="1" Content="Tilføj Ny Lejer" FontWeight="Bold" Width="150" Height="30" Background="Lightgray" BorderBrush="Black" FontFamily="Cambria"/>
             <Button Grid.Row="2" Content="Fjern eksisterende Lejer" FontWeight="Bold" Width="150" Height="30" Background="Lightgray" BorderBrush="Black" FontFamily="Cambria"/>
 
             <TextBlock Grid.Row="3" Text="For at redigere,&#10;vælg en lejer i listen:" TextAlignment="Center" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Cambria"/>
@@ -49,7 +49,7 @@
             </ComboBox>
 
             <Button Grid.Row="4" Content="Stop Leje" Click="StopRental_Click" FontWeight="Bold" Width="150" Height="30" VerticalAlignment="Bottom" Background="Lightblue" BorderBrush="Blue" FontFamily="Cambria"/>
-            <Button Grid.Row="5" Content="Gem Ændringer" Click="SaveShelf_Click" FontWeight="Bold" Width="150" Height="30" Background="Lightblue" BorderBrush="Blue" FontFamily="Cambria"/>
+            <Button Grid.Row="5" Content="Gem Ændringer" Click="SaveRack_Click" FontWeight="Bold" Width="150" Height="30" Background="Lightblue" BorderBrush="Blue" FontFamily="Cambria"/>
             
             
     </Grid>
