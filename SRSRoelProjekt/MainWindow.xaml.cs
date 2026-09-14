@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using SRSRoelProjekt.Views.UserControls;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -19,6 +20,20 @@ namespace SRSRoelProjekt
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        public FloorPlan MyFloorPlanControl
+        {
+            get { return MyFloorPlan; }
+        }
+        public void SaveRackReservation(string renterName)
+        {
+            MyFloorPlan.SaveReservation(renterName);
+        }
+
+        private void MyFloorPlan_Loaded(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

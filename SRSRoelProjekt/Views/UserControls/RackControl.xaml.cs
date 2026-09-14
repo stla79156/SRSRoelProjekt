@@ -35,7 +35,7 @@ namespace SRSRoelProjekt.Views.UserControls
             // detach handler to avoid re-running
             this.Loaded -= RackControl_Loaded;
         }
-        private void SaveShelf_Click(object sender, RoutedEventArgs e)
+        private void SaveRack_Click(object sender, RoutedEventArgs e)
         {
             string renterName =
                 ((ComboBoxItem)RenterComboBox.SelectedItem)?
@@ -49,7 +49,7 @@ namespace SRSRoelProjekt.Views.UserControls
             }
 
             ((MainWindow)Application.Current.MainWindow)
-                .SaveShelfReservation(renterName);
+                .SaveRackReservation(renterName);
         }
 
         private void StopRental_Click(object sender, RoutedEventArgs e)

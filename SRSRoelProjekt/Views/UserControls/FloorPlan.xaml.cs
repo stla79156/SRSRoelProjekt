@@ -1,4 +1,5 @@
 ﻿using SRSRoelProjekt.Core.Models;
+using SRSRoelProjekt.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,7 +36,7 @@ namespace SRSRoelProjekt.Views.UserControls
         }
         private void CreateShelfLayout()
         {
-            bool[,] shelfLayout =
+            bool[,] rackLayout =
             {
         { false,false,false,false,false,true,true,false,true,true,false,true,true,false,false,false,false,false,false,false },
         { false,false,false,false,false,true,true,false,true,true,false,true,true,false,false,false,false,false,false,false },
@@ -50,33 +51,33 @@ namespace SRSRoelProjekt.Views.UserControls
 
     };
 
-            int shelfNumber = 1;
+            int rackNumber = 1;
 
-            for (int row = 0; row < shelfLayout.GetLength(0); row++)
+            for (int row = 0; row < rackLayout.GetLength(0); row++)
             {
-                for (int col = 0; col < shelfLayout.GetLength(1); col++)
+                for (int col = 0; col < rackLayout.GetLength(1); col++)
                 {
                     Button box = new Button
                     {
                         Margin = new Thickness(1)
                     };
 
-                    if (shelfLayout[row, col])
+                    if (rackLayout[row, col])
                     {
-                        box.Content = shelfNumber.ToString();
+                        box.Content = rackNumber.ToString();
                         box.Background = Brushes.LightGreen;
 
-                        Rack shelf = new Rack
+                        Rack rack = new Rack
                         {
-                            RackNumber = shelfNumber,
+                            RackNumber = rackNumber,
                             Status = RackStatus.Available
                         };
 
-                        rackMap.Add(box, shelf);
+                        rackMap.Add(box, rack);
 
-                        box.Click += Shelf_Click;
+                        box.Click += Rack_Click;
 
-                        shelfNumber++;
+                        rackNumber++;
                     }
                     else
                     {
@@ -106,7 +107,7 @@ namespace SRSRoelProjekt.Views.UserControls
                 }
             }
         }
-        private void Shelf_Click(object sender, RoutedEventArgs e)
+        private void Rack_Click(object sender, RoutedEventArgs e)
         {
             Button clicked = (Button)sender;
 
@@ -117,7 +118,7 @@ namespace SRSRoelProjekt.Views.UserControls
             {
                 highlightedRack = rack;
                 RackInfoWindow infoWindow =
-                    new RackInfoWindow(rack);
+               new RackInfoWindow(rack);
                 infoWindow.ShowDialog();
 
                 return;
