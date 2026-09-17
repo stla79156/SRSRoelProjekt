@@ -15,17 +15,21 @@ namespace SRSRoelProjekt.ViewModels
     {
         public string Name { get; set; }
         public string Email { get; set; }
-
         public string PhoneNumber { get; set; }
 
         public RelayCommand AddRenterCommand { get; }
+        public RelayCommand CancelCommand { get; }
 
         private ObservableCollection<Renter> _renters;
+        private MainViewModel _main;
 
-        public AddRenterViewModel(ObservableCollection<Renter> renters)
+        public AddRenterViewModel(ObservableCollection<Renter> renters, MainViewModel main)
         {
             _renters = renters;
+            _main = main;
+
             AddRenterCommand = new RelayCommand(AddRenter);
+            CancelCommand = new RelayCommand(() => _main.ShowRackControl());
         }
 
         private void AddRenter()
@@ -37,11 +41,7 @@ namespace SRSRoelProjekt.ViewModels
                 PhoneNumber = this.PhoneNumber
             });
 
-            // Luk vinduet
-            Application.Current.Windows
-                .OfType<AddRenterWindow>()
-                .FirstOrDefault()?
-                .Close();
+           
         }
     }
 }

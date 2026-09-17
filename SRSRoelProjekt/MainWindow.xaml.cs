@@ -1,4 +1,5 @@
-﻿using SRSRoelProjekt.Views.UserControls;
+﻿using SRSRoelProjekt.ViewModels;
+using SRSRoelProjekt.Views.UserControls;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,7 +24,10 @@ namespace SRSRoelProjekt
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainViewModel();
         }
+        
+
 
         public FloorPlan MyFloorPlanControl
         {
@@ -38,5 +42,8 @@ namespace SRSRoelProjekt
         {
 
         }
+
+      
+
     }
 }

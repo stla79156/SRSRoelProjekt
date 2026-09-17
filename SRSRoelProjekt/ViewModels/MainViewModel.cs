@@ -1,51 +1,72 @@
 ﻿using SRSRoelProjekt.Commands;
 using SRSRoelProjekt.Core.Models;
+using SRSRoelProjekt.Views;
+using SRSRoelProjekt.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
 using System.Linq;
+using System.Text;
 using System.Windows;
-using SRSRoelProjekt.Views;
-using SRSRoelProjekt.Views.Windows;
+using System.Windows.Input;
 
 namespace SRSRoelProjekt.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
        public HeaderBarViewModel HeaderBarViewModel { get; }
+
+
+
+        //public ObservableCollection<Renter> Renters { get; set; }
+
+        //public RelayCommand OpenAddRenterCommand { get; }
+
+        public ObservableCollection<Renter> Renters { get; }
+
         public ViewModelBase CurrentViewModel { get; set; }
 
-        public void ShowMenu()
-        {
-            //CurrentViewModel = new MenuViewModel(); Kan først efter oprettelse af flere views til at refere til. 
-        }
-
-
-        public ObservableCollection<Renter> Renters { get; set; }
-
-        public RelayCommand OpenAddRenterCommand { get; }
+        public ICommand ShowRackControlCommand { get; }
+        public ICommand ShowAddRenterCommand { get; }
 
         public MainViewModel()
         {
             Renters = new ObservableCollection<Renter>();
-            OpenAddRenterCommand = new RelayCommand(OpenAddRenterWindow);
+
+            ShowRackControlCommand = new RelayCommand(ShowRackControl);
+            ShowAddRenterCommand = new RelayCommand(ShowAddRenter);
+
+            ShowRackControl(); // Start view
         }
 
-        private void OpenAddRenterWindow()
+        public void ShowRackControl()
         {
-            AddRenterWindow win = new AddRenterWindow();
-            win.Owner = Application.Current.MainWindow;
+            CurrentViewModel = new RackControlViewModel(Renters, this);
+        }
 
-            // ViewModel til vinduet
-            var vm = new AddRenterViewModel(Renters);
-            win.DataContext = vm;
+        public void ShowAddRenter()
+        {
+            CurrentViewModel = new AddRenterViewModel(Renters, this);
+        }
 
-            win.ShowDialog();
+        public void ShowMenu()
+        {
+            CurrentViewModel = new HeaderBarViewModel(this);
         }
 
 
-        
+
+
+
+
+
+
+
+        /* public void ShowRackControl()
+         {
+             CurrentViewModel = new RackControlViewModel(Renters, this);
+         }*/
+
 
 
     }

@@ -25,6 +25,17 @@ namespace SRSRoelProjekt.Views.UserControls
             this.Loaded += RackControl_Loaded;
         }
 
+
+
+
+
+
+
+
+
+
+
+
         private void RackControl_Loaded(object? sender, RoutedEventArgs e)
         {
             // Ensure selection happens after the control tree (and MainWindow children) are created
@@ -94,5 +105,10 @@ namespace SRSRoelProjekt.Views.UserControls
            
 
         }
+
+       // snakker sammen med viewmodel
+        
+
+
     }
 }

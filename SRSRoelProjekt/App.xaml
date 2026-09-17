@@ -1,9 +1,28 @@
 ﻿<Application x:Class="SRSRoelProjekt.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="clr-namespace:SRSRoelProjekt"
+             xmlns:vm="clr-namespace:SRSRoelProjekt.ViewModels"
+             xmlns:views="clr-namespace:SRSRoelProjekt.Views.UserControls"
              StartupUri="MainWindow.xaml">
+
     <Application.Resources>
-         
+
+        <!-- RackControl (UserControl) -->
+        <DataTemplate DataType="{x:Type vm:RackControlViewModel}">
+            <views:RackControl />
+        </DataTemplate>
+
+        <!-- HeaderBar (UserControl) -->
+        <DataTemplate DataType="{x:Type vm:HeaderBarViewModel}">
+            <views:HeaderBar />
+        </DataTemplate>
+
+        <!-- FloorPlan (UserControl) hvis du bruger den -->
+        <!--
+        <DataTemplate DataType="{x:Type vm:FloorPlanViewModel}">
+            <views:FloorPlan />
+        </DataTemplate>
+        -->
+
     </Application.Resources>
 </Application>

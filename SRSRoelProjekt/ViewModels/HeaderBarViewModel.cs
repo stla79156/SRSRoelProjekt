@@ -3,25 +3,30 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
 
 namespace SRSRoelProjekt.ViewModels
 {
     public class HeaderBarViewModel:ViewModelBase
     {
 
-        public RelayCommand MenuCommand { get; }
+
         private readonly MainViewModel _main;
+        public RelayCommand ShowMenuCommand { get; }
+       
+
 
         public HeaderBarViewModel(MainViewModel main)
         {
             _main = main;
-            MenuCommand = new RelayCommand(OpenMenu);
+            ShowMenuCommand = new RelayCommand(() => _main.ShowMenu());
         }
+      
 
-        private void OpenMenu()
-        {
-            _main.ShowMenu();
-        }
+           
+            
+        
+
 
 
     }
