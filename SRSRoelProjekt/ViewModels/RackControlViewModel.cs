@@ -12,12 +12,11 @@ namespace SRSRoelProjekt.ViewModels
 {
     public  class RackControlViewModel: ViewModelBase
     {
-
+        
         private MainViewModel _main;
         public ObservableCollection<Renter> Renters { get; }
         public ICommand AddRenterCommand { get; }
-
-
+        public FloorPlanViewModel FloorPlanViewModel => _main.FloorPlanViewModel;
 
         public RackControlViewModel(ObservableCollection<Renter> renters, MainViewModel main)
         {

@@ -14,9 +14,11 @@ namespace SRSRoelProjekt.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-       public HeaderBarViewModel HeaderBarViewModel { get; }
+        public HeaderBarViewModel HeaderBarViewModel { get; }
 
+        public RackControlViewModel RackControlViewModel { get; }
 
+        public FloorPlanViewModel FloorPlanViewModel { get; }
 
         //public ObservableCollection<Renter> Renters { get; set; }
 
@@ -29,14 +31,26 @@ namespace SRSRoelProjekt.ViewModels
         public ICommand ShowRackControlCommand { get; }
         public ICommand ShowAddRenterCommand { get; }
 
+        //public MainViewModel()
+        //{
+        //    Renters = new ObservableCollection<Renter>();
+
+        //    ShowRackControlCommand = new RelayCommand(ShowRackControl);
+        //    ShowAddRenterCommand = new RelayCommand(ShowAddRenter);
+
+        //    ShowRackControl(); // Start view
+        //}
         public MainViewModel()
         {
             Renters = new ObservableCollection<Renter>();
 
-            ShowRackControlCommand = new RelayCommand(ShowRackControl);
-            ShowAddRenterCommand = new RelayCommand(ShowAddRenter);
+            FloorPlanViewModel =
+                new FloorPlanViewModel();
 
-            ShowRackControl(); // Start view
+            RackControlViewModel =
+                new RackControlViewModel(
+                    Renters,
+                    this);
         }
 
         public void ShowRackControl()

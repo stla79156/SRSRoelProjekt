@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:SRSRoelProjekt.ViewModels"
+        xmlns:views="clr-namespace:SRSRoelProjekt.Views.UserControls"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
@@ -13,8 +14,22 @@
     </Window.DataContext>
 
     <Grid>
-        <!-- ⭐ Her vises RackControl, AddRenterView osv. -->
-        <ContentControl Content="{Binding CurrentViewModel}" />
-    </Grid>
+
+    <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="220"/>
+        <ColumnDefinition Width="*"/>
+    </Grid.ColumnDefinitions>
+
+    <!-- Left side -->
+    <views:RackControl
+        Grid.Column="0"
+        DataContext="{Binding RackControlViewModel}" />
+
+    <!-- Right side -->
+    <views:FloorPlan
+        Grid.Column="1"
+        DataContext="{Binding FloorPlanViewModel}" />
+
+</Grid>
 
 </Window>

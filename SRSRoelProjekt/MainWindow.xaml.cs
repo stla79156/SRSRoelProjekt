@@ -20,7 +20,7 @@ namespace SRSRoelProjekt
     {
 
 
-        private FloorPlan MyFloorPlan;
+        private FloorPlanViewModel MyFloorPlan;
         public MainWindow()
         {
             InitializeComponent();
@@ -29,7 +29,7 @@ namespace SRSRoelProjekt
         
 
 
-        public FloorPlan MyFloorPlanControl
+        public FloorPlanViewModel MyFloorPlanControl
         {
             get { return MyFloorPlan; }
         }

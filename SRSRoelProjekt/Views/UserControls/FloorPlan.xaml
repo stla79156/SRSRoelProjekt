@@ -7,7 +7,35 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            <UniformGrid x:Name="StorageGrid" Rows="10" Columns="20" Width="590" Height="400"/>
-     
-    </Grid>
+
+    <ItemsControl ItemsSource="{Binding Racks}">
+
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <UniformGrid Rows="10"
+                             Columns="20"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+
+        <ItemsControl.ItemTemplate>
+
+            <DataTemplate>
+
+                <Button Content="{Binding RackNumber}"
+                        Background="{Binding BackgroundColor}"
+                        BorderBrush="{Binding BorderBrush}"
+                        BorderThickness="{Binding BorderThickness}"
+                        Visibility="{Binding RackVisibility}"
+                        Margin="1"
+                        Command="{Binding DataContext.RackClickedCommand,
+                                  RelativeSource={RelativeSource AncestorType=UserControl}}"
+                        CommandParameter="{Binding}" />
+
+            </DataTemplate>
+
+        </ItemsControl.ItemTemplate>
+
+    </ItemsControl>
+
+</Grid>
 </UserControl>
