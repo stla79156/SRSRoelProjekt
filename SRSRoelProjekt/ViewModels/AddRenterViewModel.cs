@@ -4,9 +4,10 @@ using SRSRoelProjekt.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics.Metrics;
+using System.Linq;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
-using System.Linq;
 using System.Windows;
 
 namespace SRSRoelProjekt.ViewModels
@@ -23,6 +24,10 @@ namespace SRSRoelProjekt.ViewModels
         private ObservableCollection<Renter> _renters;
         private MainViewModel _main;
 
+
+
+
+
         public AddRenterViewModel(ObservableCollection<Renter> renters, MainViewModel main)
         {
             _renters = renters;
@@ -34,14 +39,26 @@ namespace SRSRoelProjekt.ViewModels
 
         private void AddRenter()
         {
-            _renters.Add(new Renter
+            var newId = _main.RenterService.GenerateNewId(_renters);
+
+           
+            var renter = new Renter
             {
+                Id = newId,
                 Name = this.Name,
                 Email = this.Email,
                 PhoneNumber = this.PhoneNumber
-            });
+            };
 
-           
+            _main.RenterService.AddRenter(renter); 
+            // Gem i JSON
+            _renters.Add(renter);
+
+            // Naviger tilbage
+            _main.ShowRackControl();
         }
+       
+
+
     }
 }

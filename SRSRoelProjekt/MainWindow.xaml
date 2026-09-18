@@ -9,9 +9,9 @@
         Title="MainWindow" Height="450" Width="800">
 
     <!-- ⭐ MainViewModel som DataContext -->
-    <Window.DataContext>
+    <!-- <Window.DataContext>
         <vm:MainViewModel />
-    </Window.DataContext>
+    </Window.DataContext>-->
 
     <Grid>
 

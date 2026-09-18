@@ -123,5 +123,20 @@ namespace SRSRoelProjekt.ViewModels
                 rack.Status = RackStatus.EndingSoon;
             }
         }
+
+        public void ClearRenterRack(string renterName)
+        {
+             
+            foreach (var rack in Racks.Where (x => x.RenterName == renterName))
+            {
+                rack.RenterName = null;
+                rack.Status = RackStatus.Available;
+                rack.IsHighlighted = false;
+
+            }
+        
+        
+        }
+
     }
 }

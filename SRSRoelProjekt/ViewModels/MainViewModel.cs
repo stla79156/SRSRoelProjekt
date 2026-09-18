@@ -1,5 +1,7 @@
 ﻿using SRSRoelProjekt.Commands;
 using SRSRoelProjekt.Core.Models;
+using SRSRoelProjekt.Core.Repositories;
+using SRSRoelProjekt.Core.Services;
 using SRSRoelProjekt.Views;
 using SRSRoelProjekt.Views.Windows;
 using System;
@@ -20,6 +22,8 @@ namespace SRSRoelProjekt.ViewModels
 
         public FloorPlanViewModel FloorPlanViewModel { get; }
 
+        public RenterService RenterService { get; }
+
         //public ObservableCollection<Renter> Renters { get; set; }
 
         //public RelayCommand OpenAddRenterCommand { get; }
@@ -31,15 +35,7 @@ namespace SRSRoelProjekt.ViewModels
         public ICommand ShowRackControlCommand { get; }
         public ICommand ShowAddRenterCommand { get; }
 
-        //public MainViewModel()
-        //{
-        //    Renters = new ObservableCollection<Renter>();
-
-        //    ShowRackControlCommand = new RelayCommand(ShowRackControl);
-        //    ShowAddRenterCommand = new RelayCommand(ShowAddRenter);
-
-        //    ShowRackControl(); // Start view
-        //}
+    
         public MainViewModel()
         {
             Renters = new ObservableCollection<Renter>();
@@ -51,6 +47,12 @@ namespace SRSRoelProjekt.ViewModels
                 new RackControlViewModel(
                     Renters,
                     this);
+
+            var repo = new JsonRenterRepository();
+            RenterService = new RenterService(repo);
+
+            Renters = RenterService.GetRenters();
+
         }
 
         public void ShowRackControl()
@@ -76,10 +78,7 @@ namespace SRSRoelProjekt.ViewModels
 
 
 
-        /* public void ShowRackControl()
-         {
-             CurrentViewModel = new RackControlViewModel(Renters, this);
-         }*/
+       
 
 
 

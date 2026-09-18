@@ -19,84 +19,11 @@ namespace SRSRoelProjekt.Views.UserControls
     /// </summary>
     public partial class RackControl : UserControl
     {
+
         public RackControl()
         {
             InitializeComponent();
-            this.Loaded += RackControl_Loaded;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
-        private void RackControl_Loaded(object? sender, RoutedEventArgs e)
-        {
-            // Ensure selection happens after the control tree (and MainWindow children) are created
-            if (RenterComboBox != null && RenterComboBox.Items.Count > 0)
-            {
-                RenterComboBox.SelectedIndex = 0;
-            }
-            // detach handler to avoid re-running
-            this.Loaded -= RackControl_Loaded;
-        }
-        private void SaveRack_Click(object sender, RoutedEventArgs e)
-        {
-            string renterName =
-                ((ComboBoxItem)RenterComboBox.SelectedItem)?
-                .Content?
-                .ToString();
-
-            if (string.IsNullOrEmpty(renterName))
-            {
-                MessageBox.Show("Vælg en lejer først.");
-                return;
-            }
-
-            ((MainWindow)Application.Current.MainWindow)
-                .SaveRackReservation(renterName);
-        }
-
-        private void StopRental_Click(object sender, RoutedEventArgs e)
-        {
-            string renterName =
-                ((ComboBoxItem)RenterComboBox.SelectedItem)?
-                .Content?
-                .ToString();
-
-            if (string.IsNullOrEmpty(renterName))
-            {
-                MessageBox.Show("Vælg en lejer først");
-                return;
-            }
-
-            MainWindow mainWindow =
-                (MainWindow)Application.Current.MainWindow;
-
-            mainWindow.MyFloorPlanControl.StopRentalForRenter(renterName, DateTime.Today.AddMonths(1));
-        }
-        private void RenterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            string renterName =
-                ((ComboBoxItem)RenterComboBox.SelectedItem)?
-                .Content?
-                .ToString();
-
-            if (string.IsNullOrEmpty(renterName))
-                return;
-
-            var mainWindow = Application.Current?.MainWindow as MainWindow;
-            var floorPlan = mainWindow?.MyFloorPlanControl;
-            if (floorPlan == null)
-                return;
-
-            floorPlan.HighlightRenterShelves(renterName);
+            //this.Loaded += RackControl_Loaded;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
