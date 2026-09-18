@@ -51,6 +51,8 @@ namespace SRSRoelProjekt.ViewModels
                 new RackControlViewModel(
                     Renters,
                     this);
+            HeaderBarViewModel =
+                new HeaderBarViewModel();
         }
 
         public void ShowRackControl()
@@ -65,7 +67,7 @@ namespace SRSRoelProjekt.ViewModels
 
         public void ShowMenu()
         {
-            CurrentViewModel = new HeaderBarViewModel(this);
+            CurrentViewModel = new HeaderBarViewModel();
         }
 
 

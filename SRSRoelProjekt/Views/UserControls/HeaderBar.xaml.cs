@@ -21,13 +21,6 @@ namespace SRSRoelProjekt.Views.UserControls
         public HeaderBar()
         {
             InitializeComponent();
-
-        }
-        private void Menu_Click(object sender, RoutedEventArgs e)
-        {
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
-
         }
     }
 }
