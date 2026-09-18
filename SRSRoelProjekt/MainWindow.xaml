@@ -4,32 +4,44 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:SRSRoelProjekt.ViewModels"
-        xmlns:views="clr-namespace:SRSRoelProjekt.Views.UserControls"
+        xmlns:views="clr-namespace:SRSRoelProjekt.Views.UserControls" 
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
 
-    <!-- ⭐ MainViewModel som DataContext -->
-    <!-- <Window.DataContext>
+     <!--⭐ MainViewModel som DataContext 
+    <Window.DataContext>
         <vm:MainViewModel />
-    </Window.DataContext>-->
+    </Window.DataContext> -->
 
     <Grid>
 
-    <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="220"/>
-        <ColumnDefinition Width="*"/>
-    </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="220"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
     <!-- Left side -->
     <views:RackControl
         Grid.Column="0"
+        Grid.Row="1"
         DataContext="{Binding RackControlViewModel}" />
 
     <!-- Right side -->
     <views:FloorPlan
         Grid.Column="1"
+        Grid.Row="1"
         DataContext="{Binding FloorPlanViewModel}" />
-
-</Grid>
+        
+    <!-- Header Bar -->
+    <views:HeaderBar
+        Grid.Row="0"
+        Grid.ColumnSpan="2"
+        DataContext="{Binding HeaderBarViewModel}" />
+    </Grid>
 
 </Window>

@@ -7,27 +7,18 @@ using System.Windows.Input;
 
 namespace SRSRoelProjekt.ViewModels
 {
-    public class HeaderBarViewModel:ViewModelBase
+    public class HeaderBarViewModel : ViewModelBase
     {
-
-
-        private readonly MainViewModel _main;
-        public RelayCommand ShowMenuCommand { get; }
-       
-
-
-        public HeaderBarViewModel(MainViewModel main)
+        public RelayCommand OpenNewMenuCommand { get; }
+        public HeaderBarViewModel()
         {
-            _main = main;
-            ShowMenuCommand = new RelayCommand(() => _main.ShowMenu());
+            OpenNewMenuCommand = new RelayCommand(OpenMenu);
         }
-      
 
-           
-            
-        
-
-
-
+        private void OpenMenu()
+        {
+            Window MainWindow = new MainWindow();
+            MainWindow.Show();
+        }
     }
 }

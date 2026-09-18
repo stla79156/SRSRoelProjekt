@@ -3,6 +3,12 @@ using SRSRoelProjekt.Core.Models;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
+using System.Text;
+using System.Collections.Generic;
+using System.Windows.Media;
+
+
 
 namespace SRSRoelProjekt.ViewModels
 {
@@ -22,7 +28,7 @@ namespace SRSRoelProjekt.ViewModels
             RackClickedCommand =
                 new RelayCommand(OnRackClicked);
 
-            CreateShelfLayout();
+            createRackLayout();
         }
 
         private void OnRackClicked(object parameter)
@@ -47,6 +53,10 @@ namespace SRSRoelProjekt.ViewModels
             }
         }
 
+        private void createRackLayout()
+        {
+            CreateShelfLayout();
+        }
         private void CreateShelfLayout()
         {
             bool[,] rackLayout =
@@ -124,19 +134,99 @@ namespace SRSRoelProjekt.ViewModels
             }
         }
 
+
+
         public void ClearRenterRack(string renterName)
+
         {
-             
-            foreach (var rack in Racks.Where (x => x.RenterName == renterName))
+
+
+
+            foreach (var rack in Racks.Where(x => x.RenterName == renterName))
+
             {
+
                 rack.RenterName = null;
+
                 rack.Status = RackStatus.Available;
+
                 rack.IsHighlighted = false;
 
+
             }
-        
-        
+
+        }
+    }
+    public class RackViewModel : ViewModelBase
+    {
+        private RackStatus _status;
+        private bool _isHighlighted;
+
+
+        public Visibility RackVisibility =>
+            IsVisible
+                ? Visibility.Visible
+                : Visibility.Hidden;
+
+        public int RackNumber { get; set; }
+
+        public string RenterName { get; set; }
+
+        public RackStatus Status
+        {
+            get => _status;
+            set
+            {
+                _status = value;
+
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(BackgroundColor));
+            }
         }
 
+        public bool IsHighlighted
+        {
+            get => _isHighlighted;
+            set
+            {
+                _isHighlighted = value;
+
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(BorderBrush));
+                OnPropertyChanged(nameof(BorderThickness));
+            }
+        }
+
+        public Brush BackgroundColor =>
+            Status switch
+            {
+                RackStatus.Available => Brushes.LightGreen,
+                RackStatus.Selected => Brushes.Blue,
+                RackStatus.Reserved => Brushes.Red,
+                RackStatus.EndingSoon => Brushes.Yellow,
+                _ => Brushes.Gray
+            };
+
+        public Brush BorderBrush =>
+            IsHighlighted
+                ? Brushes.Blue
+                : Brushes.Black;
+
+        public double BorderThickness =>
+            IsHighlighted ? 3 : 1;
+
+
+        private bool _isVisible = true;
+
+        public bool IsVisible
+        {
+            get => _isVisible;
+            set
+            {
+                _isVisible = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(RackVisibility));
+            }
+        }
     }
 }
