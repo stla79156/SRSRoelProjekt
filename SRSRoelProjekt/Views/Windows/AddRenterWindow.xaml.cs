@@ -1,5 +1,8 @@
-﻿using System;
+﻿using SRSRoelProjekt.Core.Models;
+using SRSRoelProjekt.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,9 +21,10 @@ namespace SRSRoelProjekt.Views
     /// </summary>
     public partial class AddRenterWindow : Window
     {
-        public AddRenterWindow()
+        public AddRenterWindow(ObservableCollection<Renter> renters, MainViewModel main)
         {
             InitializeComponent();
+            DataContext = new AddRenterViewModel(renters, main);
         }
     }
 }

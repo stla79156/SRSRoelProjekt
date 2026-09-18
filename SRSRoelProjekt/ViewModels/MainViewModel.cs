@@ -38,20 +38,19 @@ namespace SRSRoelProjekt.ViewModels
     
         public MainViewModel()
         {
-            Renters = new ObservableCollection<Renter>();
-
-            FloorPlanViewModel =
-                new FloorPlanViewModel();
-
-            RackControlViewModel =
-                new RackControlViewModel(
-                    Renters,
-                    this);
-
             var repo = new JsonRenterRepository();
             RenterService = new RenterService(repo);
 
+            // Load renters from JSON FIRST
             Renters = RenterService.GetRenters();
+
+            FloorPlanViewModel = new FloorPlanViewModel();
+
+            RackControlViewModel = new RackControlViewModel(
+                Renters,
+                this);
+
+
 
         }
 

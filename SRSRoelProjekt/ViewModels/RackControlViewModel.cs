@@ -59,7 +59,7 @@ namespace SRSRoelProjekt.ViewModels
 
         private void OpenAddRenterWindow()
         {
-            var win = new AddRenterWindow();
+            var win = new AddRenterWindow(_main.Renters, _main);
             win.ShowDialog();
         }
 

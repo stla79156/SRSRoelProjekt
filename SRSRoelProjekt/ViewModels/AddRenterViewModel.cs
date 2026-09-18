@@ -41,7 +41,7 @@ namespace SRSRoelProjekt.ViewModels
         {
             var newId = _main.RenterService.GenerateNewId(_renters);
 
-           
+
             var renter = new Renter
             {
                 Id = newId,
@@ -50,14 +50,14 @@ namespace SRSRoelProjekt.ViewModels
                 PhoneNumber = this.PhoneNumber
             };
 
-            _main.RenterService.AddRenter(renter); 
+            _main.RenterService.AddRenter(renter);
             // Gem i JSON
             _renters.Add(renter);
 
             // Naviger tilbage
             _main.ShowRackControl();
         }
-       
+
 
 
     }
