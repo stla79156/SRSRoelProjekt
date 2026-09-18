@@ -14,26 +14,26 @@ namespace SRSRoelProjekt.ViewModels
 {
     public class FloorPlanViewModel : ViewModelBase
     {
-        public ObservableCollection<FloorPlanViewModel> Racks
+        public ObservableCollection<RackViewModel> Racks
         {
             get;
         } = new();
 
         public RelayCommand RackClickedCommand { get; }
 
-        private FloorPlanViewModel highlightedRack;
+        private RackViewModel highlightedRack;
 
         public FloorPlanViewModel()
         {
             RackClickedCommand =
                 new RelayCommand(OnRackClicked);
 
-            CreateShelfLayout();
+            createRackLayout();
         }
 
         private void OnRackClicked(object parameter)
         {
-            if (parameter is not FloorPlanViewModel rack)
+            if (parameter is not RackViewModel rack)
                 return;
 
             if (rack.Status == RackStatus.Reserved ||
@@ -53,6 +53,10 @@ namespace SRSRoelProjekt.ViewModels
             }
         }
 
+        private void createRackLayout()
+        {
+            CreateShelfLayout();
+        }
         private void CreateShelfLayout()
         {
             bool[,] rackLayout =
@@ -77,7 +81,7 @@ namespace SRSRoelProjekt.ViewModels
                 {
                     if (rackLayout[row, col])
                     {
-                        Racks.Add(new FloorPlanViewModel
+                        Racks.Add(new RackViewModel
                         {
                             RackNumber = rackNumber++,
                             Status = RackStatus.Available,
@@ -86,7 +90,7 @@ namespace SRSRoelProjekt.ViewModels
                     }
                     else
                     {
-                        Racks.Add(new FloorPlanViewModel
+                        Racks.Add(new RackViewModel
                         {
                             IsVisible = false
                         });
@@ -130,6 +134,11 @@ namespace SRSRoelProjekt.ViewModels
             }
         }
 
+
+    }
+
+    public class RackViewModel : ViewModelBase
+    {
         private RackStatus _status;
         private bool _isHighlighted;
 
