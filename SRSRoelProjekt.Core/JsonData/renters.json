@@ -1,14 +1,16 @@
 [
   {
-    "Id": 2,
-    "Name": "Rasmus",
-    "Email": "shshshh",
-    "PhoneNumber": "123456"
-  },
-  {
     "Id": 3,
     "Name": "Sebastian Elm",
     "Email": "sebber@gmail.com",
-    "PhoneNumber": "12345678"
+    "PhoneNumber": "12345678",
+    "DisplayText": "3 - Sebastian Elm"
+  },
+  {
+    "Id": 4,
+    "Name": "Sanna",
+    "Email": "sanna@gmail.com",
+    "PhoneNumber": "44556688",
+    "DisplayText": "4 - Sanna"
   }
 ]
