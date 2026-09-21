@@ -9,16 +9,18 @@ namespace SRSRoelProjekt.ViewModels
 {
     public class HeaderBarViewModel : ViewModelBase
     {
-        public RelayCommand OpenNewMenuCommand { get; }
+        public RelayCommand LogOutCommand { get; }
         public HeaderBarViewModel()
         {
-            OpenNewMenuCommand = new RelayCommand(OpenMenu);
+            LogOutCommand = new RelayCommand(LogOut);
         }
 
-        private void OpenMenu()
+        private void LogOut()
         {
             Window MainWindow = new MainWindow();
             MainWindow.Show();
+
+            Application.Current.Shutdown();
         }
     }
 }
