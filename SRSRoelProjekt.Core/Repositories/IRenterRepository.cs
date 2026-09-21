@@ -8,9 +8,8 @@ namespace SRSRoelProjekt.Core.Repositories
 {
     public interface IRenterRepository
     {
-        ObservableCollection<Renter> LoadRenters();
-        void SaveRenters(ObservableCollection<Renter> renters);
-
+        List<Renter> GetRenters();
+        void SaveRenters(List<Renter> renters);
     }
 
 

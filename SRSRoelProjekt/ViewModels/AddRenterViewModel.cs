@@ -39,25 +39,20 @@ namespace SRSRoelProjekt.ViewModels
 
         private void AddRenter()
         {
-            var newId = _main.RenterService.GenerateNewId(_renters);
-
-
             var renter = new Renter
             {
-                Id = newId,
-                Name = this.Name,
-                Email = this.Email,
-                PhoneNumber = this.PhoneNumber
+                Id = _main.RenterService.GenerateNewId(_renters),
+                Name = Name,
+                Email = Email,
+                PhoneNumber = PhoneNumber
             };
 
-            _main.RenterService.AddRenter(renter);
-            // Gem i JSON
             _renters.Add(renter);
 
-            // Naviger tilbage
+            _main.RenterService.SaveRenters(_renters);
+
             _main.ShowRackControl();
         }
-
 
 
     }
