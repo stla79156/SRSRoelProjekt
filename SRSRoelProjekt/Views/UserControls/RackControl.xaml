@@ -14,21 +14,21 @@
 
             <!-- RowDefinitions must come before child elements -->
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"/>
-                <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="4*"/>
-                <RowDefinition Height="2*"/>
-            </Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
 
 
 
-        <Button Command="{Binding AddRenterCommand }" Grid.Row="1" Content="Opret Ny Lejer" FontWeight="Bold" Width="150" Height="30" Background="Lightgray" BorderBrush="Black" FontFamily="Cambria"/>
-        <Button Command="{Binding RemoveRenterCommand}" Grid.Row="2" Content="Fjern eksisterende Lejer" 
+        <Button Command="{Binding AddRenterCommand }" Grid.Row="0" Content="Opret Ny Lejer" FontWeight="Bold" Width="150" Height="30" Background="Lightgray" BorderBrush="Black" FontFamily="Cambria"/>
+        <Button Command="{Binding RemoveRenterCommand}" Grid.Row="1" Content="Fjern eksisterende Lejer" 
                     FontWeight="Bold" Width="150" Height="30" Background="Lightgray" BorderBrush="Black" FontFamily="Cambria"/>
 
-            <TextBlock Grid.Row="3" Text="pil ned vælger lejer,&#10;vælg en lejer i listen:" 
+            <TextBlock Grid.Row="2" Text="pil ned vælger lejer,&#10;vælg en lejer i listen:" 
                        TextAlignment="Center" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Cambria"/>
         <!--  Text="Vælg lejer"  IsEditable="True" IsReadOnly="True"  
         Gør der er kan stå Vælg en lejer og den forsvinder når vi åbner boksen -->
@@ -39,7 +39,7 @@
                
                   Text="Vælg lejer"  IsEditable="True" IsReadOnly="True" 
                   Width="190" 
-                  Grid.Row="4" 
+                  Grid.Row="3" 
                   Height="30" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Cambria">
                 
             
@@ -58,12 +58,12 @@
 
             
             </ComboBox>
-
-        <Button Grid.Row="4" Command="{Binding StopRentalCommand}" 
-                Content="Stop Leje" FontWeight="Bold" Width="150" Height="30" VerticalAlignment="Bottom" Background="Lightblue" BorderBrush="Blue" FontFamily="Cambria"/>
-        <Button Grid.Row="5" Command="{Binding SaveRackCommand}" 
+        <Button Grid.Row="4" Command="{Binding SaveRackCommand}" 
                Content="Tilføj Lejer til Reol" FontWeight="Bold" Width="150" Height="30" Background="Lightblue" BorderBrush="Blue" FontFamily="Cambria"/>
             
+        <Button Grid.Row="5" Command="{Binding StopRentalCommand}" 
+                Content="Stop Leje af Reol" FontWeight="Bold" Width="150" Height="30"  Background="Lightblue" BorderBrush="Blue" FontFamily="Cambria"/>
+        
             
     </Grid>
 </UserControl>
