@@ -66,7 +66,6 @@ namespace SRSRoelProjekt.ViewModels
 
         private void StopRental()
         {
-
             if (SelectedRenter == null)
             {
                 MessageBox.Show("Vælg en lejer først");
@@ -86,9 +85,23 @@ namespace SRSRoelProjekt.ViewModels
             {
                 MessageBox.Show("Vælg en lejer først");
                 return; 
-
             }
 
+            else
+            {
+                foreach (var rack in _main.FloorPlanViewModel.Racks)
+                {
+                    if (rack.RenterName == SelectedRenter.Name)
+                    { 
+                        MessageBox.Show("Denne lejer har stadig reserverede reoler, fjern reservationerne først.");
+                        return;
+                    }
+                }
+                var result = MessageBox.Show("Er du sikker på at du vil fjerne denne lejer?", "Bekræft fjerning", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.No)
+                    return;
+            }
 
             var renter = SelectedRenter;
             // Fjern reol-reservationer
