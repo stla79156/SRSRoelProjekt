@@ -4,9 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
-using System.Collections.ObjectModel;
 using System.Linq;
-using SRSRoelProjekt.Core.Models;
 
 
 namespace SRSRoelProjekt.Core.Services
@@ -22,34 +20,21 @@ namespace SRSRoelProjekt.Core.Services
 
         public ObservableCollection<Renter> GetRenters()
         {
-            return _repository.LoadRenters();
+            return new ObservableCollection<Renter>(
+                _repository.GetRenters());
         }
 
-        public int GenerateNewId(ObservableCollection<Renter> renters)
+        public void SaveRenters(ObservableCollection<Renter> renters)
         {
-            if (renters.Count == 0)
+            _repository.SaveRenters(renters.ToList());
+        }
+
+        public int GenerateNewId(IEnumerable<Renter> renters)
+        {
+            if (!renters.Any())
                 return 1;
 
             return renters.Max(r => r.Id) + 1;
-        }
-
-        public void AddRenter(Renter renter)
-        {
-            var renters = _repository.LoadRenters();
-            renters.Add(renter);
-            _repository.SaveRenters(renters);
-        }
-
-        public void RemoveRenter(int id)
-        {
-            var renters = _repository.LoadRenters();
-            var renter = renters.FirstOrDefault(r => r.Id == id);
-
-            if (renter != null)
-            {
-                renters.Remove(renter);
-                _repository.SaveRenters(renters);
-            }
         }
     }
 }
