@@ -24,7 +24,16 @@ namespace SRSRoelProjekt.Views
         public AddRenterWindow(ObservableCollection<Renter> renters, MainViewModel main)
         {
             InitializeComponent();
-            DataContext = new AddRenterViewModel(renters, main);
+
+            var vm = new AddRenterViewModel(renters, main);
+
+            vm.CloseAction = result =>
+            {
+                DialogResult = result;
+                Close();
+            };
+
+            DataContext = vm;
         }
     }
 }

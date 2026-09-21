@@ -1,8 +1,16 @@
 [
   {
-    "Id": 1,
-    "Name": "Rasmus",
-    "Email": "razz@gmail.com",
-    "PhoneNumber": "12345678"
+    "Id": 3,
+    "Name": "Sebastian Elm",
+    "Email": "sebber@gmail.com",
+    "PhoneNumber": "12345678",
+    "DisplayText": "3 - Sebastian Elm"
+  },
+  {
+    "Id": 4,
+    "Name": "Sanna",
+    "Email": "sanna@gmail.com",
+    "PhoneNumber": "44556688",
+    "DisplayText": "4 - Sanna"
   }
 ]
