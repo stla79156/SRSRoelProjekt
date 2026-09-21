@@ -36,5 +36,17 @@ namespace SRSRoelProjekt.Core.Services
 
             return renters.Max(r => r.Id) + 1;
         }
+
+        public void RemoveRenter(int id)
+        {
+            var renters = _repository.GetRenters();
+            var renter = renters.FirstOrDefault(r => r.Id == id);
+
+            if (renter != null)
+            {
+                renters.Remove(renter);
+                _repository.SaveRenters(renters);
+            }
+        }
     }
 }
