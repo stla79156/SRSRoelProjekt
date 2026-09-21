@@ -1,1 +1,8 @@
-[]
+[
+  {
+    "Id": 1,
+    "Name": "Rasmus",
+    "Email": "razz@gmail.com",
+    "PhoneNumber": "12345678"
+  }
+]
