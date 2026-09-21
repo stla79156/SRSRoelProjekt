@@ -24,6 +24,8 @@ namespace SRSRoelProjekt.ViewModels
 
         public RenterService RenterService { get; }
 
+        public Renter SelectedRenter { get; set; }
+
         //public ObservableCollection<Renter> Renters { get; set; }
 
         //public RelayCommand OpenAddRenterCommand { get; }
@@ -35,8 +37,11 @@ namespace SRSRoelProjekt.ViewModels
         public ICommand ShowRackControlCommand { get; }
         public ICommand ShowAddRenterCommand { get; }
 
+
+
     
         public MainViewModel()
+
         {
             var repo = new JsonRenterRepository();
             RenterService = new RenterService(repo);
@@ -44,7 +49,7 @@ namespace SRSRoelProjekt.ViewModels
             // Load renters from JSON FIRST
             Renters = RenterService.GetRenters();
 
-            FloorPlanViewModel = new FloorPlanViewModel();
+            FloorPlanViewModel = new FloorPlanViewModel(this);
 
             RackControlViewModel =
                 new RackControlViewModel(

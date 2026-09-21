@@ -49,6 +49,7 @@ namespace SRSRoelProjekt.ViewModels
             set
             {
                 _selectedRenter = value;
+                _main.SelectedRenter = value;
                 OnPropertyChanged();
                 HighlightRenterShelves();
             }
@@ -88,8 +89,19 @@ namespace SRSRoelProjekt.ViewModels
 
             }
 
+
+            var renter = SelectedRenter;
+            // Fjern reol-reservationer
             _main.FloorPlanViewModel.ClearRenterRack(SelectedRenter.Name);
+
+            // ⭐ GEM I JSON
+            _main.RenterService.RemoveRenter(SelectedRenter.Id);
+
+            // Fjern fra UI-listen
             Renters.Remove(SelectedRenter);
+
+
+           
             SelectedRenter = null;
         }
 

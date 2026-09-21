@@ -23,8 +23,11 @@ namespace SRSRoelProjekt.ViewModels
 
         private RackViewModel highlightedRack;
 
-        public FloorPlanViewModel()
+        private MainViewModel _main;
+
+        public FloorPlanViewModel(MainViewModel main)
         {
+            _main = main;
             RackClickedCommand =
                 new RelayCommand(OnRackClicked);
 
@@ -33,6 +36,13 @@ namespace SRSRoelProjekt.ViewModels
 
         private void OnRackClicked(object parameter)
         {
+
+            if (_main.SelectedRenter == null)
+            {
+                MessageBox.Show("Vælg en lejer først");
+                return;
+            }
+
             if (parameter is not RackViewModel rack)
                 return;
 
@@ -228,5 +238,12 @@ namespace SRSRoelProjekt.ViewModels
                 OnPropertyChanged(nameof(RackVisibility));
             }
         }
+
+
+
+
+
+
+
     }
 }
