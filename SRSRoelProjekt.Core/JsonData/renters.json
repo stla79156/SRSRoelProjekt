@@ -4,5 +4,11 @@
     "Name": "Rasmus",
     "Email": "shshshh",
     "PhoneNumber": "123456"
+  },
+  {
+    "Id": 3,
+    "Name": "Sebastian Elm",
+    "Email": "sebber@gmail.com",
+    "PhoneNumber": "12345678"
   }
 ]

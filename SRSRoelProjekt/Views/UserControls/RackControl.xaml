@@ -33,7 +33,7 @@
         <!--  Text="Vælg lejer"  IsEditable="True" IsReadOnly="True"  
         Gør der er kan stå Vælg en lejer og den forsvinder når vi åbner boksen -->
         <ComboBox x:Name="RenterComboBox"  
-                  DisplayMemberPath="Name" 
+                  DisplayMemberPath="DisplayText" 
                   ItemsSource="{Binding Renters}" 
                   SelectedItem="{Binding SelectedRenter}"
                

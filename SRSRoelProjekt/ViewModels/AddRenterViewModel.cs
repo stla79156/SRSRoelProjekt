@@ -12,29 +12,106 @@ using System.Windows;
 
 namespace SRSRoelProjekt.ViewModels
 {
+    using System.Collections.ObjectModel;
+    using System.Windows.Input;
+    using System.Windows;
+
     public class AddRenterViewModel : ViewModelBase
     {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string PhoneNumber { get; set; }
+        private string _name = string.Empty;
+        private string _email = string.Empty;
+        private string _phoneNumber = string.Empty;
+
+        private readonly ObservableCollection<Renter> _renters;
+        private readonly MainViewModel _main;
+
+        public Action<bool?>? CloseAction { get; set; }
+
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                OnPropertyChanged();
+
+                CommandManager.InvalidateRequerySuggested();
+            }
+        }
+
+        public string Email
+        {
+            get => _email;
+            set
+            {
+                _email = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(EmailError));
+
+                CommandManager.InvalidateRequerySuggested();
+            }
+        }
+
+        public string PhoneNumber
+        {
+            get => _phoneNumber;
+            set
+            {
+                _phoneNumber = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(PhoneError));
+
+                CommandManager.InvalidateRequerySuggested();
+            }
+        }
+
+        public string EmailError =>
+            string.IsNullOrWhiteSpace(Email) || IsValidEmail(Email)
+                ? string.Empty
+                : "Email skal indeholde @ og .";
+
+        public string PhoneError =>
+            string.IsNullOrWhiteSpace(PhoneNumber) || IsValidPhoneNumber(PhoneNumber)
+                ? string.Empty
+                : "Telefonnummer skal være 8-15 cifre.";
 
         public RelayCommand AddRenterCommand { get; }
         public RelayCommand CancelCommand { get; }
 
-        private ObservableCollection<Renter> _renters;
-        private MainViewModel _main;
-
-
-
-
-
-        public AddRenterViewModel(ObservableCollection<Renter> renters, MainViewModel main)
+        public AddRenterViewModel(
+            ObservableCollection<Renter> renters,
+            MainViewModel main)
         {
             _renters = renters;
             _main = main;
 
-            AddRenterCommand = new RelayCommand(AddRenter);
-            CancelCommand = new RelayCommand(() => _main.ShowRackControl());
+            AddRenterCommand =
+                new RelayCommand(AddRenter, CanAddRenter);
+
+            CancelCommand =
+                new RelayCommand(() => _main.ShowRackControl());
+        }
+
+        private bool CanAddRenter()
+        {
+            return !string.IsNullOrWhiteSpace(Name)
+                   && IsValidEmail(Email)
+                   && IsValidPhoneNumber(PhoneNumber);
+        }
+
+        private bool IsValidEmail(string email)
+        {
+            return !string.IsNullOrWhiteSpace(email)
+                   && email.Contains("@")
+                   && email.Contains(".");
+        }
+
+        private bool IsValidPhoneNumber(string phoneNumber)
+        {
+            return !string.IsNullOrWhiteSpace(phoneNumber)
+                   && phoneNumber.Length >= 8
+                   && phoneNumber.Length <= 15
+                   && phoneNumber.All(char.IsDigit);
         }
 
         private void AddRenter()
@@ -51,9 +128,8 @@ namespace SRSRoelProjekt.ViewModels
 
             _main.RenterService.SaveRenters(_renters);
 
-            _main.ShowRackControl();
+            CloseAction?.Invoke(true);
         }
-
-
     }
 }
+
