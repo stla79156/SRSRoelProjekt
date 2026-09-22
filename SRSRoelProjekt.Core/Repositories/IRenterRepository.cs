@@ -9,7 +9,13 @@ namespace SRSRoelProjekt.Core.Repositories
     public interface IRenterRepository
     {
         List<Renter> GetRenters();
-        void SaveRenters(List<Renter> renters);
+
+        //void SaveRenters(List<Renter> renters);
+
+        void AddRenter(Renter renter);
+        void RemoveRenter(int id);
+        void UpdateRenter(Renter renter);
+
     }
 
 

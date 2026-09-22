@@ -124,9 +124,11 @@ namespace SRSRoelProjekt.ViewModels
                 PhoneNumber = PhoneNumber
             };
 
+            _main.RenterService.AddRenter(renter);
+
             _renters.Add(renter);
 
-            _main.RenterService.SaveRenters(_renters);
+           // _main.RenterService.SaveRenters(_renters);
 
             CloseAction?.Invoke(true);
         }

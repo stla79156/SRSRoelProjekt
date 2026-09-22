@@ -20,13 +20,22 @@ namespace SRSRoelProjekt.Core.Services
 
         public ObservableCollection<Renter> GetRenters()
         {
-            return new ObservableCollection<Renter>(
-                _repository.GetRenters());
+            return new ObservableCollection<Renter>(_repository.GetRenters());
         }
 
-        public void SaveRenters(ObservableCollection<Renter> renters)
+        public void AddRenter(Renter renter)
         {
-            _repository.SaveRenters(renters.ToList());
+            _repository.AddRenter(renter);
+        }
+
+        public void RemoveRenter(int id)
+        {
+            _repository.RemoveRenter(id);
+        }
+
+        public void UpdateRenter(Renter renter)
+        {
+            _repository.UpdateRenter(renter);
         }
 
         public int GenerateNewId(IEnumerable<Renter> renters)
@@ -35,18 +44,6 @@ namespace SRSRoelProjekt.Core.Services
                 return 1;
 
             return renters.Max(r => r.Id) + 1;
-        }
-
-        public void RemoveRenter(int id)
-        {
-            var renters = _repository.GetRenters();
-            var renter = renters.FirstOrDefault(r => r.Id == id);
-
-            if (renter != null)
-            {
-                renters.Remove(renter);
-                _repository.SaveRenters(renters);
-            }
         }
     }
 }

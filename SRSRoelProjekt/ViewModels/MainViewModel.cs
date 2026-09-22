@@ -1,6 +1,7 @@
 ﻿using SRSRoelProjekt.Commands;
 using SRSRoelProjekt.Core.Models;
 using SRSRoelProjekt.Core.Repositories;
+using SRSRoelProjekt.Core.Repositories.SRSRoelProjekt.Core.Repositories;
 using SRSRoelProjekt.Core.Services;
 using SRSRoelProjekt.Views;
 using SRSRoelProjekt.Views.Windows;
@@ -43,7 +44,7 @@ namespace SRSRoelProjekt.ViewModels
         public MainViewModel()
 
         {
-            var repo = new JsonRenterRepository();
+            var repo = new SqlRenterRepository();
             RenterService = new RenterService(repo);
 
             // Load renters from JSON FIRST

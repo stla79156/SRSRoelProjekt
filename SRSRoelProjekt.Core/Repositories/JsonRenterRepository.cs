@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace SRSRoelProjekt.Core.Repositories
 {
-    public class JsonRenterRepository : IRenterRepository
+   /* public class JsonRenterRepository : IRenterRepository
     {
             private readonly string _filePath;
 
@@ -79,5 +79,5 @@ namespace SRSRoelProjekt.Core.Repositories
             }
         
          
-    }
+    }*/
 }
