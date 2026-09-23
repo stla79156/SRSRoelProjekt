@@ -118,7 +118,7 @@ namespace SRSRoelProjekt.ViewModels
         {
             var renter = new Renter
             {
-                Id = _main.RenterService.GenerateNewId(_renters),
+                RenterId = _main.RenterService.GenerateNewId(_renters),
                 Name = Name,
                 Email = Email,
                 PhoneNumber = PhoneNumber

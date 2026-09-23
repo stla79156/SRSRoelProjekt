@@ -56,15 +56,7 @@ namespace SRSRoelProjekt.ViewModels
 
         private void ShowRackInfo(RackViewModel rack)
         {
-            var rackModel = new Rack
-            {
-                RackNumber = rack.RackNumber,
-                RenterName = rack.RenterName,
-                Status = rack.Status,
-                Type = rack.RackType
-            };
-
-            var window = new RackInfoWindow(rackModel);
+            var window = new RackInfoWindow(rack);
             window.ShowDialog();
         }
         private void CreateRackLayout()
@@ -96,11 +88,7 @@ namespace SRSRoelProjekt.ViewModels
                             RackNumber = rackNumber,
                             Status = RackStatus.Available,
                             IsVisible = true,
-                            RackType = new RackType
-                            {
-                                WithHanger = racksWithHangers.Contains(rackNumber)
-                               
-                            }
+                            WithHanger = racksWithHangers.Contains(rackNumber)
                         });
 
                         rackNumber++;
@@ -178,8 +166,9 @@ namespace SRSRoelProjekt.ViewModels
         private bool _isVisible = true;
 
         public int RackNumber { get; set; }
-
         public string? RenterName { get; set; }
+        public DateTime? EndDate { get; set; }
+        public DateTime? AvailableFrom { get; set; }
 
         public RackStatus Status
         {
@@ -192,11 +181,9 @@ namespace SRSRoelProjekt.ViewModels
                 OnPropertyChanged(nameof(BackgroundColor));
             }
         }
-        public RackType RackType { get; set; }
+        public bool WithHanger { get; set; }
 
-        public bool WithHangers => RackType?.WithHanger ?? false;
-
-        public string DisplayText => WithHangers
+        public string DisplayText => WithHanger
         ? $"{RackNumber}\nb"
         : RackNumber.ToString();
 

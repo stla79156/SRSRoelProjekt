@@ -108,7 +108,7 @@ namespace SRSRoelProjekt.ViewModels
             _main.FloorPlanViewModel.ClearRenterRack(SelectedRenter.Name);
 
             // ⭐ GEM I JSON
-            _main.RenterService.RemoveRenter(SelectedRenter.Id);
+            _main.RenterService.RemoveRenter(SelectedRenter.RenterId);
 
             // Fjern fra UI-listen
             Renters.Remove(SelectedRenter);

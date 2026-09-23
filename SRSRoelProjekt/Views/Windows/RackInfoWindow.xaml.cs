@@ -19,7 +19,7 @@ namespace SRSRoelProjekt.Views.Windows
     /// </summary>
     public partial class RackInfoWindow : Window
     {
-            public RackInfoWindow(Rack rack)
+            public RackInfoWindow(RackViewModel rack)
             {
                 InitializeComponent();
                 DataContext = new RackInfoWindowViewModel(rack);

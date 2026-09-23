@@ -17,13 +17,13 @@ namespace SRSRoelProjekt.ViewModels
             public string EndDate { get; }
             public string AvailableFrom { get; }
 
-            public RackInfoWindowViewModel(Rack rack)
+            public RackInfoWindowViewModel(RackViewModel rack)
             {
                 RackNumber = $"Reol: {rack.RackNumber}";
                 RenterName = $"Lejer: {rack.RenterName ?? "Ingen"}";
                 Status = $"Status: {rack.Status}";
 
-                Type = rack.Type != null && rack.Type.WithHanger
+                Type = rack.WithHanger
                     ? "Reoltype: Med bøjlestang"
                     : "Reoltype: Uden bøjlestang";
 

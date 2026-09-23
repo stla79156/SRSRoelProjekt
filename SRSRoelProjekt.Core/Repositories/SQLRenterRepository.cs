@@ -28,7 +28,7 @@ namespace SRSRoelProjekt.Core.Repositories
                     {
                         renters.Add(new Renter
                         {
-                            Id = reader.GetInt32(0),
+                            RenterId = reader.GetInt32(0),
                             Name = reader.GetString(1),
                             Email = reader.GetString(2),
                             PhoneNumber = reader.GetString(3)
@@ -80,7 +80,7 @@ namespace SRSRoelProjekt.Core.Repositories
                         "UPDATE Renters SET Name=@Name, Email=@Email, PhoneNumber=@Phone WHERE Id=@Id",
                         conn);
 
-                    cmd.Parameters.AddWithValue("@Id", renter.Id);
+                    cmd.Parameters.AddWithValue("@Id", renter.RenterId);
                     cmd.Parameters.AddWithValue("@Name", renter.Name);
                     cmd.Parameters.AddWithValue("@Email", renter.Email);
                     cmd.Parameters.AddWithValue("@Phone", renter.PhoneNumber);

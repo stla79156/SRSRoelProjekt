@@ -43,7 +43,7 @@ namespace SRSRoelProjekt.Core.Services
             if (!renters.Any())
                 return 1;
 
-            return renters.Max(r => r.Id) + 1;
+            return renters.Max(r => r.RenterId) + 1;
         }
     }
 }
