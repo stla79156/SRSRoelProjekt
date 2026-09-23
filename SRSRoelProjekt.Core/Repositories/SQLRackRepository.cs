@@ -30,11 +30,13 @@ namespace SRSRoelProjekt.Core.Repositories
 
                     racks.Add(new Rack
                     {
-                     RackNumber= reader.GetInt32(0),
-                     RackType = reader.GetString(1),
-                     RenterId = reader.IsDBNull(2) ? null : reader.GetInt32(2),
-                     RackStatusId = reader.GetString(3)
-                    });
+                        RackNumber = reader.GetInt32(0),
+                        RackType = reader.GetString(1),
+                        RenterId = reader.IsDBNull(2) ? null : reader.GetInt32(2),
+
+                        // ⭐ Convert SQL int → enum
+                        RackStatusId = (RackStatus)reader.GetInt32(3)
+                    }); ;
 
                     
                 }
