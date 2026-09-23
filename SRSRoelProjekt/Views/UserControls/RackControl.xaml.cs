@@ -33,8 +33,13 @@ namespace SRSRoelProjekt.Views.UserControls
 
         }
 
-       // snakker sammen med viewmodel
-        
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        // snakker sammen med viewmodel
+
 
 
     }

@@ -21,7 +21,7 @@ namespace SRSRoelProjekt.Core.Repositories
                 {
                     conn.Open();
 
-                    var cmd = new SqlCommand("SELECT Id, Name, Email, PhoneNumber FROM Renters", conn);
+                    var cmd = new SqlCommand("SELECT RenterId, Name, Email, PhoneNumber FROM Renters", conn);
                     var reader = cmd.ExecuteReader();
 
                     while (reader.Read())
@@ -63,7 +63,7 @@ namespace SRSRoelProjekt.Core.Repositories
                 {
                     conn.Open();
 
-                    var cmd = new SqlCommand("DELETE FROM Renters WHERE Id = @Id", conn);
+                    var cmd = new SqlCommand("DELETE FROM Renters WHERE RenterId = @Id", conn);
                     cmd.Parameters.AddWithValue("@Id", id);
 
                     cmd.ExecuteNonQuery();

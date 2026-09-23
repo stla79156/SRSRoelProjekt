@@ -59,7 +59,7 @@
             
             </ComboBox>
         <Button Grid.Row="4" Command="{Binding SaveRackCommand}" 
-               Content="Tilføj Lejer til Reol" FontWeight="Bold" Width="150" Height="30" Background="Lightblue" BorderBrush="Blue" FontFamily="Cambria"/>
+               Content="Tilføj Lejer til Reol" FontWeight="Bold" Width="150" Height="30" Background="Lightblue" BorderBrush="Blue" FontFamily="Cambria" Click="Button_Click_1"/>
             
         <Button Grid.Row="5" Command="{Binding StopRentalCommand}" 
                 Content="Stop Leje af Reol" FontWeight="Bold" Width="150" Height="30"  Background="Lightblue" BorderBrush="Blue" FontFamily="Cambria"/>
