@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SRSRoelProjekt.ViewModels;
 using SRSRoelProjekt.Views.Windows;
 
 namespace SRSRoelProjekt.Views.UserControls
@@ -35,19 +36,14 @@ namespace SRSRoelProjekt.Views.UserControls
 
         // snakker sammen med viewmodel
 
-        private void RenterComboBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        private void ClearRenter_Click(object sender, RoutedEventArgs e)
         {
-            if (RenterComboBox.IsDropDownOpen &&
-                RenterComboBox.SelectedItem != null)
+            if (DataContext is RackControlViewModel vm)
             {
-                var item = e.OriginalSource as FrameworkElement;
-
-                if (item?.DataContext == RenterComboBox.SelectedItem)
-                {
-                    RenterComboBox.SelectedItem = null;
-                    e.Handled = true;
-                }
+                vm.ClearSelection();
             }
+
+            RenterComboBox.SelectedItem = null;
         }
 
 

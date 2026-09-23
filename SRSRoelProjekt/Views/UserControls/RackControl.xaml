@@ -35,11 +35,10 @@
                   ItemsSource="{Binding Renters}" 
                   SelectedItem="{Binding SelectedRenter}"
                   Text="Vælg lejer"  IsEditable="True" IsReadOnly="True" 
-                  Width="190" 
+                  Width="160" 
                   Grid.Row="3" 
-                  Height="30" VerticalAlignment="Top" FontWeight="Bold" FontFamily="Cambria">
-                
-            
+                  Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" FontFamily="Cambria">
+
             <ComboBox.ItemContainerStyle>
                     <Style TargetType="ComboBoxItem">
                         <Setter Property="Background" Value="White"/>
@@ -53,10 +52,17 @@
                     </Style>
                 </ComboBox.ItemContainerStyle>
 
-            
             </ComboBox>
+        <Button Grid.Row="3"
+            Content="X"
+            Width="20"
+            Height="20"
+            Background="White"
+            VerticalAlignment="Top"
+            HorizontalAlignment="Right"
+            Click="ClearRenter_Click"/>
         <Button Grid.Row="4" Command="{Binding SaveRackCommand}" 
-               Content="Tilføj Lejer til Reol" FontWeight="Bold" Width="150" Height="30" Background="Lightblue" BorderBrush="Blue" FontFamily="Cambria" Click="Button_Click_1"/>
+               Content="Tilføj Lejer til Reol" FontWeight="Bold" Width="150" Height="30" Background="Lightblue" BorderBrush="Blue" FontFamily="Cambria"/>
             
         <Button Grid.Row="5" Command="{Binding StopRentalCommand}" 
                 Content="Stop Leje af Reol" FontWeight="Bold" Width="150" Height="30"  Background="Lightblue" BorderBrush="Blue" FontFamily="Cambria"/>

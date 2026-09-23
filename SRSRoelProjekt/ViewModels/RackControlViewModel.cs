@@ -131,7 +131,18 @@ namespace SRSRoelProjekt.ViewModels
             _main.FloorPlanViewModel.SaveReservation(SelectedRenter.Name);
         }
 
+        public void ClearSelection()
+        {
+            SelectedRenter = null;
 
+            foreach (var rack in _main.FloorPlanViewModel.Racks)
+            {
+                if (rack.Status == RackStatus.Selected)
+                {
+                    rack.Status = RackStatus.Available;
+                }
+            }
+        }
 
         private void HighlightRenterShelves()
         {

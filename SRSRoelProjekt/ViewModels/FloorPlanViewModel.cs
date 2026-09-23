@@ -135,7 +135,13 @@ namespace SRSRoelProjekt.ViewModels
                 rack.IsHighlighted = true;
             }
         }
-
+        public void ClearSelectedRacks()
+        {
+            foreach (var rack in Racks.Where(r => r.Status == RackStatus.Selected))
+            {
+                rack.Status = RackStatus.Available;
+            }
+        }
         public void SaveReservation(string renterName)
         {
             foreach (var rack in Racks.Where(x => x.Status == RackStatus.Selected))
