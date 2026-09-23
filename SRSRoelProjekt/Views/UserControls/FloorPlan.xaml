@@ -21,7 +21,7 @@
 
             <DataTemplate>
 
-                <Button Content="{Binding RackNumber}"
+                <Button Content="{Binding DisplayText}"
                         Background="{Binding BackgroundColor}"
                         BorderBrush="{Binding BorderBrush}"
                         BorderThickness="{Binding BorderThickness}"

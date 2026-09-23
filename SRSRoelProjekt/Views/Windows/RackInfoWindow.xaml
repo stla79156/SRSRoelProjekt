@@ -2,28 +2,31 @@
        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="Shelf Information"
-        Height="250"
+        Height="300"
         Width="350"
         ResizeMode="NoResize">
 
     <StackPanel Margin="20">
 
-        <TextBlock x:Name="ShelfNumberText"
-                   FontSize="16"
-                   FontWeight="Bold"
-                   Margin="0,0,0,10"/>
+        <TextBlock Text="{Binding RackNumber}"
+           FontSize="16"
+           FontWeight="Bold"
+           Margin="0,0,0,10"/>
 
-        <TextBlock x:Name="RenterText"
-                   Margin="0,5"/>
+        <TextBlock Text="{Binding RenterName}"
+           Margin="0,5"/>
 
-        <TextBlock x:Name="StatusText"
-                   Margin="0,5"/>
+        <TextBlock Text="{Binding Status}"
+           Margin="0,5"/>
+        
+        <TextBlock Text="{Binding Type}"
+           Margin="0,5"/>
 
-        <TextBlock x:Name="EndDateText"
-                   Margin="0,5"/>
+        <TextBlock Text="{Binding EndDate}"
+           Margin="0,5"/>
 
-        <TextBlock x:Name="AvailableFromText"
-                   Margin="0,5"/>
+        <TextBlock Text="{Binding AvailableFrom}"
+           Margin="0,5"/>
 
         <Button Content="Luk"
                 Width="100"

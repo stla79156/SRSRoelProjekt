@@ -1,4 +1,5 @@
 ﻿using SRSRoelProjekt.Core.Models;
+using SRSRoelProjekt.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -18,30 +19,16 @@ namespace SRSRoelProjekt.Views.Windows
     /// </summary>
     public partial class RackInfoWindow : Window
     {
-        public RackInfoWindow(Rack rack)
-        {
-            InitializeComponent();
+            public RackInfoWindow(Rack rack)
+            {
+                InitializeComponent();
+                DataContext = new RackInfoWindowViewModel(rack);
+            }
 
-            ShelfNumberText.Text =
-                $"Reol: {rack.RackNumber}";
-
-            RenterText.Text =
-                $"Lejer: {rack.RenterName ?? "Ingen"}";
-
-            StatusText.Text =
-                $"Status: {rack.Status}";
-
-            EndDateText.Text =
-                $"Slutdato: {(rack.EndDate?.ToShortDateString() ?? "N/A")}";
-
-            AvailableFromText.Text =
-            $"Ledig fra: {(rack.AvailableFrom?.ToShortDateString() ?? "N/A")}";
-
-        }
-
-        private void Close_Click(object sender, RoutedEventArgs e)
-        {
-            Close();
-        }
+            private void Close_Click(object sender, RoutedEventArgs e)
+            {
+                Close();
+            }
+        
     }
 }
