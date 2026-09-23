@@ -33,12 +33,22 @@ namespace SRSRoelProjekt.Views.UserControls
 
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-
-        }
-
         // snakker sammen med viewmodel
+
+        private void RenterComboBox_PreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (RenterComboBox.IsDropDownOpen &&
+                RenterComboBox.SelectedItem != null)
+            {
+                var item = e.OriginalSource as FrameworkElement;
+
+                if (item?.DataContext == RenterComboBox.SelectedItem)
+                {
+                    RenterComboBox.SelectedItem = null;
+                    e.Handled = true;
+                }
+            }
+        }
 
 
 

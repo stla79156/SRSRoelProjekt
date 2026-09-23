@@ -6,5 +6,6 @@ namespace SRSRoelProjekt.Core.Models
 {
     public class RackType
     {
+        public bool WithHanger { get; set; }
     }
 }

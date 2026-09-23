@@ -1,73 +1,73 @@
 ﻿using SRSRoelProjekt.Commands;
 using SRSRoelProjekt.Core.Models;
+using SRSRoelProjekt.Views.Windows;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows;
 using System.Text;
-using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Media;
-
-
 
 namespace SRSRoelProjekt.ViewModels
 {
     public class FloorPlanViewModel : ViewModelBase
     {
-        public ObservableCollection<RackViewModel> Racks
-        {
-            get;
-        } = new();
+        public ObservableCollection<RackViewModel> Racks { get; } = new();
 
         public RelayCommand RackClickedCommand { get; }
-
-        private RackViewModel highlightedRack;
 
         private MainViewModel _main;
 
         public FloorPlanViewModel(MainViewModel main)
         {
             _main = main;
+
             RackClickedCommand =
                 new RelayCommand(OnRackClicked);
 
-            createRackLayout();
+            CreateRackLayout();
         }
 
         private void OnRackClicked(object parameter)
         {
-
-            if (_main.SelectedRenter == null)
-            {
-                MessageBox.Show("Vælg en lejer først");
-                return;
-            }
-
             if (parameter is not RackViewModel rack)
                 return;
 
-            if (rack.Status == RackStatus.Reserved ||
-                rack.Status == RackStatus.EndingSoon)
+            // No renter selected -> show info window
+            if (_main.SelectedRenter == null)
             {
-                highlightedRack = rack;
+                ShowRackInfo(rack);
                 return;
             }
 
-            if (rack.Status == RackStatus.Selected)
+            // Reserved racks cannot be changed
+            if (rack.Status == RackStatus.Reserved ||
+                rack.Status == RackStatus.EndingSoon)
             {
-                rack.Status = RackStatus.Available;
+                return;
             }
-            else
-            {
-                rack.Status = RackStatus.Selected;
-            }
+
+            rack.Status =
+                rack.Status == RackStatus.Selected
+                    ? RackStatus.Available
+                    : RackStatus.Selected;
         }
 
-        private void createRackLayout()
+        private void ShowRackInfo(RackViewModel rack)
         {
-            CreateShelfLayout();
+            var rackModel = new Rack
+            {
+                RackNumber = rack.RackNumber,
+                RenterName = rack.RenterName,
+                Status = rack.Status,
+                Type = rack.RackType
+            };
+
+            var window = new RackInfoWindow(rackModel);
+            window.ShowDialog();
         }
-        private void CreateShelfLayout()
+        private void CreateRackLayout()
         {
             bool[,] rackLayout =
             {
@@ -93,10 +93,17 @@ namespace SRSRoelProjekt.ViewModels
                     {
                         Racks.Add(new RackViewModel
                         {
-                            RackNumber = rackNumber++,
+                            RackNumber = rackNumber,
                             Status = RackStatus.Available,
-                            IsVisible = true
+                            IsVisible = true,
+                            RackType = new RackType
+                            {
+                                WithHanger = racksWithHangers.Contains(rackNumber)
+                               
+                            }
                         });
+
+                        rackNumber++;
                     }
                     else
                     {
@@ -109,6 +116,13 @@ namespace SRSRoelProjekt.ViewModels
             }
         }
 
+        //Asign racks with hangers based on their rack numbers
+        private readonly HashSet<int> racksWithHangers =
+        [
+            21, 30, 31, 43, 44, 54, 55, 67, 68, 69, 70, 
+            71, 72, 73, 74, 75, 76, 77, 78, 79, 80
+        ];
+
         public void HighlightRenterShelves(string renterName)
         {
             foreach (var rack in Racks)
@@ -116,8 +130,7 @@ namespace SRSRoelProjekt.ViewModels
                 rack.IsHighlighted = false;
             }
 
-            foreach (var rack in Racks
-                .Where(x => x.RenterName == renterName))
+            foreach (var rack in Racks.Where(x => x.RenterName == renterName))
             {
                 rack.IsHighlighted = true;
             }
@@ -125,62 +138,42 @@ namespace SRSRoelProjekt.ViewModels
 
         public void SaveReservation(string renterName)
         {
-            foreach (var rack in Racks
-                .Where(x => x.Status == RackStatus.Selected))
+            foreach (var rack in Racks.Where(x => x.Status == RackStatus.Selected))
             {
                 rack.RenterName = renterName;
                 rack.Status = RackStatus.Reserved;
             }
         }
 
-        public void StopRentalForRenter(
-            string renterName,
-            DateTime endDate)
+        public void StopRentalForRenter(string renterName, DateTime endDate)
         {
-            foreach (var rack in Racks
-                .Where(x => x.RenterName == renterName))
+            foreach (var rack in Racks.Where(x => x.RenterName == renterName))
             {
                 rack.Status = RackStatus.EndingSoon;
             }
         }
 
-
-
         public void ClearRenterRack(string renterName)
-
         {
-
-
-
             foreach (var rack in Racks.Where(x => x.RenterName == renterName))
-
             {
-
                 rack.RenterName = null;
-
                 rack.Status = RackStatus.Available;
-
                 rack.IsHighlighted = false;
-
-
             }
-
         }
     }
+
+
     public class RackViewModel : ViewModelBase
     {
         private RackStatus _status;
         private bool _isHighlighted;
-
-
-        public Visibility RackVisibility =>
-            IsVisible
-                ? Visibility.Visible
-                : Visibility.Hidden;
+        private bool _isVisible = true;
 
         public int RackNumber { get; set; }
 
-        public string RenterName { get; set; }
+        public string? RenterName { get; set; }
 
         public RackStatus Status
         {
@@ -193,6 +186,14 @@ namespace SRSRoelProjekt.ViewModels
                 OnPropertyChanged(nameof(BackgroundColor));
             }
         }
+        public RackType RackType { get; set; }
+
+        public bool WithHangers => RackType?.WithHanger ?? false;
+
+        public string DisplayText => WithHangers
+        ? $"{RackNumber}\nb"
+        : RackNumber.ToString();
+
 
         public bool IsHighlighted
         {
@@ -206,6 +207,23 @@ namespace SRSRoelProjekt.ViewModels
                 OnPropertyChanged(nameof(BorderThickness));
             }
         }
+
+        public bool IsVisible
+        {
+            get => _isVisible;
+            set
+            {
+                _isVisible = value;
+
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(RackVisibility));
+            }
+        }
+
+        public Visibility RackVisibility =>
+            IsVisible
+                ? Visibility.Visible
+                : Visibility.Hidden;
 
         public Brush BackgroundColor =>
             Status switch
@@ -224,26 +242,5 @@ namespace SRSRoelProjekt.ViewModels
 
         public double BorderThickness =>
             IsHighlighted ? 3 : 1;
-
-
-        private bool _isVisible = true;
-
-        public bool IsVisible
-        {
-            get => _isVisible;
-            set
-            {
-                _isVisible = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(RackVisibility));
-            }
-        }
-
-
-
-
-
-
-
     }
 }

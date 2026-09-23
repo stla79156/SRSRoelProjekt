@@ -22,8 +22,6 @@
                 <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-
-
         <Button Command="{Binding AddRenterCommand }" Grid.Row="0" Content="Opret Ny Lejer" FontWeight="Bold" Width="150" Height="30" Background="Lightgray" BorderBrush="Black" FontFamily="Cambria"/>
         <Button Command="{Binding RemoveRenterCommand}" Grid.Row="1" Content="Fjern eksisterende Lejer" 
                     FontWeight="Bold" Width="150" Height="30" Background="Lightgray" BorderBrush="Black" FontFamily="Cambria"/>
@@ -36,7 +34,6 @@
                   DisplayMemberPath="DisplayText" 
                   ItemsSource="{Binding Renters}" 
                   SelectedItem="{Binding SelectedRenter}"
-               
                   Text="Vælg lejer"  IsEditable="True" IsReadOnly="True" 
                   Width="190" 
                   Grid.Row="3" 
