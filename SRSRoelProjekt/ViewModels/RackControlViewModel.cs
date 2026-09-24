@@ -152,11 +152,11 @@ namespace SRSRoelProjekt.ViewModels
             _main.FloorPlanViewModel.HighlightRenterShelves(SelectedRenter.Name);
         }
 
-       
-
-
 
         
+
+
+
     }
 
 
