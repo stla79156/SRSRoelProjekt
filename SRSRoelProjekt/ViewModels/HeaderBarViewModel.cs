@@ -17,10 +17,29 @@ namespace SRSRoelProjekt.ViewModels
 
         private void LogOut()
         {
-            Window MainWindow = new MainWindow();
-            MainWindow.Show();
+            var result = MessageBox.Show(
+                "Er du sikker på at du vil logge af?",
+                "Bekræft log af",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
 
-            Application.Current.Shutdown();
+            if (result == MessageBoxResult.No)
+                return;
+
+            // Find nuværende vindue
+            var currentWindow = Application.Current.MainWindow;
+
+            // Åbn login-vinduet
+            var loginWindow = new MainWindow();
+            loginWindow.Show();
+
+            // Luk nuværende vindue
+            currentWindow.Close();
+            Application.Current.Shutdown(); //  Application.Current.Shutdown(); skal ersttes med  new LoginWindow().Show(); når login er implementeret
         }
+
+
+
+
     }
 }

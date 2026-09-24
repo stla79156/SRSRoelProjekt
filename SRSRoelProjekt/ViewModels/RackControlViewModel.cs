@@ -93,7 +93,7 @@ namespace SRSRoelProjekt.ViewModels
                 {
                     if (rack.RenterName == SelectedRenter.Name)
                     { 
-                        MessageBox.Show("Denne lejer har stadig reserverede reoler, fjern reservationerne først.");
+                        MessageBox.Show("Denne lejer har stadig reserverede reoler.");
                         return;
                     }
                 }
