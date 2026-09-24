@@ -11,30 +11,30 @@
         <!-- Header Grid -->
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="150"/>
-                <ColumnDefinition Width="40"/>
-                <ColumnDefinition Width="70"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="200"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="70"/>
-                <ColumnDefinition Width="30"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="60"/>
+                <ColumnDefinition Width="20*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="28*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="10*"/>
+                <ColumnDefinition Width="20*"/>
             </Grid.ColumnDefinitions>
 
             
            
-            <TextBlock Grid.Column="0" Text="Reol Overblik" FontSize="16" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Cambria"/>
+            <TextBlock Grid.Column="0" Text="Reol Overblik" FontWeight="Bold" Foreground="White" FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Cambria"/>
             <Rectangle Grid.Column="1" Fill="Red" Width="20" Height="20" HorizontalAlignment="Right"/>
-            <TextBlock Grid.Column="2" Text=": Optaget" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"  FontFamily="Cambria" Margin="2,0,0,0"/>
+            <TextBlock Grid.Column="2" Text=": Optaget"  FontWeight="Bold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left"  FontFamily="Cambria" Margin="2,0,0,0"/>
             <Rectangle Grid.Column="3" Fill="Yellow" Width="20" Height="20" HorizontalAlignment="Right"/>
-            <TextBlock Grid.Column="4" Text=": Optaget til d. 1. i næste måned" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"  FontFamily="Cambria" Margin="2,0,0,0"/>
+            <TextBlock Grid.Column="4" Text=": Optaget til d. 1. i næste måned" Foreground="White" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Left"  FontFamily="Cambria" Margin="2,0,0,0"/>
             <Rectangle Grid.Column="5" Fill="LimeGreen" Width="20" Height="20" HorizontalAlignment="Right"/>
-            <TextBlock Grid.Column="6" Text=": Ledig" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"  FontFamily="Cambria" Margin="2,0,0,0"/>
+            <TextBlock Grid.Column="6" Text=": Ledig" FontWeight="Bold" Foreground="White" VerticalAlignment="Center" HorizontalAlignment="Left"  FontFamily="Cambria" Margin="2,0,0,0"/>
             <Rectangle Grid.Column="7" Fill="Blue" Width="20" Height="20" HorizontalAlignment="Right"/>
-            <TextBlock Grid.Column="8" Text=": Valgte" FontSize="14" VerticalAlignment="Center" HorizontalAlignment="Left"  FontFamily="Cambria" Margin="2,0,0,0"/>
-			<Button Grid.Column="9" Content="Log af" Command="{Binding LogOutCommand}" FontWeight="Bold"  Margin="5" Background="Lightblue" FontFamily="Cambria"/>
+            <TextBlock Grid.Column="8" Text=": Valgte" FontWeight="Bold" VerticalAlignment="Center" Foreground="White" HorizontalAlignment="Left"  FontFamily="Cambria" Margin="2,0,0,0"/>
+            <Button Grid.Column="9" Content="Log af" Command="{Binding LogOutCommand}" Foreground="#2C3E50" FontWeight="Bold" FontSize="18"  Margin="5" MinWidth="100" MinHeight="30" MaxHeight="60" MaxWidth="200" Background=" Lightblue" BorderBrush="SkyBlue" FontFamily="Cambria"/>
             <Border Grid.Row="0" Grid.ColumnSpan="10" BorderBrush="Black" BorderThickness="1"/>
         </Grid>
     </Grid>
