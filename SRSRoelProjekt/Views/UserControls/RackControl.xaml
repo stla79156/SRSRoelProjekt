@@ -22,12 +22,16 @@
                 <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <Button Command="{Binding AddRenterCommand }" Grid.Row="0" Content="Opret Ny Lejer" FontWeight="Bold" Width="150" Height="30" Background="Lightgray" BorderBrush="Black" FontFamily="Cambria"/>
+        <Button Command="{Binding AddRenterCommand }" Grid.Row="0" Content="Opret Ny Lejer" FontWeight="Bold" Width="150" Height="30" 
+                Background="Lightblue" BorderBrush="SkyBlue" FontFamily="Cambria"/>
         <Button Command="{Binding RemoveRenterCommand}" Grid.Row="1" Content="Fjern eksisterende Lejer" 
-                    FontWeight="Bold" Width="150" Height="30" Background="Lightgray" BorderBrush="Black" FontFamily="Cambria"/>
+                    FontWeight="Bold" Width="150" Height="30" Background="Lightblue" BorderBrush="SkyBlue" 
+                    FontFamily="Cambria" Click="Button_Click_2"/>
 
-            <TextBlock Grid.Row="2" Text="pil ned vælger lejer,&#10;vælg en lejer i listen:" 
-                       TextAlignment="Center" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Cambria"/>
+            <TextBlock Grid.Row="2" Text="Tryk på pil ned &#10;vælg en lejer i listen:" 
+                       TextAlignment="Left" FontWeight="Bold" Margin="5
+                       ,0,0,0"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Left" FontFamily="Cambria"/>
         <!--  Text="Vælg lejer"  IsEditable="True" IsReadOnly="True"  
         Gør der er kan stå Vælg en lejer og den forsvinder når vi åbner boksen -->
         <ComboBox x:Name="RenterComboBox"  
@@ -35,9 +39,11 @@
                   ItemsSource="{Binding Renters}" 
                   SelectedItem="{Binding SelectedRenter}"
                   Text="Vælg lejer"  IsEditable="True" IsReadOnly="True" 
+                  Margin="5,5,0,0"
                   Width="160" 
                   Grid.Row="3" 
-                  Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" FontFamily="Cambria">
+                
+                  Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" FontFamily="Cambria" SelectionChanged="RenterComboBox_SelectionChanged">
 
             <ComboBox.ItemContainerStyle>
                     <Style TargetType="ComboBoxItem">
@@ -45,7 +51,7 @@
                         <Setter Property="Foreground" Value="Black"/>
                         <Style.Triggers>
                             <Trigger Property="IsSelected" Value="True">
-                                <Setter Property="Background" Value="LightBlue"/>
+                                <Setter Property="Background" Value="White"/>
                                 <Setter Property="Foreground" Value="Blue"/>
                             </Trigger>
                         </Style.Triggers>
@@ -54,18 +60,26 @@
 
             </ComboBox>
         <Button Grid.Row="3"
-            Content="X"
-            Width="20"
-            Height="20"
-            Background="White"
+            Content="Ryd"
+            FontSize="13"
+            FontFamily="Cambria"
+            FontWeight="Bold"
+            Width="30"
+            Height="30"
+            Margin="0,5,5,0"
+            BorderBrush="SkyBlue"
+            Background="Lightblue"
             VerticalAlignment="Top"
             HorizontalAlignment="Right"
             Click="ClearRenter_Click"/>
         <Button Grid.Row="4" Command="{Binding SaveRackCommand}" 
-               Content="Tilføj Lejer til Reol" Click="Button_Click_1" FontWeight="Bold" Width="150" Height="30" Background="Lightblue" BorderBrush="Blue" FontFamily="Cambria"/>
+               Content="Tilføj Lejer til Reol" Click="Button_Click_1" 
+                FontWeight="Bold" Width="150" Height="30" Background="Lightblue" 
+                BorderBrush="SkyBlue" FontFamily="Cambria"/>
             
         <Button Grid.Row="5" Command="{Binding StopRentalCommand}" 
-                Content="Stop Leje af Reol" FontWeight="Bold" Width="150" Height="30"  Background="Lightblue" BorderBrush="Blue" FontFamily="Cambria"/>
+                Content="Stop Leje af Reol" FontWeight="Bold" Width="150" 
+                Height="30"  Background="Lightblue" BorderBrush="SkyBlue" FontFamily="Cambria"/>
         
             
     </Grid>

@@ -51,5 +51,15 @@ namespace SRSRoelProjekt.Views.UserControls
 
 
         }
+
+        private void RenterComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
