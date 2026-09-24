@@ -1,7 +1,7 @@
 ﻿using SRSRoelProjekt.Commands;
 using SRSRoelProjekt.Core.Models;
+using SRSRoelProjekt.Core.Services;
 using SRSRoelProjekt.Views;
-
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,6 +17,7 @@ namespace SRSRoelProjekt.ViewModels
         private MainViewModel _main;
         private Renter _selectedRenter;
 
+        private readonly IDialogService _dialogService;
         public ObservableCollection<Renter> Renters { get; }
 
         public ICommand AddRenterCommand { get; }
@@ -26,10 +27,11 @@ namespace SRSRoelProjekt.ViewModels
 
         
 
-        public RackControlViewModel(ObservableCollection<Renter> renters, MainViewModel main)
+        public RackControlViewModel(ObservableCollection<Renter> renters, MainViewModel main, IDialogService dialogService)
         {
             Renters = renters;
             _main = main;
+            _dialogService = dialogService;
 
             // Åbn popup-vinduet
             AddRenterCommand = new RelayCommand(OpenAddRenterWindow);
@@ -60,6 +62,10 @@ namespace SRSRoelProjekt.ViewModels
 
         private void OpenAddRenterWindow()
         {
+
+            bool ok = _dialogService.ShowConfirm("Vil du tilføje en ny lejer?");
+            if (!ok) return;
+
             var win = new AddRenterWindow(_main.Renters, _main);
             win.ShowDialog();
         }
@@ -89,26 +95,29 @@ namespace SRSRoelProjekt.ViewModels
 
             else
             {
+                // Tjek om lejeren stadig har reserverede reoler
                 foreach (var rack in _main.FloorPlanViewModel.Racks)
                 {
                     if (rack.RenterName == SelectedRenter.Name)
-                    { 
-                        MessageBox.Show("Denne lejer har stadig reserverede reoler.");
+                    {
+                        // Informér brugeren (her bruger vi dialogService til en simpel besked via ShowConfirm med kun OK)
+                        _dialogService.ShowMessage("Denne lejer har stadig reserverede reoler.");
                         return;
                     }
                 }
-                var result = MessageBox.Show("Er du sikker på at du vil fjerne denne lejer?", "Bekræft fjerning", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-                if (result == MessageBoxResult.No)
-                    return;
             }
+
+
+            bool confirm = _dialogService.ShowConfirm($"Er du sikker på at du vil fjerne lejer '{SelectedRenter.Name}'?");
+            if (!confirm) return;
+
 
             var renter = SelectedRenter;
             // Fjern reol-reservationer
             _main.FloorPlanViewModel.ClearRenterRack(SelectedRenter.Name);
 
             // ⭐ GEM I JSON
-            _main.RenterService.RemoveRenter(SelectedRenter.RenterId);
+            //_main.RenterService.RemoveRenter(SelectedRenter.RenterId);
 
             // Fjern fra UI-listen
             Renters.Remove(SelectedRenter);
