@@ -142,6 +142,7 @@ namespace SRSRoelProjekt.ViewModels
                     rack.Status = RackStatus.Available;
                 }
             }
+            
         }
 
         private void HighlightRenterShelves()
