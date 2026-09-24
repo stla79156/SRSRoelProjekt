@@ -139,11 +139,28 @@ namespace SRSRoelProjekt.ViewModels
             }
         }
 
+        private DateTime CalculateAvailableFrom(DateTime endDate)
+        {
+            if (endDate.Day < 20)
+            {
+                return new DateTime(
+                    endDate.Year,
+                    endDate.Month,
+                    1).AddMonths(1);
+            }
+
+            return new DateTime(
+                endDate.Year,
+                endDate.Month,
+                1).AddMonths(2);
+        }
         public void StopRentalForRenter(string renterName, DateTime endDate)
         {
             foreach (var rack in Racks.Where(x => x.RenterName == renterName))
             {
                 rack.Status = RackStatus.EndingSoon;
+                rack.EndDate = endDate;
+                rack.AvailableFrom = CalculateAvailableFrom(endDate);
             }
         }
 
