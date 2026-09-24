@@ -28,11 +28,25 @@
                 Background="Lightblue" BorderBrush="SkyBlue" Foreground="#2C3E50" FontSize="18"
                 FontFamily="Cambria" Click="Button_Click_2" Margin="5"/>
 
-            <TextBlock Grid.Row="2" Text="Tryk på pil ned for at &#10;vælge en lejer i listen:" 
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="55*" />
+                <ColumnDefinition Width="45*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="Tryk på pil ned for at &#10;vælge en lejer i listen:" 
                        TextAlignment="Left" FontWeight="Bold" 
-                       Foreground="#2C3E50"
-                       FontSize="18"
+                       Foreground="#7E93A8"
+                       FontSize="14"
                        VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10" FontFamily="Cambria"/>
+            
+            <TextBlock Grid.Column="1" Text="Tryk på Ryd for &#10;at fjerne valgt lejer:" 
+                       TextAlignment="Right" FontWeight="Bold" 
+                       Foreground="#7E93A8"
+                       FontSize="14"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,5,10" FontFamily="Cambria" />
+
+        </Grid>
         <!--  Text="Vælg lejer"  IsEditable="True" IsReadOnly="True"  
         Gør der er kan stå Vælg en lejer og den forsvinder når vi åbner boksen -->
 
