@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace SRSRoelProjekt.ViewModels
@@ -141,6 +142,7 @@ namespace SRSRoelProjekt.ViewModels
                 {
                     rack.Status = RackStatus.Available;
                 }
+                rack.IsHighlighted = false;
             }
             
         }
@@ -153,8 +155,7 @@ namespace SRSRoelProjekt.ViewModels
             _main.FloorPlanViewModel.HighlightRenterShelves(SelectedRenter.Name);
         }
 
-
-        
+       
 
 
 
