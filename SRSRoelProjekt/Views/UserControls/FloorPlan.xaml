@@ -32,9 +32,12 @@
                         Margin="1"
                         MaxHeight="120"
                         MaxWidth="60"
+                        ToolTip="{Binding TooltipText}"
+                        ToolTipService.InitialShowDelay="100"
                         Command="{Binding DataContext.RackClickedCommand,
                                   RelativeSource={RelativeSource AncestorType=UserControl}}"
-                        CommandParameter="{Binding}" />
+                        CommandParameter="{Binding}" 
+                    />
 
             </DataTemplate>
 

@@ -53,6 +53,13 @@ namespace SRSRoelProjekt.ViewModels
                 _main.SelectedRenter = value;
                 OnPropertyChanged();
                 HighlightRenterShelves();
+
+                bool showTooltips = _selectedRenter == null;
+
+                foreach (var rack in _main.FloorPlanViewModel.Racks)
+                {
+                    rack.CanShowInfo = showTooltips;
+                }
             }
         }
 
@@ -155,9 +162,7 @@ namespace SRSRoelProjekt.ViewModels
             _main.FloorPlanViewModel.HighlightRenterShelves(SelectedRenter.Name);
         }
 
-       
-
-
+        
 
     }
 

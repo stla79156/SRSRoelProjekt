@@ -27,6 +27,12 @@ namespace SRSRoelProjekt.ViewModels
                 new RelayCommand(OnRackClicked);
 
             CreateRackLayout();
+
+            //click for info on racks becomes true. this disables when a renter is selected in the combo box.
+            foreach (var rack in Racks)
+            {
+                rack.CanShowInfo = true;
+            }
         }
 
         private void OnRackClicked(object parameter)
@@ -173,6 +179,8 @@ namespace SRSRoelProjekt.ViewModels
                 rack.IsHighlighted = false;
             }
         }
+
+        
     }
 
 

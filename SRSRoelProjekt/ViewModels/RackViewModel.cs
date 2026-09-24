@@ -88,5 +88,22 @@ namespace SRSRoelProjekt.ViewModels
 
         public double BorderThickness =>
             IsHighlighted ? 3 : 1;
+
+        private bool _canShowInfo;
+
+        public bool CanShowInfo
+        {
+            get => _canShowInfo;
+            set
+            {
+                _canShowInfo = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(TooltipText));
+            }
+        }
+
+        public string TooltipText =>
+            CanShowInfo ? "Klik for info" : null;
+       
     }
 }
