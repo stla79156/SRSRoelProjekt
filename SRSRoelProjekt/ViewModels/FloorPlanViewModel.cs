@@ -5,6 +5,7 @@ using SRSRoelProjekt.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Windows;
@@ -53,6 +54,7 @@ namespace SRSRoelProjekt.ViewModels
 
         private void OnRackClicked(object parameter)
         {
+            
             if (parameter is not RackViewModel rack)
                 return;
 
@@ -63,10 +65,10 @@ namespace SRSRoelProjekt.ViewModels
                 return;
             }
 
-            /*if(_main.SelectedRenter.RenterId != rack.RenterId)
+            if(rack.Status == RackStatus.Reserved && _main.SelectedRenter.RenterId != rack.RenterId)
             {
                 return;
-            }*/
+            }
 
             // Reserved racks cannot be changed
             if (rack.Status == RackStatus.EndingSoon)
@@ -76,8 +78,10 @@ namespace SRSRoelProjekt.ViewModels
 
 
             rack.IsSelected = true;
-                    
-                    
+
+            Debug.WriteLine($"CLICKED: {rack.RackNumber} - {rack.IsSelected} - {rack.RenterName}");
+
+
         }
 
         private void ShowRackInfo(RackViewModel rack)
@@ -120,7 +124,10 @@ namespace SRSRoelProjekt.ViewModels
                             EndDate = dbRack.EndDate,
                             AvailableFrom = dbRack.AvailableFrom,
                             RenterId = dbRack.RenterId,
+<<<<<<< HEAD
                             RenterName = _main.Renters.FirstOrDefault(r => r.RenterId == dbRack.RenterId)?.Name,
+=======
+>>>>>>> d9f8044b888059fd65134e4c39bcc1c96555bea7
                             IsVisible = true,
                             
                         });
