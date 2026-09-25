@@ -1,5 +1,6 @@
 ﻿using SRSRoelProjekt.Commands;
 using SRSRoelProjekt.Core.Models;
+using SRSRoelProjekt.Core.Repositories;
 using SRSRoelProjekt.Views.Windows;
 using System;
 using System.Collections.Generic;
@@ -13,15 +14,17 @@ namespace SRSRoelProjekt.ViewModels
 {
     public class FloorPlanViewModel : ViewModelBase
     {
+        private readonly IRackRepository _rackRepository;
         public ObservableCollection<RackViewModel> Racks { get; } = new();
 
         public RelayCommand RackClickedCommand { get; }
 
         private MainViewModel _main;
 
-        public FloorPlanViewModel(MainViewModel main)
+        public FloorPlanViewModel(MainViewModel main, IRackRepository rackRepository)
         {
             _main = main;
+            _rackRepository = rackRepository;
 
             RackClickedCommand =
                 new RelayCommand(OnRackClicked);
@@ -61,6 +64,7 @@ namespace SRSRoelProjekt.ViewModels
         }
         private void CreateRackLayout()
         {
+            var dbRacks = _rackRepository.GetRacks().ToDictionary(r => r.RackNumber);
             bool[,] rackLayout =
             {
                 { false,false,false,false,false,true,true,false,true,true,false,true,true,false,false,false,false,false,false,false },
@@ -83,12 +87,17 @@ namespace SRSRoelProjekt.ViewModels
                 {
                     if (rackLayout[row, col])
                     {
+                        var dbRack = dbRacks[rackNumber];
+
                         Racks.Add(new RackViewModel
                         {
                             RackNumber = rackNumber,
-                            Status = RackStatus.Available,
+                            WithHanger = dbRack.WithHanger,
+                            Status = dbRack.RackStatus,
+                            EndDate = dbRack.EndDate,
+                            AvailableFrom = dbRack.AvailableFrom,
                             IsVisible = true,
-                            WithHanger = racksWithHangers.Contains(rackNumber)
+                            
                         });
 
                         rackNumber++;
@@ -105,11 +114,11 @@ namespace SRSRoelProjekt.ViewModels
         }
 
         //Asign racks with hangers based on their rack numbers
-        private readonly HashSet<int> racksWithHangers =
+        /*private readonly HashSet<int> racksWithHangers =
         [
-            21, 30, 31, 43, 44, 54, 55, 67, 68, 69, 70, 
+            21, 30, 41, 42, 43, 54, 67, 68, 69, 70, 
             71, 72, 73, 74, 75, 76, 77, 78, 79, 80
-        ];
+        ];*/
 
         public void HighlightRenterShelves(string renterName)
         {

@@ -50,7 +50,7 @@ namespace SRSRoelProjekt.ViewModels
             // Load renters from JSON FIRST
             Renters = RenterService.GetRenters();
 
-            FloorPlanViewModel = new FloorPlanViewModel(this);
+            FloorPlanViewModel = new FloorPlanViewModel(this, new SQLRackRepository());
 
             RackControlViewModel =
                 new RackControlViewModel(
