@@ -7,7 +7,10 @@ namespace SRSRoelProjekt.Core.Repositories
 {
     public interface IRackRepository
     {
-        void UpdateRack(Rack rack);
         List<Rack> GetRacks();
+
+        void StartRental(int rackNumber, int renterId);
+
+        void StopRental(int rackNumber);
     }
 }

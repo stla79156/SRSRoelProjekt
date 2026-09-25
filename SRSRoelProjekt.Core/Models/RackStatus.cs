@@ -6,9 +6,9 @@ namespace SRSRoelProjekt.Core.Models
 {
     public enum RackStatus
     {
-        Available,
-        Selected,
-        Reserved,
-        EndingSoon
+        Available = 1,
+        Selected = 2,
+        Reserved = 3,
+        EndingSoon = 4
     }
 }
