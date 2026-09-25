@@ -249,7 +249,8 @@ namespace SRSRoelProjekt.ViewModels
                 }
                 rack.IsHighlighted = false;
             }
-            
+            OnPropertyChanged(nameof(SelectedRenter));
+
         }
 
         
