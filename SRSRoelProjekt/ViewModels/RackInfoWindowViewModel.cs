@@ -30,6 +30,7 @@ namespace SRSRoelProjekt.ViewModels
                 EndDate = $"Slutdato: {rack.EndDate?.ToShortDateString() ?? "N/A"}";
                 AvailableFrom = $"Ledig fra: {rack.AvailableFrom?.ToShortDateString() ?? "N/A"}";
             }
+
         
     }
 }

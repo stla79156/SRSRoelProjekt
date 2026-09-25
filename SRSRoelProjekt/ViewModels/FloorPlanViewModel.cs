@@ -30,6 +30,12 @@ namespace SRSRoelProjekt.ViewModels
                 new RelayCommand(OnRackClicked);
 
             CreateRackLayout();
+
+            //click for info on racks becomes true. this disables when a renter is selected in the combo box.
+            foreach (var rack in Racks)
+            {
+                rack.CanShowInfo = true;
+            }
         }
 
         private void OnRackClicked(object parameter)
@@ -148,11 +154,28 @@ namespace SRSRoelProjekt.ViewModels
             }
         }
 
+        private DateTime CalculateAvailableFrom(DateTime endDate)
+        {
+            if (endDate.Day < 20)
+            {
+                return new DateTime(
+                    endDate.Year,
+                    endDate.Month,
+                    1).AddMonths(1);
+            }
+
+            return new DateTime(
+                endDate.Year,
+                endDate.Month,
+                1).AddMonths(2);
+        }
         public void StopRentalForRenter(string renterName, DateTime endDate)
         {
             foreach (var rack in Racks.Where(x => x.RenterName == renterName))
             {
                 rack.Status = RackStatus.EndingSoon;
+                rack.EndDate = endDate;
+                rack.AvailableFrom = CalculateAvailableFrom(endDate);
             }
         }
 
@@ -165,6 +188,8 @@ namespace SRSRoelProjekt.ViewModels
                 rack.IsHighlighted = false;
             }
         }
+
+        
     }
 
 

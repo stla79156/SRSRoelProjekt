@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Input;
 
 namespace SRSRoelProjekt.ViewModels
@@ -52,6 +53,13 @@ namespace SRSRoelProjekt.ViewModels
                 _main.SelectedRenter = value;
                 OnPropertyChanged();
                 HighlightRenterShelves();
+
+                bool showTooltips = _selectedRenter == null;
+
+                foreach (var rack in _main.FloorPlanViewModel.Racks)
+                {
+                    rack.CanShowInfo = showTooltips;
+                }
             }
         }
 
@@ -141,7 +149,9 @@ namespace SRSRoelProjekt.ViewModels
                 {
                     rack.Status = RackStatus.Available;
                 }
+                rack.IsHighlighted = false;
             }
+            
         }
 
         private void HighlightRenterShelves()
@@ -152,10 +162,7 @@ namespace SRSRoelProjekt.ViewModels
             _main.FloorPlanViewModel.HighlightRenterShelves(SelectedRenter.Name);
         }
 
-
         
-
-
 
     }
 
