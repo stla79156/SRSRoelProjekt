@@ -8,6 +8,14 @@ namespace SRSRoelProjekt.UI.Services
 {
     public class DialogService : IDialogService
     {
+
+            /*
+            DialogService kan ikke ligge i Core, fordi Core må ikke kende UI.
+            Og en dialog er UI – den viser et vindue, knapper, layout, XAML, Window, Owner osv.
+            Derfor skal DialogService ligge i UI‑projektet.*/
+
+
+
         public bool ShowConfirm(string message)
         {
             var vm = new ConfirmDialogViewModel(message);
@@ -36,10 +44,46 @@ namespace SRSRoelProjekt.UI.Services
         }
 
 
-        public void ShowMessage(string message)
+        /* public void ShowMessage(string message)
+         {
+             MessageBox.Show(message, "Besked", MessageBoxButton.OK, MessageBoxImage.Information);
+         }*/
+
+
+        public void ShowMessage(String message)
         {
-            MessageBox.Show(message, "Besked", MessageBoxButton.OK, MessageBoxImage.Information);
+            var vm = new InfoDialogViewModel(message);
+
+            vm.CloseAction = () =>
+            {
+                foreach (Window w in Application.Current.Windows)
+                {
+                    if (w.DataContext == vm)
+                    {
+                        w.Close();
+                        break;
+                    }
+
+                }
+
+            };
+
+            var dialog = new InfoDialog
+            {
+                DataContext=vm,
+                Owner=Application.Current.MainWindow
+
+            };
+            dialog.ShowDialog();
         }
+
+
+
+
+
+
+
+
 
 
         public void CloseDialog(object viewModel)
