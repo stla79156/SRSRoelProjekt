@@ -15,6 +15,8 @@ namespace SRSRoelProjekt.ViewModels
     public class FloorPlanViewModel : ViewModelBase
     {
         private readonly IRackRepository _rackRepository;
+
+
         public ObservableCollection<RackViewModel> Racks { get; } = new();
 
         public RelayCommand RackClickedCommand { get; }
@@ -36,7 +38,7 @@ namespace SRSRoelProjekt.ViewModels
         }
 
 
-        public FloorPlanViewModel(MainViewModel main)
+        public FloorPlanViewModel(MainViewModel main, IRackRepository rackRepository)
         {
             _main = main;
             _rackRepository = rackRepository;
