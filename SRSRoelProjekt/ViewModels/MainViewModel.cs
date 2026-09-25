@@ -25,7 +25,21 @@ namespace SRSRoelProjekt.ViewModels
 
         public RenterService RenterService { get; }
 
-        public Renter SelectedRenter { get; set; }
+        private Renter _selectedRenter;
+        public Renter SelectedRenter
+        {
+            get => _selectedRenter;
+            set
+            {
+                if (_selectedRenter != value)
+                {
+                    _selectedRenter = value;
+                    OnPropertyChanged();
+
+                    FloorPlanViewModel.ClearSelectedRacks();
+                }
+            }
+        }
 
         //public ObservableCollection<Renter> Renters { get; set; }
 

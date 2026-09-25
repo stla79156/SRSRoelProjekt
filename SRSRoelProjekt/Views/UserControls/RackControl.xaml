@@ -5,14 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SRSRoelProjekt.Views.UserControls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="210">
-    
-    <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="210"/>
-            </Grid.ColumnDefinitions>
+             d:DesignHeight="600" d:DesignWidth="333"
+             MaxHeight="800">
 
-            <!-- RowDefinitions must come before child elements -->
+    <Grid>
+
+        <!-- RowDefinitions must come before child elements -->
             <Grid.RowDefinitions>
             <RowDefinition Height="1*"/>
                 <RowDefinition Height="1*"/>
@@ -22,30 +20,55 @@
                 <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
 
-        <Button Command="{Binding AddRenterCommand }" Grid.Row="0" Content="Opret Ny Lejer" FontWeight="Bold" Width="150" Height="30" 
-                Background="Lightblue" BorderBrush="SkyBlue" FontFamily="Cambria"/>
+        <Button Command="{Binding AddRenterCommand }" Grid.Row="0" Content="Opret Ny Lejer" FontWeight="Bold" 
+                MinWidth="150" MinHeight="30" MaxHeight="60" Foreground="#2C3E50" FontSize="18"
+                Background="Lightblue" BorderBrush="SkyBlue" FontFamily="Cambria" Margin="5"/>
         <Button Command="{Binding RemoveRenterCommand}" Grid.Row="1" Content="Fjern eksisterende Lejer" 
-                    FontWeight="Bold" Width="150" Height="30" Background="Lightblue" BorderBrush="SkyBlue" 
-                    FontFamily="Cambria" Click="Button_Click_2"/>
+                FontWeight="Bold" MinWidth="150" MinHeight="30" MaxHeight="60" 
+                Background="Lightblue" BorderBrush="SkyBlue" Foreground="#2C3E50" FontSize="18"
+                FontFamily="Cambria" Click="Button_Click_2" Margin="5"/>
 
-            <TextBlock Grid.Row="2" Text="Tryk på pil ned &#10;vælg en lejer i listen:" 
-                       TextAlignment="Left" FontWeight="Bold" Margin="5
-                       ,0,0,0"
-                       VerticalAlignment="Bottom" HorizontalAlignment="Left" FontFamily="Cambria"/>
+        <Grid Grid.Row="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="55*" />
+                <ColumnDefinition Width="45*" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="Tryk på pil ned for at &#10;vælge en lejer i listen:" 
+                       TextAlignment="Left" FontWeight="Bold" 
+                       Foreground="#7E93A8"
+                       FontSize="14"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="10" FontFamily="Cambria"/>
+            
+            <TextBlock Grid.Column="1" Text="Tryk på Ryd for &#10;at fjerne valgt lejer:" 
+                       TextAlignment="Right" FontWeight="Bold" 
+                       Foreground="#7E93A8"
+                       FontSize="14"
+                       VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="0,0,5,10" FontFamily="Cambria" />
+
+        </Grid>
         <!--  Text="Vælg lejer"  IsEditable="True" IsReadOnly="True"  
         Gør der er kan stå Vælg en lejer og den forsvinder når vi åbner boksen -->
-        <ComboBox x:Name="RenterComboBox"  
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="85*" />
+                <ColumnDefinition Width="15*" />
+            </Grid.ColumnDefinitions>
+
+            <ComboBox Grid.Column="0" x:Name="RenterComboBox"  
                   DisplayMemberPath="DisplayText" 
                   ItemsSource="{Binding Renters}" 
                   SelectedItem="{Binding SelectedRenter}"
                   Text="Vælg lejer"  IsEditable="True" IsReadOnly="True" 
-                  Margin="5,5,0,0"
-                  Width="160" 
-                  Grid.Row="3" 
-                
-                  Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" FontWeight="Bold" FontFamily="Cambria" SelectionChanged="RenterComboBox_SelectionChanged">
+                  FontSize="15"
+                  Margin="5"
+                  MinHeight="30" MaxHeight="110" 
+                  MinWidth="250"
+                   VerticalAlignment="Top" HorizontalAlignment="Stretch" 
+                  FontWeight="Bold" FontFamily="Cambria" SelectionChanged="RenterComboBox_SelectionChanged">
 
-            <ComboBox.ItemContainerStyle>
+                <ComboBox.ItemContainerStyle>
                     <Style TargetType="ComboBoxItem">
                         <Setter Property="Background" Value="White"/>
                         <Setter Property="Foreground" Value="Black"/>
@@ -59,27 +82,34 @@
                 </ComboBox.ItemContainerStyle>
 
             </ComboBox>
-        <Button Grid.Row="3"
-            Content="Ryd"
-            FontSize="13"
-            FontFamily="Cambria"
-            FontWeight="Bold"
-            Width="30"
-            Height="30"
-            Margin="0,5,5,0"
-            BorderBrush="SkyBlue"
-            Background="Lightblue"
-            VerticalAlignment="Top"
-            HorizontalAlignment="Right"
-            Click="ClearRenter_Click"/>
+            <Button Grid.Column="1"
+                    Content="Ryd"
+                    FontSize="18"
+                    Foreground="#2C3E50"
+                    FontFamily="Cambria"
+                    FontWeight="Bold"
+                    MinHeight="30"
+                    MaxHeight="190"
+                    MaxWidth="190"
+                    Margin="5"
+                    BorderBrush="SkyBlue"
+                    Background="Lightblue"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Stretch"
+                    Click="ClearRenter_Click"/>
+        </Grid>
         <Button Grid.Row="4" Command="{Binding SaveRackCommand}" 
                Content="Tilføj Lejer til Reol" Click="Button_Click_1" 
-                FontWeight="Bold" Width="150" Height="30" Background="Lightblue" 
-                BorderBrush="SkyBlue" FontFamily="Cambria"/>
+                FontWeight="Bold" Background="Lightblue" 
+                MinWidth="150" MinHeight="30" MaxHeight="60" 
+                Foreground="#2C3E50" FontSize="18"
+                BorderBrush="SkyBlue" FontFamily="Cambria" Margin="5"/>
             
         <Button Grid.Row="5" Command="{Binding StopRentalCommand}" 
-                Content="Stop Leje af Reol" FontWeight="Bold" Width="150" 
-                Height="30"  Background="Lightblue" BorderBrush="SkyBlue" FontFamily="Cambria"/>
+                Content="Stop Leje af Reol" FontWeight="Bold" 
+                MinWidth="150" MinHeight="30" MaxHeight="60" 
+                Foreground="#2C3E50" FontSize="18"
+                Background="Lightblue" BorderBrush="SkyBlue" FontFamily="Cambria" Margin="5"/>
         
             
     </Grid>
