@@ -139,6 +139,15 @@ namespace SRSRoelProjekt.ViewModels
                 return;
             }
 
+            string rackNumbers = string.Join(", ", racksToStop.Select(r => r.RackNumber));
+
+            bool confirm = _dialogService.ShowConfirm(
+                $"Vil du opsige reol(er) {rackNumbers} for lejer '{_main.SelectedRenter.Name}'?"
+            );
+
+            if (!confirm)
+                return;
+
             foreach (var rack in racksToStop)
             {
                 _rackRepo.StopRental(rack.RackNumber);
