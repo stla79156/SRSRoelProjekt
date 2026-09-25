@@ -74,16 +74,27 @@ namespace SRSRoelProjekt.ViewModels
         {
             if (SelectedRenter == null)
             {
-                MessageBox.Show("Vælg en lejer først");
+                _dialogService.ShowMessage("Vælg en lejer først.");
+                return;
+            }
+            else
+            if (_main.FloorPlanViewModel.SelectedRack == null)
+            {
+                _dialogService.ShowMessage("Vælg en reol først.");
+                return;
+            }
+
+            bool confirm = _dialogService.ShowConfirm(
+                $"Vil du fjerne reol {_main.FloorPlanViewModel.SelectedRack.RackNumber} fra lejer '{SelectedRenter.Name}'?"
+            );
+
+            if (!confirm)
                 return;
 
-            }
             _main.FloorPlanViewModel.StopRentalForRenter(
-            SelectedRenter.Name,
-            DateTime.Today.AddMonths(1)
-        );
-
-
+                SelectedRenter.Name,
+                DateTime.Today.AddMonths(1)
+            );
         }
 
 
@@ -133,6 +144,8 @@ namespace SRSRoelProjekt.ViewModels
 
            
             SelectedRenter = null;
+
+            _dialogService.ShowMessage("Lejer er nu blevet fjernet.");
         }
 
 
@@ -144,8 +157,23 @@ namespace SRSRoelProjekt.ViewModels
                 MessageBox.Show("Vælg en lejer først.");
                 return;
             }
+            else
+            if (_main.FloorPlanViewModel.SelectedRack == null)
+            {
+                _dialogService.ShowMessage("Vælg en reol først.");
+                return;
+            }
+
+            bool confirm = _dialogService.ShowConfirm(
+                $"Vil du tilføje reol {_main.FloorPlanViewModel.SelectedRack.RackNumber} til lejer '{SelectedRenter.Name}'?"
+            );
+
+            if (!confirm)
+                return;
 
             _main.FloorPlanViewModel.SaveReservation(SelectedRenter.Name);
+
+            ClearSelection();
         }
 
         public void ClearSelection()

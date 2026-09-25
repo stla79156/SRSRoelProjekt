@@ -19,6 +19,21 @@ namespace SRSRoelProjekt.ViewModels
 
         private MainViewModel _main;
 
+        private Rack _selectedRack;
+
+
+
+        public Rack SelectedRack
+        {
+            get => _selectedRack;
+            set
+            {
+                _selectedRack = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public FloorPlanViewModel(MainViewModel main)
         {
             _main = main;
