@@ -119,6 +119,8 @@ namespace SRSRoelProjekt.ViewModels
                             Status = dbRack.RackStatus,
                             EndDate = dbRack.EndDate,
                             AvailableFrom = dbRack.AvailableFrom,
+                            RenterId = dbRack.RenterId,
+                            RenterName = _main.Renters.FirstOrDefault(r => r.RenterId == dbRack.RenterId)?.Name,
                             IsVisible = true,
                             
                         });
