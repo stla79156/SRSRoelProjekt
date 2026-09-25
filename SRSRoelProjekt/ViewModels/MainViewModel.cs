@@ -1,8 +1,6 @@
 ﻿using SRSRoelProjekt.Commands;
 using SRSRoelProjekt.Core.Models;
 using SRSRoelProjekt.Core.Repositories;
-using SRSRoelProjekt.Core.Repositories.SRSRoelProjekt.Core.Repositories;
-
 using SRSRoelProjekt.Views;
 using SRSRoelProjekt.Views.UserControls;
 using SRSRoelProjekt.Views.Windows;
@@ -23,6 +21,7 @@ namespace SRSRoelProjekt.ViewModels
     {
          // public HeaderBarViewModel HeaderBarViewModel { get; }
         private readonly IRackRepository _rackRepo;
+        private readonly IRenterRepository _renterRepo;
         public HeaderBarViewModel HeaderBarViewModel { get; }
       
 
@@ -35,18 +34,32 @@ namespace SRSRoelProjekt.ViewModels
         public RenterService RenterService { get; }
 
         private Renter _selectedRenter;
+
         public Renter SelectedRenter
         {
             get => _selectedRenter;
             set
             {
-                if (_selectedRenter != value)
-                {
-                    _selectedRenter = value;
-                    OnPropertyChanged();
+                if (_selectedRenter == value)
+                    return;
 
-                    FloorPlanViewModel.ClearSelectedRacks();
+                _selectedRenter = value;
+
+                OnPropertyChanged();
+
+                FloorPlanViewModel.ClearSelectedRacks();
+
+                if (_selectedRenter != null)
+                {
+                    FloorPlanViewModel.HighlightRenterShelves(
+                        _selectedRenter.RenterId);
                 }
+                else
+                {
+                    FloorPlanViewModel.ClearHighlightedRacks();
+                }
+
+                FloorPlanViewModel.UpdateTooltips();
             }
         }
 
@@ -67,43 +80,35 @@ namespace SRSRoelProjekt.ViewModels
 
 
         public MainViewModel()
-
         {
+            _dialogService = new DialogService();
 
-            // opret én DialogService og genbrug den
-            _dialogService = new SRSRoelProjekt.UI.Services.DialogService();
+            _renterRepo = new SqlRenterRepository();
+            _rackRepo = new SQLRackRepository();
 
-            var repo = new SqlRenterRepository();
-            var rackRepo = new SQLRackRepository();
-            RenterService = new RenterService(repo);
+            RenterService = new RenterService(_renterRepo);
 
-            // Load renters from Database
             Renters = RenterService.GetRenters();
 
-            FloorPlanViewModel = new FloorPlanViewModel(this, new SQLRackRepository());
+            FloorPlanViewModel = new FloorPlanViewModel(this, _rackRepo);
 
             RackViewModel = new RackViewModel();
 
-            //RackControlViewModel = new RackControlViewModel(Renters, this);
-
-            // Opret DialogService-implementeringen fra UI-laget
-            // Sørg for at SRSRoelProjekt (WPF) har reference til SRSRoelProjekt.Core
-            // IDialogService dialogService = new SRSRoelProjekt.UI.Services.DialogService();
-
-
-            // Opret HeaderBarViewModel med dialogService
-            //HeaderBarViewModel = new HeaderBarViewModel(dialogService);
-            //RackControlViewModel = new RackControlViewModel(Renters, this, dialogService);
             HeaderBarViewModel = new HeaderBarViewModel(_dialogService);
-            RackControlViewModel = new RackControlViewModel(Renters, this, _dialogService, rackRepo);
 
-            // sæt start-ViewModel hvis nødvendigt
+            RackControlViewModel = new RackControlViewModel(
+                Renters,
+                this,
+                _dialogService,
+                _rackRepo,
+                _renterRepo);
+
             CurrentViewModel = FloorPlanViewModel;
         }
 
         public void ShowRackControl()
         {
-            CurrentViewModel = new RackControlViewModel(Renters, this, _dialogService, _rackRepo);
+            CurrentViewModel = new RackControlViewModel(Renters, this, _dialogService, _rackRepo, _renterRepo);
         }
 
         public void ShowAddRenter()

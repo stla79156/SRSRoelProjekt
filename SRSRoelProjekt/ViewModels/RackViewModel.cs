@@ -25,6 +25,18 @@ namespace SRSRoelProjekt.ViewModels
         public DateTime? EndDate { get; set; }
         public DateTime? AvailableFrom { get; set; }
 
+        private string _tooltipText;
+
+        public string TooltipText
+        {
+            get => _tooltipText;
+            set
+            {
+                _tooltipText = value;
+                OnPropertyChanged();
+            }
+        }
+
         public RackStatus Status
         {
             get => _status;
@@ -105,21 +117,44 @@ namespace SRSRoelProjekt.ViewModels
         public double BorderThickness =>
             IsHighlighted ? 3 : 1;
 
-        private bool _canShowInfo;
+        /*public bool IsReservedByAnotherRenter =>
+           _main.SelectedRenter != null &&
+           Status == RackStatus.Reserved &&
+           RenterId != _main.SelectedRenter.RenterId;*/
 
-        public bool CanShowInfo
+        /*public string TooltipText
         {
-            get => _canShowInfo;
+            get
+            {
+                if (_main.SelectedRenter == null)
+                    return "Klik for info";
+
+                if (IsReservedByAnotherRenter)
+                    return "Reolen er reserveret af en anden lejer";
+
+                return null;
+            }
+        }*/
+
+        /*private bool _isReservedByAnotherRenter;
+
+        public bool IsReservedByAnotherRenter
+        {
+            get => _isReservedByAnotherRenter;
             set
             {
-                _canShowInfo = value;
+                _isReservedByAnotherRenter = value;
                 OnPropertyChanged();
-                OnPropertyChanged(nameof(TooltipText));
+                OnPropertyChanged(nameof(ToolTipTextReservedRack));
             }
-        }
+        }*/
 
-        public string TooltipText =>
-            CanShowInfo ? "Klik for info" : null;
-       
+        /*public string TooltipText =>
+            _main.SelectedRenter == null ? "Klik for info" : "Reolen er reserveret af en anden lejer";
+
+        public string ToolTipTextReservedRack =>
+            IsReservedByAnotherRenter ? "Reolen er reserveret af en anden lejer" : null;*/
+
+
     }
 }

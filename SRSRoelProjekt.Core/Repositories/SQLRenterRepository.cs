@@ -6,8 +6,6 @@ using System.Text;
 
 namespace SRSRoelProjekt.Core.Repositories
 {
-    namespace SRSRoelProjekt.Core.Repositories
-    {
         public class SqlRenterRepository : IRenterRepository
         {
             private readonly string _connectionString =
@@ -57,14 +55,14 @@ namespace SRSRoelProjekt.Core.Repositories
                 }
             }
 
-            public void RemoveRenter(int id)
+            public void RemoveRenter(Renter renter)
             {
                 using (var conn = new SqlConnection(_connectionString))
                 {
                     conn.Open();
 
                     var cmd = new SqlCommand("DELETE FROM Renters WHERE RenterId = @Id", conn);
-                    cmd.Parameters.AddWithValue("@Id", id);
+                    cmd.Parameters.AddWithValue("@Id", renter.RenterId);
 
                     cmd.ExecuteNonQuery();
                 }
@@ -89,5 +87,4 @@ namespace SRSRoelProjekt.Core.Repositories
                 }
             }
         }
-    }
 }

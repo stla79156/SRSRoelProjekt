@@ -13,7 +13,7 @@ namespace SRSRoelProjekt.Core.Repositories
         //void SaveRenters(List<Renter> renters);
 
         void AddRenter(Renter renter);
-        void RemoveRenter(int id);
+        void RemoveRenter(Renter renter);
         void UpdateRenter(Renter renter);
 
     }

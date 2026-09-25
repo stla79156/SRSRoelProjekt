@@ -28,7 +28,7 @@ namespace SRSRoelProjekt.Core.Services
             _repository.AddRenter(renter);
         }
 
-        public void RemoveRenter(int id)
+        /*public void RemoveRenter(int id)
         {
             _repository.RemoveRenter(id);
         }
@@ -36,7 +36,7 @@ namespace SRSRoelProjekt.Core.Services
         public void UpdateRenter(Renter renter)
         {
             _repository.UpdateRenter(renter);
-        }
+        }*/
 
         public int GenerateNewId(IEnumerable<Renter> renters)
         {

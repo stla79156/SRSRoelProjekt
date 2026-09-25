@@ -17,10 +17,9 @@ namespace SRSRoelProjekt.ViewModels
     {
         
         private MainViewModel _main;
-        private Renter _selectedRenter;
 
         private readonly IRackRepository _rackRepo;
-
+        private readonly IRenterRepository _renterRepo;
         private readonly IDialogService _dialogService;
         public ObservableCollection<Renter> Renters { get; }
 
@@ -31,11 +30,12 @@ namespace SRSRoelProjekt.ViewModels
 
         
 
-        public RackControlViewModel(ObservableCollection<Renter> renters, MainViewModel main, IDialogService dialogService, IRackRepository rackRepo)
+        public RackControlViewModel(ObservableCollection<Renter> renters, MainViewModel main, IDialogService dialogService, IRackRepository rackRepo, IRenterRepository renterRepo)
         {
             Renters = renters;
             _main = main;
             _rackRepo = rackRepo;
+            _renterRepo = renterRepo;
             _dialogService = dialogService;
 
             // Åbn popup-vinduet
@@ -47,10 +47,10 @@ namespace SRSRoelProjekt.ViewModels
         }
 
 
-        
 
 
-        public Renter SelectedRenter
+
+        /*public Renter SelectedRenter
         {
             get => _selectedRenter;
             set
@@ -66,11 +66,25 @@ namespace SRSRoelProjekt.ViewModels
                 {
                     rack.CanShowInfo = showTooltips;
                 }
+
+                /*bool hasSelectedRenter = _selectedRenter != null;
+
+                foreach (var rack in _main.FloorPlanViewModel.Racks)
+                {
+                    if (hasSelectedRenter && rack.Status == RackStatus.Reserved && rack.RenterId != _selectedRenter?.RenterId)
+                    {
+                        rack.IsReservedByAnotherRenter = true;
+                    }
+                }
             }
+        }*/
+
+
+        public Renter SelectedRenter
+        {
+            get => _main.SelectedRenter;
+            set => _main.SelectedRenter = value;
         }
-
-
-
 
         private void OpenAddRenterWindow()
         {
@@ -106,7 +120,7 @@ namespace SRSRoelProjekt.ViewModels
 
         public void StopRentalForRenter()
         {
-            if(SelectedRenter == null)
+            if(_main.SelectedRenter == null)
             {
                 _dialogService.ShowMessage("Vælg en lejer først.");
                 return;
@@ -116,7 +130,7 @@ namespace SRSRoelProjekt.ViewModels
                 .Where(r =>
                     r.IsSelected &&
                     r.Status == RackStatus.Reserved &&
-                    r.RenterId == SelectedRenter.RenterId)
+                    r.RenterId == _main.SelectedRenter.RenterId)
                 .ToList();
 
             if (!racksToStop.Any())
@@ -141,7 +155,7 @@ namespace SRSRoelProjekt.ViewModels
 
         private void RemoveRenter()
         {
-            if (SelectedRenter == null)
+            if (_main.SelectedRenter == null)
             {
                 MessageBox.Show("Vælg en lejer først");
                 return; 
@@ -152,7 +166,7 @@ namespace SRSRoelProjekt.ViewModels
                 // Tjek om lejeren stadig har reserverede reoler
                 foreach (var rack in _main.FloorPlanViewModel.Racks)
                 {
-                    if (rack.RenterName == SelectedRenter.Name)
+                    if (rack.RenterId == _main.SelectedRenter.RenterId)
                     {
                         // Informér brugeren (her bruger vi dialogService til en simpel besked via ShowConfirm med kun OK)
                         _dialogService.ShowMessage("Denne lejer har stadig reserverede reoler.");
@@ -162,23 +176,24 @@ namespace SRSRoelProjekt.ViewModels
             }
 
 
-            bool confirm = _dialogService.ShowConfirm($"Er du sikker på at du vil fjerne lejer '{SelectedRenter.Name}'?");
+            bool confirm = _dialogService.ShowConfirm($"Er du sikker på at du vil fjerne lejer '{_main.SelectedRenter.Name}'?");
             if (!confirm) return;
 
 
-            var renter = SelectedRenter;
+            
             // Fjern reol-reservationer
-            _main.FloorPlanViewModel.ClearRenterRack(SelectedRenter.Name);
+            //_main.FloorPlanViewModel.ClearRenterRack(_main.SelectedRenter.RenterId);
 
             // ⭐ GEM I JSON
-            //_main.RenterService.RemoveRenter(SelectedRenter.RenterId);
+            //_main.RenterService.RemoveRenter(_main.SelectedRenter.RenterId);
 
-            // Fjern fra UI-listen
-            Renters.Remove(SelectedRenter);
+            // Fjern fra SQL
+            _renterRepo.RemoveRenter(_main.SelectedRenter);
+
+            Renters.Remove(_main.SelectedRenter);
 
 
-           
-            SelectedRenter = null;
+            _main.SelectedRenter = null;
 
             _dialogService.ShowMessage("Lejer er nu blevet fjernet.");
         }
@@ -187,7 +202,7 @@ namespace SRSRoelProjekt.ViewModels
 
         private void StartRentalForRenter()
         {
-            if (SelectedRenter == null)
+            if (_main.SelectedRenter == null)
             {
                 _dialogService.ShowMessage("Vælg en lejer først.");
                 return;
@@ -204,7 +219,7 @@ namespace SRSRoelProjekt.ViewModels
             string rackNumbers = string.Join(", ", selectedRacks.Select(r => r.RackNumber));
 
             bool confirm = _dialogService.ShowConfirm(
-                $"Vil du tilføje reol(er) {rackNumbers} til lejer '{SelectedRenter.Name}'?"
+                $"Vil du tilføje reol(er) {rackNumbers} til lejer '{_main.SelectedRenter.Name}'?"
             );
 
             if (!confirm)
@@ -212,7 +227,7 @@ namespace SRSRoelProjekt.ViewModels
 
             foreach (var rack in selectedRacks)
             {
-                _rackRepo.StartRental(rack.RackNumber, SelectedRenter.RenterId);
+                _rackRepo.StartRental(rack.RackNumber, _main.SelectedRenter.RenterId);
 
                 rack.Status = RackStatus.Reserved;
             }
@@ -224,7 +239,7 @@ namespace SRSRoelProjekt.ViewModels
 
         public void ClearSelection()
         {
-            SelectedRenter = null;
+            _main.SelectedRenter = null;
 
             foreach (var rack in _main.FloorPlanViewModel.Racks)
             {
@@ -235,14 +250,6 @@ namespace SRSRoelProjekt.ViewModels
                 rack.IsHighlighted = false;
             }
             
-        }
-
-        private void HighlightRenterShelves()
-        {
-            if (SelectedRenter == null)
-                return;
-
-            _main.FloorPlanViewModel.HighlightRenterShelves(SelectedRenter.RenterId);
         }
 
         

@@ -44,50 +44,43 @@ namespace SRSRoelProjekt.ViewModels
                 new RelayCommand(OnRackClicked);
 
             CreateRackLayout();
+            UpdateTooltips();
 
             //click for info on racks becomes true. this disables when a renter is selected in the combo box.
-            foreach (var rack in Racks)
+            /*foreach (var rack in Racks)
             {
-                rack.CanShowInfo = true;
-            }
+                rack.Tool = true;
+            }*/
+
+            
+
+
+
         }
 
         private void OnRackClicked(object parameter)
         {
-            
             if (parameter is not RackViewModel rack)
                 return;
 
-            // No renter selected -> show info window
             if (_main.SelectedRenter == null)
             {
                 ShowRackInfo(rack);
                 return;
             }
 
-            if(rack.Status == RackStatus.Reserved && _main.SelectedRenter.RenterId != rack.RenterId)
+            if (rack.Status == RackStatus.Reserved &&
+            rack.RenterId != _main.SelectedRenter.RenterId)
             {
                 return;
             }
 
-            // Reserved racks cannot be changed
             if (rack.Status == RackStatus.EndingSoon)
             {
                 return;
             }
 
-            if(rack.IsSelected)
-            {
-                rack.IsSelected = false;
-                return;
-            }
-
-
-            rack.IsSelected = true;
-
-            Debug.WriteLine($"CLICKED: {rack.RackNumber} - {rack.IsSelected} - {rack.RenterName}");
-
-
+            rack.IsSelected = !rack.IsSelected;
         }
 
         private void ShowRackInfo(RackViewModel rack)
@@ -160,14 +153,23 @@ namespace SRSRoelProjekt.ViewModels
         {
             foreach (var rack in Racks)
             {
-                rack.IsHighlighted = false;
-            }
-
-            foreach (var rack in Racks.Where(x => x.RenterId == renterId))
-            {
-                rack.IsHighlighted = true;
+                rack.IsHighlighted =
+                    rack.RenterId == renterId &&
+                    (
+                        rack.Status == RackStatus.Reserved ||
+                        rack.Status == RackStatus.EndingSoon
+                    );
             }
         }
+
+        public void ClearHighlightedRacks()
+        {
+            foreach (var rack in Racks)
+            {
+                rack.IsHighlighted = false;
+            }
+        }
+
         public void ClearSelectedRacks()
         {
             foreach (var rack in Racks.Where(r => r.IsSelected))
@@ -208,6 +210,47 @@ namespace SRSRoelProjekt.ViewModels
                 rack.IsHighlighted = false;
             }
         }
+
+        public void UpdateTooltips()
+        {
+            foreach (var rack in Racks)
+            {
+                if (_main.SelectedRenter == null)
+                {
+                    rack.TooltipText = "Klik for info";
+                }
+                else if (
+                    rack.Status == RackStatus.Reserved &&
+                    rack.RenterId != _main.SelectedRenter.RenterId)
+                {
+                    rack.TooltipText =
+                        "Reolen er reserveret af en anden lejer";
+                }
+                else if(rack.Status == RackStatus.EndingSoon && rack.RenterId != _main.SelectedRenter.RenterId)
+                {
+                    rack.TooltipText = $"Reolen er ved at udløbe. Ledig igen: {rack.AvailableFrom:dd-MM-yyyy}";
+                }
+                else
+                {
+                    rack.TooltipText = null;
+                }
+            }
+        }
+
+        /*private bool _canShowInfo;
+
+        public bool CanShowInfo
+        {
+            get => _canShowInfo;
+            set
+            {
+                _canShowInfo = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(TooltipText));
+            }
+        }*/
+
+
 
 
     }
