@@ -15,11 +15,13 @@ namespace SRSRoelProjekt.ViewModels
     public class RackViewModel : ViewModelBase
     {
         private RackStatus _status;
+        private bool _isSelected;
         private bool _isHighlighted;
         private bool _isVisible = true;
 
         public int RackNumber { get; set; }
         public string? RenterName { get; set; }
+        public int? RenterId { get; set; }
         public DateTime? EndDate { get; set; }
         public DateTime? AvailableFrom { get; set; }
 
@@ -40,7 +42,16 @@ namespace SRSRoelProjekt.ViewModels
         ? $"{RackNumber}\nb"
         : RackNumber.ToString();
 
-
+        public bool IsSelected
+        {
+            get => _isSelected;
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(BackgroundColor));
+            }
+        }
         public bool IsHighlighted
         {
             get => _isHighlighted;
@@ -72,14 +83,19 @@ namespace SRSRoelProjekt.ViewModels
                 : Visibility.Hidden;
 
         public Brush BackgroundColor =>
+
+            IsSelected 
+                ? Brushes.Blue
+                :   
             Status switch
             {
                 RackStatus.Available => Brushes.LightGreen,
-                RackStatus.Selected => Brushes.Blue,
+               //RackStatus.Selected => Brushes.Blue
                 RackStatus.Reserved => Brushes.Red,
                 RackStatus.EndingSoon => Brushes.Yellow,
                 _ => Brushes.Gray
             };
+            
 
         public Brush BorderBrush =>
             IsHighlighted

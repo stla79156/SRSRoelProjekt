@@ -58,11 +58,11 @@ namespace SRSRoelProjekt.Core.Repositories
 
         public void StopRental(int rackNumber)
         {
-            //Opsagt senest d. 20. i måneden, så er den ledig fra 1. i næste måned
+            //Opsagt før den 20. i måneden, så er den ledig fra 1. i næste måned
             DateTime endDate = DateTime.Today;
             DateTime availableFrom;
 
-            if (endDate.Day <= 20) 
+            if (endDate.Day < 20) 
             { 
                 availableFrom = new DateTime(endDate.Year, endDate.Month,1).AddMonths(1);
             }

@@ -33,7 +33,8 @@ namespace SRSRoelProjekt
         {
             get { return MyFloorPlan; }
         }
-        public void SaveRackReservation(string renterName)
+
+        /*public void SaveRackReservation(string renterName)
         {
             MyFloorPlan.SaveReservation(renterName);
         }
@@ -41,7 +42,7 @@ namespace SRSRoelProjekt
         private void MyFloorPlan_Loaded(object sender, RoutedEventArgs e)
         {
 
-        }
+        }*/
 
       
 

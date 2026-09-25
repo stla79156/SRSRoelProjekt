@@ -22,11 +22,13 @@ namespace SRSRoelProjekt.ViewModels
     public class MainViewModel : ViewModelBase
     {
          // public HeaderBarViewModel HeaderBarViewModel { get; }
-
+        private readonly IRackRepository _rackRepo;
         public HeaderBarViewModel HeaderBarViewModel { get; }
       
 
         public RackControlViewModel RackControlViewModel { get; }
+
+        public RackViewModel RackViewModel { get; }
 
         public FloorPlanViewModel FloorPlanViewModel { get; }
 
@@ -72,14 +74,17 @@ namespace SRSRoelProjekt.ViewModels
             _dialogService = new SRSRoelProjekt.UI.Services.DialogService();
 
             var repo = new SqlRenterRepository();
+            var rackRepo = new SQLRackRepository();
             RenterService = new RenterService(repo);
 
-            // Load renters from JSON FIRST
+            // Load renters from Database
             Renters = RenterService.GetRenters();
 
             FloorPlanViewModel = new FloorPlanViewModel(this, new SQLRackRepository());
 
-            // RackControlViewModel = new RackControlViewModel(Renters, this);
+            RackViewModel = new RackViewModel();
+
+            //RackControlViewModel = new RackControlViewModel(Renters, this);
 
             // Opret DialogService-implementeringen fra UI-laget
             // Sørg for at SRSRoelProjekt (WPF) har reference til SRSRoelProjekt.Core
@@ -90,7 +95,7 @@ namespace SRSRoelProjekt.ViewModels
             //HeaderBarViewModel = new HeaderBarViewModel(dialogService);
             //RackControlViewModel = new RackControlViewModel(Renters, this, dialogService);
             HeaderBarViewModel = new HeaderBarViewModel(_dialogService);
-            RackControlViewModel = new RackControlViewModel(Renters, this, _dialogService);
+            RackControlViewModel = new RackControlViewModel(Renters, this, _dialogService, rackRepo);
 
             // sæt start-ViewModel hvis nødvendigt
             CurrentViewModel = FloorPlanViewModel;
@@ -98,7 +103,7 @@ namespace SRSRoelProjekt.ViewModels
 
         public void ShowRackControl()
         {
-            CurrentViewModel = new RackControlViewModel(Renters, this, _dialogService);
+            CurrentViewModel = new RackControlViewModel(Renters, this, _dialogService, _rackRepo);
         }
 
         public void ShowAddRenter()

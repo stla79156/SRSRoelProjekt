@@ -24,9 +24,6 @@ namespace SRSRoelProjekt.ViewModels
         private MainViewModel _main;
 
         private Rack _selectedRack;
-
-
-
         public Rack SelectedRack
         {
             get => _selectedRack;
@@ -36,7 +33,6 @@ namespace SRSRoelProjekt.ViewModels
                 OnPropertyChanged();
             }
         }
-
 
         public FloorPlanViewModel(MainViewModel main, IRackRepository rackRepository)
         {
@@ -67,17 +63,21 @@ namespace SRSRoelProjekt.ViewModels
                 return;
             }
 
+            /*if(_main.SelectedRenter.RenterId != rack.RenterId)
+            {
+                return;
+            }*/
+
             // Reserved racks cannot be changed
-            if (rack.Status == RackStatus.Reserved ||
-                rack.Status == RackStatus.EndingSoon)
+            if (rack.Status == RackStatus.EndingSoon)
             {
                 return;
             }
 
-            rack.Status =
-                rack.Status == RackStatus.Selected
-                    ? RackStatus.Available
-                    : RackStatus.Selected;
+
+            rack.IsSelected = true;
+                    
+                    
         }
 
         private void ShowRackInfo(RackViewModel rack)
@@ -85,7 +85,7 @@ namespace SRSRoelProjekt.ViewModels
             var window = new RackInfoWindow(rack);
             window.ShowDialog();
         }
-        private void CreateRackLayout()
+        public void CreateRackLayout()
         {
             var dbRacks = _rackRepository.GetRacks().ToDictionary(r => r.RackNumber);
             bool[,] rackLayout =
@@ -143,32 +143,29 @@ namespace SRSRoelProjekt.ViewModels
             71, 72, 73, 74, 75, 76, 77, 78, 79, 80
         ];*/
 
-        public void HighlightRenterShelves(string renterName)
+        public void HighlightRenterShelves(int renterId)
         {
             foreach (var rack in Racks)
             {
                 rack.IsHighlighted = false;
             }
 
-            foreach (var rack in Racks.Where(x => x.RenterName == renterName))
+            foreach (var rack in Racks.Where(x => x.RenterId == renterId))
             {
                 rack.IsHighlighted = true;
             }
         }
         public void ClearSelectedRacks()
         {
-            foreach (var rack in Racks.Where(r => r.Status == RackStatus.Selected))
+            foreach (var rack in Racks.Where(r => r.IsSelected))
             {
-                rack.Status = RackStatus.Available;
+                rack.IsSelected = false;
             }
         }
-        public void SaveReservation(string renterName)
+        public void SaveReservation(RackViewModel selectedRack, string renterName)
         {
-            foreach (var rack in Racks.Where(x => x.Status == RackStatus.Selected))
-            {
-                rack.RenterName = renterName;
-                rack.Status = RackStatus.Reserved;
-            }
+            selectedRack.RenterName = renterName;
+            selectedRack.Status = RackStatus.Reserved;
         }
 
         private DateTime CalculateAvailableFrom(DateTime endDate)
@@ -186,15 +183,8 @@ namespace SRSRoelProjekt.ViewModels
                 endDate.Month,
                 1).AddMonths(2);
         }
-        public void StopRentalForRenter(string renterName, DateTime endDate)
-        {
-            foreach (var rack in Racks.Where(x => x.RenterName == renterName))
-            {
-                rack.Status = RackStatus.EndingSoon;
-                rack.EndDate = endDate;
-                rack.AvailableFrom = CalculateAvailableFrom(endDate);
-            }
-        }
+
+        
 
         public void ClearRenterRack(string renterName)
         {
@@ -206,7 +196,7 @@ namespace SRSRoelProjekt.ViewModels
             }
         }
 
-        
+
     }
 
 

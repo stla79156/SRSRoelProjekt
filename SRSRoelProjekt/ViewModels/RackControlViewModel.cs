@@ -1,6 +1,7 @@
 ﻿using SRSRoelProjekt.Commands;
 using SRSRoelProjekt.Core.Models;
 using SRSRoelProjekt.Core.Services;
+using SRSRoelProjekt.Core.Repositories;
 using SRSRoelProjekt.Views;
 using System;
 using System.Collections.Generic;
@@ -18,6 +19,8 @@ namespace SRSRoelProjekt.ViewModels
         private MainViewModel _main;
         private Renter _selectedRenter;
 
+        private readonly IRackRepository _rackRepo;
+
         private readonly IDialogService _dialogService;
         public ObservableCollection<Renter> Renters { get; }
 
@@ -28,16 +31,17 @@ namespace SRSRoelProjekt.ViewModels
 
         
 
-        public RackControlViewModel(ObservableCollection<Renter> renters, MainViewModel main, IDialogService dialogService)
+        public RackControlViewModel(ObservableCollection<Renter> renters, MainViewModel main, IDialogService dialogService, IRackRepository rackRepo)
         {
             Renters = renters;
             _main = main;
+            _rackRepo = rackRepo;
             _dialogService = dialogService;
 
             // Åbn popup-vinduet
             AddRenterCommand = new RelayCommand(OpenAddRenterWindow);
-            StopRentalCommand = new RelayCommand(StopRental);
-            SaveRackCommand = new RelayCommand(SaveRack);
+            StopRentalCommand = new RelayCommand(StopRentalForRenter);
+            SaveRackCommand = new RelayCommand(StartRentalForRenter);
             RemoveRenterCommand = new RelayCommand(RemoveRenter); 
 
         }
@@ -78,7 +82,7 @@ namespace SRSRoelProjekt.ViewModels
             win.ShowDialog();
         }
 
-        private void StopRental()
+        /*private void StopRental()
         {
             if (SelectedRenter == null)
             {
@@ -86,31 +90,54 @@ namespace SRSRoelProjekt.ViewModels
                 return;
             }
             else
-            if (_main.FloorPlanViewModel.SelectedRack == null)
+            if (_main.RackViewModel.IsSelected == false)
             {
                 _dialogService.ShowMessage("Vælg en reol først.");
                 return;
             }
 
             bool confirm = _dialogService.ShowConfirm(
-                $"Vil du fjerne reol {_main.FloorPlanViewModel.SelectedRack.RackNumber} fra lejer '{SelectedRenter.Name}'?"
+                $"Vil du fjerne reol {_main.RackViewModel.RackNumber} fra lejer '{SelectedRenter.Name}'?"
             );
 
             if (!confirm)
                 return;
+        }*/
 
-            _main.FloorPlanViewModel.StopRentalForRenter(
-                SelectedRenter.Name,
-                DateTime.Today.AddMonths(1)
-            );
+        public void StopRentalForRenter()
+        {
+            if(SelectedRenter == null)
+            {
+                _dialogService.ShowMessage("Vælg en lejer først.");
+                return;
+            }
+
+            var racksToStop = _main.FloorPlanViewModel.Racks
+                .Where(r =>
+                    r.IsSelected &&
+                    r.Status == RackStatus.Reserved &&
+                    r.RenterId == SelectedRenter.RenterId)
+                .ToList();
+
+            if (!racksToStop.Any())
+            {
+                _dialogService.ShowMessage("Vælg en reol først.");
+                return;
+            }
+
+            foreach (var rack in racksToStop)
+            {
+                _rackRepo.StopRental(rack.RackNumber);
+
+                rack.Status = RackStatus.EndingSoon;
+                rack.IsSelected = false;
+            }
+
+            _main.FloorPlanViewModel.Racks.Clear();
+            _main.FloorPlanViewModel.CreateRackLayout();
+
+            ClearSelection();
         }
-
-
-
-
-
-
-
 
         private void RemoveRenter()
         {
@@ -158,28 +185,39 @@ namespace SRSRoelProjekt.ViewModels
 
 
 
-        private void SaveRack()
+        private void StartRentalForRenter()
         {
             if (SelectedRenter == null)
             {
-                MessageBox.Show("Vælg en lejer først.");
+                _dialogService.ShowMessage("Vælg en lejer først.");
                 return;
             }
-            else
-            if (_main.FloorPlanViewModel.SelectedRack == null)
+
+            var selectedRacks = _main.FloorPlanViewModel.Racks.Where(r => r.IsSelected).ToList();
+
+            if (!selectedRacks.Any())
             {
                 _dialogService.ShowMessage("Vælg en reol først.");
                 return;
             }
 
+            string rackNumbers = string.Join(", ", selectedRacks.Select(r => r.RackNumber));
+
             bool confirm = _dialogService.ShowConfirm(
-                $"Vil du tilføje reol {_main.FloorPlanViewModel.SelectedRack.RackNumber} til lejer '{SelectedRenter.Name}'?"
+                $"Vil du tilføje reol(er) {rackNumbers} til lejer '{SelectedRenter.Name}'?"
             );
 
             if (!confirm)
                 return;
 
-            _main.FloorPlanViewModel.SaveReservation(SelectedRenter.Name);
+            foreach (var rack in selectedRacks)
+            {
+                _rackRepo.StartRental(rack.RackNumber, SelectedRenter.RenterId);
+
+                rack.Status = RackStatus.Reserved;
+            }
+            _main.FloorPlanViewModel.Racks.Clear();
+            _main.FloorPlanViewModel.CreateRackLayout();
 
             ClearSelection();
         }
@@ -190,9 +228,9 @@ namespace SRSRoelProjekt.ViewModels
 
             foreach (var rack in _main.FloorPlanViewModel.Racks)
             {
-                if (rack.Status == RackStatus.Selected)
+                if (rack.IsSelected)
                 {
-                    rack.Status = RackStatus.Available;
+                    rack.IsSelected = false;
                 }
                 rack.IsHighlighted = false;
             }
@@ -204,7 +242,7 @@ namespace SRSRoelProjekt.ViewModels
             if (SelectedRenter == null)
                 return;
 
-            _main.FloorPlanViewModel.HighlightRenterShelves(SelectedRenter.Name);
+            _main.FloorPlanViewModel.HighlightRenterShelves(SelectedRenter.RenterId);
         }
 
         
