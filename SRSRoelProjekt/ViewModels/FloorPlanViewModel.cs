@@ -76,6 +76,12 @@ namespace SRSRoelProjekt.ViewModels
                 return;
             }
 
+            if(rack.IsSelected)
+            {
+                rack.IsSelected = false;
+                return;
+            }
+
 
             rack.IsSelected = true;
 
