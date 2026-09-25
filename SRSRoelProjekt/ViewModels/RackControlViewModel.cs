@@ -85,6 +85,14 @@ namespace SRSRoelProjekt.ViewModels
 
 
         }
+
+
+
+
+
+
+
+
         private void RemoveRenter()
         {
             if (SelectedRenter == null)
