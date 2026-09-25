@@ -130,10 +130,8 @@ namespace SRSRoelProjekt.ViewModels
                             EndDate = dbRack.EndDate,
                             AvailableFrom = dbRack.AvailableFrom,
                             RenterId = dbRack.RenterId,
-<<<<<<< HEAD
                             RenterName = _main.Renters.FirstOrDefault(r => r.RenterId == dbRack.RenterId)?.Name,
-=======
->>>>>>> d9f8044b888059fd65134e4c39bcc1c96555bea7
+
                             IsVisible = true,
                             
                         });
