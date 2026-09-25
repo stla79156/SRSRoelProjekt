@@ -2,8 +2,9 @@
 using SRSRoelProjekt.Core.Models;
 using SRSRoelProjekt.Core.Repositories;
 using SRSRoelProjekt.Core.Repositories.SRSRoelProjekt.Core.Repositories;
-using SRSRoelProjekt.Core.Services;
+
 using SRSRoelProjekt.Views;
+using SRSRoelProjekt.Views.UserControls;
 using SRSRoelProjekt.Views.Windows;
 using System;
 using System.Collections.Generic;
@@ -12,12 +13,18 @@ using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using SRSRoelProjekt.Core.Services;
+using SRSRoelProjekt.UI.Services; // DialogService-implementering
+using SRSRoelProjekt.ViewModels;
 
 namespace SRSRoelProjekt.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
+         // public HeaderBarViewModel HeaderBarViewModel { get; }
+
         public HeaderBarViewModel HeaderBarViewModel { get; }
+      
 
         public RackControlViewModel RackControlViewModel { get; }
 
@@ -49,15 +56,21 @@ namespace SRSRoelProjekt.ViewModels
 
         public ViewModelBase CurrentViewModel { get; set; }
 
+
+
         public ICommand ShowRackControlCommand { get; }
         public ICommand ShowAddRenterCommand { get; }
 
+        private readonly IDialogService _dialogService;
 
 
-    
         public MainViewModel()
 
         {
+
+            // opret én DialogService og genbrug den
+            _dialogService = new SRSRoelProjekt.UI.Services.DialogService();
+
             var repo = new SqlRenterRepository();
             RenterService = new RenterService(repo);
 
@@ -66,17 +79,26 @@ namespace SRSRoelProjekt.ViewModels
 
             FloorPlanViewModel = new FloorPlanViewModel(this, new SQLRackRepository());
 
-            RackControlViewModel =
-                new RackControlViewModel(
-                    Renters,
-                    this);
-            HeaderBarViewModel =
-                new HeaderBarViewModel();
+            // RackControlViewModel = new RackControlViewModel(Renters, this);
+
+            // Opret DialogService-implementeringen fra UI-laget
+            // Sørg for at SRSRoelProjekt (WPF) har reference til SRSRoelProjekt.Core
+            // IDialogService dialogService = new SRSRoelProjekt.UI.Services.DialogService();
+
+
+            // Opret HeaderBarViewModel med dialogService
+            //HeaderBarViewModel = new HeaderBarViewModel(dialogService);
+            //RackControlViewModel = new RackControlViewModel(Renters, this, dialogService);
+            HeaderBarViewModel = new HeaderBarViewModel(_dialogService);
+            RackControlViewModel = new RackControlViewModel(Renters, this, _dialogService);
+
+            // sæt start-ViewModel hvis nødvendigt
+            CurrentViewModel = FloorPlanViewModel;
         }
 
         public void ShowRackControl()
         {
-            CurrentViewModel = new RackControlViewModel(Renters, this);
+            CurrentViewModel = new RackControlViewModel(Renters, this, _dialogService);
         }
 
         public void ShowAddRenter()
@@ -86,7 +108,7 @@ namespace SRSRoelProjekt.ViewModels
 
         public void ShowMenu()
         {
-            CurrentViewModel = new HeaderBarViewModel();
+            CurrentViewModel = new HeaderBarViewModel(new SRSRoelProjekt.UI.Services.DialogService());
         }
 
 

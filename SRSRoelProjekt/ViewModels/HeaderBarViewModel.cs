@@ -1,45 +1,35 @@
 ﻿using SRSRoelProjekt.Commands;
+using SRSRoelProjekt.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
 
+
 namespace SRSRoelProjekt.ViewModels
 {
     public class HeaderBarViewModel : ViewModelBase
     {
+        private readonly IDialogService _dialogService;
+
         public RelayCommand LogOutCommand { get; }
-        public HeaderBarViewModel()
+
+        public HeaderBarViewModel(IDialogService dialogService)
         {
+            _dialogService = dialogService;
             LogOutCommand = new RelayCommand(LogOut);
         }
 
         private void LogOut()
         {
-            var result = MessageBox.Show(
-                "Er du sikker på at du vil logge af?",
-                "Bekræft log af",
-                MessageBoxButton.YesNo,
-                MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.No)
+            bool confirm = _dialogService.ShowConfirm("Er du sikker på at du vil logge af?");
+            if (!confirm)
                 return;
 
-            // Find nuværende vindue
-            var currentWindow = Application.Current.MainWindow;
-
-            // Åbn login-vinduet
-            var loginWindow = new MainWindow();
-            loginWindow.Show();
-
-            // Luk nuværende vindue
-            currentWindow.Close();
-            Application.Current.Shutdown(); //  Application.Current.Shutdown(); skal ersttes med  new LoginWindow().Show(); når login er implementeret
+            Application.Current.Shutdown();
         }
 
-
-
-
+        // Application.Current.Shutdown(); //  Application.Current.Shutdown(); skal ersttes med  new LoginWindow().Show(); når login er implementeret
     }
 }
