@@ -23,14 +23,8 @@ namespace SRSRoelProjekt.ViewModels
         private readonly IRackRepository _rackRepo;
         private readonly IRenterRepository _renterRepo;
         public HeaderBarViewModel HeaderBarViewModel { get; }
-      
-
         public RackControlViewModel RackControlViewModel { get; }
-
-        public RackViewModel RackViewModel { get; }
-
         public FloorPlanViewModel FloorPlanViewModel { get; }
-
         public RenterService RenterService { get; }
 
         private Renter _selectedRenter;
@@ -92,7 +86,6 @@ namespace SRSRoelProjekt.ViewModels
 
             FloorPlanViewModel = new FloorPlanViewModel(this, _rackRepo);
 
-            RackViewModel = new RackViewModel();
 
             HeaderBarViewModel = new HeaderBarViewModel(_dialogService);
 

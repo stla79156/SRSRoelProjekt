@@ -198,8 +198,11 @@ namespace SRSRoelProjekt.ViewModels
 
             // Fjern fra SQL
             _renterRepo.RemoveRenter(_main.SelectedRenter);
+            
+            Renters.Clear();
+            _renterRepo.GetRenters();
 
-            Renters.Remove(_main.SelectedRenter);
+            //Renters.Remove(_main.SelectedRenter);
 
 
             _main.SelectedRenter = null;
