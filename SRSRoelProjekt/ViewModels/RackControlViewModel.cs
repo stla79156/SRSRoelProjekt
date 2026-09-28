@@ -166,8 +166,8 @@ namespace SRSRoelProjekt.ViewModels
         {
             if (_main.SelectedRenter == null)
             {
-                MessageBox.Show("Vælg en lejer først");
-                return; 
+                _dialogService.ShowMessage("Vælg en lejer først.");
+                return;
             }
 
             else
