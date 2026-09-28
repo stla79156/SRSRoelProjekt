@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SRSRoelProjekt.ViewModels;
 
 namespace SRSRoelProjekt.Views.Windows
 {
@@ -20,6 +21,10 @@ namespace SRSRoelProjekt.Views.Windows
         public LoginWindow()
         {
             InitializeComponent();
+
+            var vm = new LoginWindowViewModel();
+
+            DataContext = vm;
         }
     }
 }

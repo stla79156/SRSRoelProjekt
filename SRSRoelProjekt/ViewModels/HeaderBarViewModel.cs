@@ -17,9 +17,6 @@ namespace SRSRoelProjekt.ViewModels
 
         private void LogOut()
         {
-            Window MainWindow = new MainWindow();
-            MainWindow.Show();
-
             Application.Current.Shutdown();
         }
     }
