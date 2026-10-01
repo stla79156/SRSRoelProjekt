@@ -7,6 +7,9 @@
         mc:Ignorable="d"
         Title="LoginWindow" Height="450" Width="800">
     <Grid>
-        
+		<TextBlock Text="Indtast brugerid:"/>
+		<TextBox Text="{Binding UserId}"/>
+		<TextBlock Text="{Binding UserIdError}" Foreground="Red"/>
+		<Button Content="Log ind" Command="{Binding LoginCommand}" Margin="0,20,0,0"/>
     </Grid>
 </Window>
