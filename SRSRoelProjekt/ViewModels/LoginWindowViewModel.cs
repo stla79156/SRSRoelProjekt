@@ -5,21 +5,54 @@ using System.Text;
 using System.Windows;
 using SRSRoelProjekt;
 using System.Windows.Input;
+using SRSRoelProjekt.Core.Repositories;
+using SRSRoelProjekt.Core.Models;
+using System.Linq;
 
 namespace SRSRoelProjekt.ViewModels
 {
-    public class LoginWindowViewModel
+    public class LoginWindowViewModel : ViewModelBase
     {
-        public RelayCommand LoginCommand { get; }
+
+
+        private readonly SQLEmployeeRepository _employeeRepo;
+        private readonly SqlRenterRepository _renterRepo;
+        private string _userId;
+
+        public string UserId
+        {
+            get => _userId;
+            set
+            {
+                _userId = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _userIdError;
+
+        public string UserIdError
+        {
+            get => _userIdError;
+            set
+            {
+                _userIdError = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand LoginCommand { get; }
+
         public LoginWindowViewModel()
         {
+            _employeeRepo = new SQLEmployeeRepository();
+            _renterRepo = new SqlRenterRepository();
             LoginCommand = new RelayCommand(Login);
         }
 
         private void Login()
         {
-            Window mainWindow = new MainWindow();
-            mainWindow.Show();
+            _employeeRepo.GetEmployeeByUsername(UserId);
         }
     }
 }

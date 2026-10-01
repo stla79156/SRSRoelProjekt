@@ -89,5 +89,39 @@ namespace SRSRoelProjekt.Core.Repositories
                     cmd.ExecuteNonQuery();
                 }
             }
+
+
+        public Renter GetRenterByUsername(string username)
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                var cmd = new SqlCommand(
+                "SELECT RenterId, Name, Email, PhoneNumber, Username " +
+                "FROM Renters " +
+                "WHERE Username = @Username",
+                conn);
+
+                cmd.Parameters.AddWithValue("@Username", username);
+
+                var reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    return new Renter
+                    {
+                        RenterId = reader.GetInt32(0),
+                        Name = reader.GetString(1),
+                        Email = reader.GetString(2),
+                        PhoneNumber = reader.GetString(3),
+                        Username = reader.GetString(4)
+                    };
+                }
+            }
+
+            return null;
         }
+
+    }
 }
