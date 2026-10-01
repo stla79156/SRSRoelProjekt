@@ -6,8 +6,27 @@
         xmlns:local="clr-namespace:SRSRoelProjekt.Views.Windows"
         mc:Ignorable="d"
         Title="RenterWindow" Height="450" Width="800">
+    
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="9*"/>
+        </Grid.RowDefinitions>
 
-    </Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" MaxWidth="550"/>
+            <ColumnDefinition Width="6*"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Row="0"
+                Grid.ColumnSpan="2"
+                Background="#2C3E50" />
+
+        <Border Grid.Row="1"
+                Grid.Column="0"
+                Background="#F5F5F5" />
+
+
+
+        </Grid>
 </Window>
