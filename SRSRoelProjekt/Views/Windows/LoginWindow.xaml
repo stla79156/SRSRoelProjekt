@@ -11,5 +11,6 @@
 		<TextBox Text="{Binding UserId}"/>
 		<TextBlock Text="{Binding UserIdError}" Foreground="Red"/>
 		<Button Content="Log ind" Command="{Binding LoginCommand}" Margin="0,20,0,0"/>
+
     </Grid>
 </Window>
