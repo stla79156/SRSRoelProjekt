@@ -126,9 +126,14 @@ namespace SRSRoelProjekt.ViewModels
 
             _main.RenterService.AddRenter(renter);
 
-            _renters.Add(renter);
+            _renters.Clear();
 
-           // _main.RenterService.SaveRenters(_renters);
+            foreach (var r in _main.RenterService.GetRenters()) 
+            {
+                _renters.Add(r);
+            }
+
+
 
             CloseAction?.Invoke(true);
         }

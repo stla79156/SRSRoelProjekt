@@ -198,12 +198,13 @@ namespace SRSRoelProjekt.ViewModels
 
             // Fjern fra SQL
             _renterRepo.RemoveRenter(_main.SelectedRenter);
-            
-            Renters.Clear();
-            _renterRepo.GetRenters();
 
-            //Renters.Remove(_main.SelectedRenter);
+            Renters.Clear(); // Fjern alle lejere
 
+            foreach (var renter in _renterRepo.GetRenters())
+            {
+                Renters.Add(renter); // Tilføj alle lejere igen fra databasen
+            }
 
             _main.SelectedRenter = null;
 
