@@ -9,48 +9,46 @@
     <Grid>
 
         <StackPanel>
-            
-    <TextBlock Text="Login Ind Vindue"
-     
-    HorizontalAlignment="left" Margin="20,0,0,00"
-   FontSize="20"/>
+
+            <TextBlock Text="Indtast brugernavn: "
+               Margin="100,80,0,10"
+               HorizontalAlignment="left"
+               FontSize="20"
+               FontFamily="Cambria"/>
+
+            <TextBox Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" 
+               Margin="100,0,0,0"
+               Height="30"
+               Width="600"
+               HorizontalAlignment="Left"
+               FontSize="18"
+               FontFamily="Cambria"
+               Background="Transparent" />
 
 
-
-    <TextBlock Text="Indtast brugernavn: "
-                 
-                HorizontalAlignment="left" Margin="100,80,0,10"
-               FontSize="20" FontFamily="Cambria"/>
-
-            <TextBox Text="{Binding UserId, UpdateSourceTrigger=PropertyChanged}" 
-             Height="30" Width="200" HorizontalAlignment="Left" 
-             Margin="100,0,0,0" Background="Transparent" FontFamily="Cambria" />
-    
-    
-    <Button Content="Log ind"
-            Command="{Binding LoginCommand}" 
-            Margin="100,20,0,0" Width="100" Height="50" 
-            HorizontalAlignment="Left" VerticalAlignment="Center" 
-            FontSize="18" Background="LightBlue" 
-            Foreground="#2C3E50" BorderBrush="SkyBlue" FontFamily="Cambria"
-            />
-    
-    
-    <TextBlock Text="{Binding UserIdError}" 
-               Foreground="Red" Margin="0,0,0,10"/>
+            <TextBlock Text="{Binding UsernameError}"
+               Margin="100,0,0,0"
+               Height="20"
+               Width="600"
+               HorizontalAlignment="Left"
+               Foreground="Red" />
 
 
-
-
-
-
-
+            <Button Content="Log ind"
+               Command="{Binding LoginCommand}" 
+               Margin="0,20,0,0"
+               Width="150"
+               Height="50"
+               HorizontalAlignment="Center"
+               VerticalAlignment="Center" 
+               FontSize="18"
+               FontWeight="Bold"
+               Background="LightBlue" 
+               Foreground="#2C3E50"
+               BorderBrush="SkyBlue"
+               FontFamily="Cambria" />
 
         </StackPanel>
-        
-        
-        
-		
-		
+
     </Grid>
 </Window>

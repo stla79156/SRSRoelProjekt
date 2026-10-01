@@ -1,6 +1,4 @@
-﻿using SRSRoelProjekt.Core.Models;
-using SRSRoelProjekt.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -15,22 +13,13 @@ using System.Windows.Shapes;
 namespace SRSRoelProjekt.Views.Windows
 {
     /// <summary>
-    /// Interaction logic for LoginWindow.xaml
+    /// Interaction logic for RenterWindow.xaml
     /// </summary>
-    public partial class LoginWindow : Window
+    public partial class RenterWindow : Window
     {
-        public LoginWindow()
+        public RenterWindow()
         {
             InitializeComponent();
-
-            var vm = new LoginWindowViewModel();
-
-            vm.CloseAction = result =>
-            {
-                Close();
-            };
-
-            DataContext = vm;
         }
     }
 }
