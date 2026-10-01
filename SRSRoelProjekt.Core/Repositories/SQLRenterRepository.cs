@@ -19,7 +19,7 @@ namespace SRSRoelProjekt.Core.Repositories
                 {
                     conn.Open();
 
-                    var cmd = new SqlCommand("SELECT RenterId, Name, Email, PhoneNumber FROM Renters", conn);
+                    var cmd = new SqlCommand("SELECT RenterId, Name, Email, PhoneNumber, Username FROM Renters", conn);
                     var reader = cmd.ExecuteReader();
 
                     while (reader.Read())
@@ -29,7 +29,8 @@ namespace SRSRoelProjekt.Core.Repositories
                             RenterId = reader.GetInt32(0),
                             Name = reader.GetString(1),
                             Email = reader.GetString(2),
-                            PhoneNumber = reader.GetString(3)
+                            PhoneNumber = reader.GetString(3),
+                            Username = reader.GetString(4)
                         });
                     }
                 }
@@ -44,14 +45,15 @@ namespace SRSRoelProjekt.Core.Repositories
                     conn.Open();
 
                     var cmd = new SqlCommand(
-                        "INSERT INTO Renters (Name, Email, PhoneNumber) VALUES (@Name, @Email, @Phone)",
+                        "INSERT INTO Renters (Name, Email, PhoneNumber, Username) VALUES (@Name, @Email, @Phone, @Username)",
                         conn);
 
                     cmd.Parameters.AddWithValue("@Name", renter.Name);
                     cmd.Parameters.AddWithValue("@Email", renter.Email);
                     cmd.Parameters.AddWithValue("@Phone", renter.PhoneNumber);
+                    cmd.Parameters.AddWithValue("@Username", renter.Username);
 
-                    cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();
                 }
             }
 
@@ -75,13 +77,14 @@ namespace SRSRoelProjekt.Core.Repositories
                     conn.Open();
 
                     var cmd = new SqlCommand(
-                        "UPDATE Renters SET Name=@Name, Email=@Email, PhoneNumber=@Phone WHERE Id=@Id",
+                        "UPDATE Renters SET Name=@Name, Email=@Email, PhoneNumber=@Phone, Username=@Username WHERE RenterId=@RenterId",
                         conn);
 
-                    cmd.Parameters.AddWithValue("@Id", renter.RenterId);
+                    cmd.Parameters.AddWithValue("@RenterId", renter.RenterId);
                     cmd.Parameters.AddWithValue("@Name", renter.Name);
                     cmd.Parameters.AddWithValue("@Email", renter.Email);
                     cmd.Parameters.AddWithValue("@Phone", renter.PhoneNumber);
+                    cmd.Parameters.AddWithValue("@Username", renter.Username);
 
                     cmd.ExecuteNonQuery();
                 }
