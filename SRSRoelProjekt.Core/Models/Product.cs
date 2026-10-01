@@ -12,6 +12,7 @@ namespace SRSRoelProjekt.Core.Models
         public decimal Price { get; set; }
         public string EAN13Number { get; set; }
         public int RackNumber { get; set; }
+        public bool ProductStatus { get; set; } // true = Not Sold, false = Sold
     }
 
 
