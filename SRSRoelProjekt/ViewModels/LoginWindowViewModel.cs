@@ -10,6 +10,7 @@ using SRSRoelProjekt.Core.Models;
 using System.Linq;
 using SRSRoelProjekt.Core.Services;
 using SRSRoelProjekt.Views.Windows;
+using SRSRoelProjekt.UI.Services;
 
 namespace SRSRoelProjekt.ViewModels
 {
@@ -46,6 +47,7 @@ namespace SRSRoelProjekt.ViewModels
             _employeeRepo = new SQLEmployeeRepository();
             _renterRepo = new SqlRenterRepository();
             LoginCommand = new RelayCommand(Login);
+            _dialogService = new DialogService();
         }
 
         private void Login(object parameter)
