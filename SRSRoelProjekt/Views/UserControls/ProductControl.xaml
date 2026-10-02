@@ -1,0 +1,98 @@
+﻿<UserControl x:Class="SRSRoelProjekt.Views.UserControls.ProductControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SRSRoelProjekt.Views.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="600" d:DesignWidth="333">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+
+        <ComboBox Grid.Row="0"
+          Margin="5"
+          MinWidth="150"
+          MinHeight="30"
+          MaxHeight="60"
+          ItemsSource="{Binding Racks}"
+          SelectedItem="{Binding SelectedRack}"
+          DisplayMemberPath="DisplayText"
+          Text="Vælg reol" IsEditable="True" IsReadOnly="True" 
+          FontSize="18"
+          FontWeight="Bold" FontFamily="Cambria"/>
+
+        <Button Grid.Row="2"
+        Command="{Binding AddProductCommand}"
+        Content="Tilføj Produkt til Reol"
+        FontWeight="Bold"
+        MinWidth="150"
+        MinHeight="30"
+        MaxHeight="60"
+        FontSize="18"
+        FontFamily="Cambria"
+        Margin="5">
+
+            <Button.Style>
+                <Style TargetType="Button">
+
+                    <!-- Enabled colors -->
+                    <Setter Property="Background" Value="LightBlue"/>
+                    <Setter Property="BorderBrush" Value="SkyBlue"/>
+                    <Setter Property="Foreground" Value="#2C3E50"/>
+
+                    <Style.Triggers>
+
+                        <!-- Disabled colors -->
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="#F4FBFF"/>
+                            <Setter Property="BorderBrush" Value="#E6F7FF"/>
+                            <Setter Property="Foreground" Value="#BFD2DD"/>
+                        </Trigger>
+
+                    </Style.Triggers>
+
+                </Style>
+            </Button.Style>
+
+        </Button>
+
+        <Button Grid.Row="3"
+        Command="{Binding RemoveProductCommand}"
+        Content="Fjern Produkt fra Reol"
+        FontWeight="Bold"
+        MinWidth="150"
+        MinHeight="30"
+        MaxHeight="60"
+        FontSize="18"
+        FontFamily="Cambria"
+        Margin="5">
+
+            <Button.Style>
+                <Style TargetType="Button">
+
+                    <Setter Property="Background" Value="LightBlue"/>
+                    <Setter Property="BorderBrush" Value="SkyBlue"/>
+                    <Setter Property="Foreground" Value="#2C3E50"/>
+
+                    <Style.Triggers>
+
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Background" Value="#F4FBFF"/>
+                            <Setter Property="BorderBrush" Value="#E6F7FF"/>
+                            <Setter Property="Foreground" Value="#BFD2DD"/>
+                        </Trigger>
+
+                    </Style.Triggers>
+
+                </Style>
+            </Button.Style>
+
+        </Button>
+
+    </Grid>
+</UserControl>

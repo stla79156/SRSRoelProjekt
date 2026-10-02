@@ -9,21 +9,23 @@ using System.Linq;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
+  
 
 namespace SRSRoelProjekt.ViewModels
 {
-    using System.Collections.ObjectModel;
-    using System.Windows.Input;
-    using System.Windows;
+   
 
     public class AddRenterViewModel : ViewModelBase
     {
         private string _name = string.Empty;
         private string _email = string.Empty;
         private string _phoneNumber = string.Empty;
+        private string _username = string.Empty;
 
         private readonly ObservableCollection<Renter> _renters;
         private readonly MainViewModel _main;
+        private readonly LoginWindowViewModel _loginWindowViewModel;
 
         public Action<bool?>? CloseAction { get; set; }
 
@@ -65,6 +67,19 @@ namespace SRSRoelProjekt.ViewModels
             }
         }
 
+        public string Username
+        {
+            get => _username;
+            set
+            {
+                _username = value;
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(UsernameError));
+
+                CommandManager.InvalidateRequerySuggested();
+            }
+        }
+
         public string EmailError =>
             string.IsNullOrWhiteSpace(Email) || IsValidEmail(Email)
                 ? string.Empty
@@ -74,6 +89,11 @@ namespace SRSRoelProjekt.ViewModels
             string.IsNullOrWhiteSpace(PhoneNumber) || IsValidPhoneNumber(PhoneNumber)
                 ? string.Empty
                 : "Telefonnummer skal være 8-15 cifre.";
+
+        public string UsernameError =>
+            string.IsNullOrWhiteSpace(Username) || IsValidUsername(Username)
+                ? string.Empty
+                : "Ugyldigt brugernavn";
 
         public RelayCommand AddRenterCommand { get; }
         public RelayCommand CancelCommand { get; }
@@ -114,6 +134,28 @@ namespace SRSRoelProjekt.ViewModels
                    && phoneNumber.All(char.IsDigit);
         }
 
+        private bool IsRenterUsername(string username)
+        {
+            return !string.IsNullOrWhiteSpace(username)
+            && username.Length >= 2
+            && char.IsLetter(username[0])
+            && char.IsLetter(username[1]);
+        }
+
+        public bool IsValidUsername(string username)
+        {
+            
+            if (IsRenterUsername(username))
+            {
+                return !string.IsNullOrWhiteSpace(username)
+                   && username.Length == 6
+                   && char.IsLetter(username[0])
+                   && char.IsLetter(username[1])
+                   && username.Substring(2).All(char.IsDigit);
+            }
+            return false;
+        }
+
         private void AddRenter()
         {
             var renter = new Renter
@@ -121,7 +163,8 @@ namespace SRSRoelProjekt.ViewModels
                 RenterId = _main.RenterService.GenerateNewId(_renters),
                 Name = Name,
                 Email = Email,
-                PhoneNumber = PhoneNumber
+                PhoneNumber = PhoneNumber,
+                Username = Username,
             };
 
             _main.RenterService.AddRenter(renter);

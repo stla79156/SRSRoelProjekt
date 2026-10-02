@@ -12,5 +12,7 @@ namespace SRSRoelProjekt.Core.Models
         public bool WithHanger { get; set; }
         public DateTime? EndDate { get; set; }
         public DateTime? AvailableFrom { get; set; }
+
+        public string DisplayText => $"Reol {RackNumber}";
     }
 }

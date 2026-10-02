@@ -24,7 +24,7 @@ namespace SRSRoelProjekt.Core.Repositories
             {
                 conn.Open();
 
-                var cmd = new SqlCommand("SELECT EmployeeId, EmployeeName, EmployyeeUserName FROM Employees", conn);
+                var cmd = new SqlCommand("SELECT EmployeeId, EmployeeName, EmployeeUserName FROM Employees", conn);
                 var reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -33,7 +33,7 @@ namespace SRSRoelProjekt.Core.Repositories
                     {
                         EmployeeId = reader.GetInt32(0),
                         EmployeeName = reader.GetString(1),
-                        EmployyeeUserName = reader.GetString(2),
+                        EmployeeUserName = reader.GetString(2),
                         
                     });
 
@@ -60,12 +60,12 @@ namespace SRSRoelProjekt.Core.Repositories
                 conn.Open();
 
                 var cmd = new SqlCommand(
-                    "INSERT INTO Employees (EmployeeName, EmployyeeUserName) VALUES (@EmployeeName, @EmployyeeUserName)",
+                    "INSERT INTO Employees (EmployeeName, EmployeeUserName) VALUES (@EmployeeName, @EmployeeUserName)",
                     conn);
 
              
                 cmd.Parameters.AddWithValue("@EmployeeName", employee.EmployeeName);
-                cmd.Parameters.AddWithValue("@EmployyeeUserName", employee.EmployyeeUserName);
+                cmd.Parameters.AddWithValue("@EmployeeUserName", employee.EmployeeUserName);
 
                 cmd.ExecuteNonQuery();
             }
@@ -91,19 +91,47 @@ namespace SRSRoelProjekt.Core.Repositories
                 conn.Open();
 
                 var cmd = new SqlCommand(
-                    "UPDATE Employees SET EmployeeName=@EmployeeName, EmployyeeUserName=@EmployyeeUserName WHERE EmployeeId=@EmployeeId",
+                    "UPDATE Employees SET EmployeeName=@EmployeeName, EmployeeUserName=@EmployeeUserName WHERE EmployeeId=@EmployeeId",
                     conn);
 
                 cmd.Parameters.AddWithValue("@EmployeeId", employee.EmployeeId);
                 cmd.Parameters.AddWithValue("@EmployeeName", employee.EmployeeName);
-                cmd.Parameters.AddWithValue("@EmployyeeUserName", employee.EmployyeeUserName);
+                cmd.Parameters.AddWithValue("@EmployeeUserName", employee.EmployeeUserName);
               
 
                 cmd.ExecuteNonQuery();
             }
         }
 
-        
+        public Employee GetEmployeeByUsername(string username)
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                var cmd = new SqlCommand(
+                "SELECT EmployeeId, EmployeeName, EmployeeUserName " +
+                "FROM Employees " +
+                "WHERE EmployeeUserName = @Username",
+                conn); // her har jeg ændret parameteren til @Username for at matche SQL-forespørgslen til kun at hente en enkelt medarbejder baseret på brugernavnet
+
+                cmd.Parameters.AddWithValue("@Username", username);
+
+                var reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    return new Employee
+                    {
+                        EmployeeId = reader.GetInt32(0),
+                        EmployeeName = reader.GetString(1),
+                        EmployeeUserName = reader.GetString(2)
+                    };
+                }
+            }
+
+            return null;
+        }
 
 
 
