@@ -164,7 +164,7 @@ namespace SRSRoelProjekt.ViewModels
 
 
             if (_employeeRepository.GetEmployees()
-.Any(e => e.EmployeeUserName == EmployeeUserName))
+            .Any(e => e.EmployeeUserName == EmployeeUserName))
             {
                 _dialogService.ShowMessage(
                 "Brugernavnet findes allerede.");
