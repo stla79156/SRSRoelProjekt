@@ -29,11 +29,24 @@
                     FontFamily="Cambria"
                     Margin="20,10,0,20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
+        <Button Grid.Row="1" Grid.ColumnSpan="1" 
+            Content="Slet medarbejder"
+                        Command="{Binding RemoveEmployeeCommand}"
+                        Margin="0,10,0,40"
+                        Width="200"
+                        Height="35" Background="Lightblue" BorderBrush="SkyBlue" 
+                        Foreground="#2C3E50" FontSize="18"
+                        FontFamily="Cambria" 
+                        HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+
+
+
 
         <!-- Medarbejderliste -->
         <ListBox Grid.Row="1"
                 Grid.Column="0"
-                Margin="10"
+                Margin="10,10,10,100"
+            
                 ItemsSource="{Binding Employees}"
                 SelectedItem="{Binding SelectedEmployee}"
                  BorderThickness="1"/>
@@ -41,14 +54,17 @@
         <StackPanel Grid.Row="1"
                     Grid.Column="1">
 
+            <TextBlock  Text="Tilføj ny medarbejder til liste" Foreground="#7E93A8"
+                        FontSize="18" FontFamily="Cambria" 
+                        HorizontalAlignment="Center" Margin="0,0,0,10"/>
 
             <TextBlock  Text="Navn" Foreground="#7E93A8"
                         FontSize="14" FontFamily="Cambria" 
                         HorizontalAlignment="Left"/>
 
             <TextBox    Text="{Binding EmployeeName}"
-                        Margin="0,5,0,10" Height="25" Width="260" 
-                        HorizontalAlignment="Center"/>
+                        Margin="0,5,5,10" Height="25" Width="250" 
+                        HorizontalAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
 
 
             <TextBlock  Text="Brugernavn" Foreground="#7E93A8"
@@ -56,10 +72,10 @@
                         HorizontalAlignment="left"/>
 
             <TextBox    Text="{Binding EmployeeUserName}"
-                        Margin="0,5,0,20" Height="25" Width="260" 
-                        HorizontalAlignment="Center"/>
+                        Margin="0,5,5,20" Height="25" Width="250" 
+                        HorizontalAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
 
-            <Button     Content="Tilføj medarbejder"
+            <Button     Content="Tilføj ny medarbejder"
                         Command="{Binding AddEmployeeCommand}"
                         Height="35" 
                         Margin="0,0,0,10" Width="220"
@@ -69,14 +85,6 @@
                         HorizontalAlignment="Center"/>
 
 
-            <Button     Content="Fjern valgt medarbejder"
-                        Command="{Binding RemoveEmployeeCommand}"
-                        Margin="0,0,0,10"
-                        Width="220"
-                        Height="35" Background="Lightblue" BorderBrush="SkyBlue" 
-                        Foreground="#2C3E50" FontSize="18"
-                        FontFamily="Cambria" 
-                        HorizontalAlignment="Center"/>
 
 
 
