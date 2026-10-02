@@ -16,6 +16,6 @@ Width="800">
     
     
 <Grid>
-        <views:AdministratorView />
+        <views:AdministratorView/>
     </Grid>
 </Window>
