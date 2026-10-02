@@ -24,7 +24,7 @@ namespace SRSRoelProjekt.Core.Repositories
             {
                 conn.Open();
 
-                var cmd = new SqlCommand("SELECT EmployeeId, EmployeeName, EmployeeUserName FROM Employees", conn);
+                var cmd = new SqlCommand("SELECT EmployeeId, EmployeeName, EmployeeUserName, IsAdministrator FROM Employees", conn);
                 var reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -34,7 +34,7 @@ namespace SRSRoelProjekt.Core.Repositories
                         EmployeeId = reader.GetInt32(0),
                         EmployeeName = reader.GetString(1),
                         EmployeeUserName = reader.GetString(2),
-                        
+                        IsAdministrator = reader.GetBoolean(3),
                     });
 
                 }
@@ -110,7 +110,7 @@ namespace SRSRoelProjekt.Core.Repositories
                 conn.Open();
 
                 var cmd = new SqlCommand(
-                "SELECT EmployeeId, EmployeeName, EmployeeUserName " +
+                "SELECT EmployeeId, EmployeeName, EmployeeUserName, IsAdministrator " +
                 "FROM Employees " +
                 "WHERE EmployeeUserName = @Username",
                 conn); // her har jeg ændret parameteren til @Username for at matche SQL-forespørgslen til kun at hente en enkelt medarbejder baseret på brugernavnet
@@ -125,7 +125,8 @@ namespace SRSRoelProjekt.Core.Repositories
                     {
                         EmployeeId = reader.GetInt32(0),
                         EmployeeName = reader.GetString(1),
-                        EmployeeUserName = reader.GetString(2)
+                        EmployeeUserName = reader.GetString(2),
+                        IsAdministrator = reader.GetBoolean(3)
                     };
                 }
             }

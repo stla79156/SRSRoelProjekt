@@ -23,6 +23,7 @@ namespace SRSRoelProjekt.ViewModels
             public ObservableCollection<Employee> Employees { get; }
 
             private Employee _selectedEmployee;
+
             public Employee SelectedEmployee
             {
                 get => _selectedEmployee;
@@ -122,8 +123,9 @@ namespace SRSRoelProjekt.ViewModels
                     _dialogService.ShowMessage("Vælg en medarbejder.");
                     return;
                 }
-            if (SelectedEmployee.EmployeeId == 4 ||
-                SelectedEmployee.EmployeeId == 5)
+
+
+            if (SelectedEmployee.IsAdministrator)
             {
                 _dialogService.ShowMessage(
                 "Du kan ikke slette en administrator.");

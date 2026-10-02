@@ -12,13 +12,10 @@ namespace SRSRoelProjekt.Core.Models
 
         public string EmployeeUserName { get; set; }
 
+        public bool IsAdministrator { get; set; }
+
         public override string ToString()
         {
-            if (EmployeeId == 4 || EmployeeId == 5)
-            {
-                return $"{EmployeeName} - {EmployeeUserName} (Admin)";
-            }
-
             return $"{EmployeeName} - {EmployeeUserName}";
         }
 
