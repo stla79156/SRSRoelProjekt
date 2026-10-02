@@ -7,6 +7,8 @@ namespace SRSRoelProjekt.Core.Repositories
 {
     public interface IProductRepository
     {
+        List<Product> GetProductsByRack(int rackNumber);
+
         List<Product> GetProducts();
 
         //void SaveProducts(List<Product> products);

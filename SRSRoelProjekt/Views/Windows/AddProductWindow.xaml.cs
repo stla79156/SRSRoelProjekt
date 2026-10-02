@@ -1,5 +1,8 @@
-﻿using System;
+﻿using SRSRoelProjekt.Core.Models;
+using SRSRoelProjekt.ViewModels;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -8,23 +11,18 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
-using SRSRoelProjekt.Core.Repositories;
-using SRSRoelProjekt.Core.Services;
-using SRSRoelProjekt.ViewModels;
 
-namespace SRSRoelProjekt.Views.UserControls
+namespace SRSRoelProjekt.Views.Windows
 {
     /// <summary>
-    /// Interaction logic for ProductControl.xaml
+    /// Interaction logic for AddProductWindow.xaml
     /// </summary>
-    public partial class ProductControl : UserControl
+    public partial class AddProductWindow : Window
     {
-        public ProductControl()
+        public AddProductWindow()
         {
             InitializeComponent();
-           
         }
     }
 }

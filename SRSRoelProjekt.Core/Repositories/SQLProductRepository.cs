@@ -16,6 +16,46 @@ namespace SRSRoelProjekt.Core.Repositories
 
 
 
+        public List<Product> GetProductsByRack(int rackNumber)
+        {
+            var products = new List<Product>();
+
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                var cmd = new SqlCommand(
+                    @"SELECT ProductNumber,
+                     ProductName,
+                     ProductDescription,
+                     Price,
+                     EAN13Number,
+                     RackNumber
+              FROM Products
+              WHERE RackNumber = @RackNumber",
+                    conn);
+
+                cmd.Parameters.AddWithValue("@RackNumber", rackNumber);
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    products.Add(new Product
+                    {
+                        ProductNumber = reader.GetInt32(0),
+                        ProductName = reader.GetString(1),
+                        ProductDescription = reader.GetString(2),
+                        Price = reader.GetDecimal(3),
+                        EAN13Number = reader.GetString(4),
+                        RackNumber = reader.GetInt32(5)
+                    });
+                }
+            }
+
+            return products;
+        }
+
         public List<Product> GetProducts()
         {
             var products = new List<Product>();
@@ -24,7 +64,7 @@ namespace SRSRoelProjekt.Core.Repositories
             {
                 conn.Open();
 
-                var cmd = new SqlCommand("SELECT ProductNumber, ProductName, ProductDescription, Price, EAN13Number FROM Products", conn);
+                var cmd = new SqlCommand("SELECT ProductNumber, ProductName, ProductDescription, Price, EAN13Number, RackNumber FROM Products", conn);
                 var reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -43,8 +83,8 @@ namespace SRSRoelProjekt.Core.Repositories
             }
             return products;
         }
-           
-        
+
+
 
 
 
@@ -61,23 +101,37 @@ namespace SRSRoelProjekt.Core.Repositories
             {
                 conn.Open();
 
-                var cmd = new SqlCommand(
-                    "INSERT INTO Products (ProductName, ProductDescription, Price, EAN13Number, RackNumber) VALUES (@ProductName, @ProductDescription, @Price, @EAN13Number, @RackNumber)",
-                    conn);
+                var insertCmd = new SqlCommand(
+                @"INSERT INTO Products
+          (ProductName, ProductDescription, Price, RackNumber)
+          OUTPUT INSERTED.ProductNumber
+          VALUES
+          (@ProductName, @ProductDescription, @Price, @RackNumber)",
+                conn);
 
-             
-                cmd.Parameters.AddWithValue("@ProductName", product.ProductName);
-                cmd.Parameters.AddWithValue("@ProductDescription", product.ProductDescription);
-                cmd.Parameters.AddWithValue("@Price", product.Price);
-                cmd.Parameters.AddWithValue("@EAN13Number", product.EAN13Number);
-                cmd.Parameters.AddWithValue("@RackNumber", product.RackNumber);
+                insertCmd.Parameters.AddWithValue("@ProductName", product.ProductName);
+                insertCmd.Parameters.AddWithValue("@ProductDescription", product.ProductDescription);
+                insertCmd.Parameters.AddWithValue("@Price", product.Price);
+                insertCmd.Parameters.AddWithValue("@RackNumber", product.RackNumber);
 
-                cmd.ExecuteNonQuery();
+                int generatedProductNumber =
+                    (int)insertCmd.ExecuteScalar();
+
+                product.ProductNumber = generatedProductNumber;
+
+                product.GenerateEan13();
+
+                var updateCmd = new SqlCommand(
+                @"UPDATE Products
+          SET EAN13Number = @EAN13Number
+          WHERE ProductNumber = @ProductNumber",
+                conn);
+
+                updateCmd.Parameters.AddWithValue("@EAN13Number", product.EAN13Number);
+                updateCmd.Parameters.AddWithValue("@ProductNumber", product.ProductNumber);
+
+                updateCmd.ExecuteNonQuery();
             }
-               
-
-                
-            
         }
 
         public void RemoveProduct(Product product)

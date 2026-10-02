@@ -1,0 +1,32 @@
+﻿<Window x:Class="SRSRoelProjekt.Views.Windows.AddProductWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SRSRoelProjekt.Views.Windows"
+        mc:Ignorable="d"
+        Title="AddProductWindow" Height="350" Width="400">
+    <Grid>
+        <StackPanel Margin="20">
+            <TextBlock Text="Produktnavn:" Margin="0,10,0,0" FontFamily="Cambria"/>
+            <TextBox Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" FontFamily="Cambria"/>
+            <TextBlock Text="{Binding ProductNameError}" Foreground="Red" FontFamily="Cambria"/>
+            <TextBlock Text=" "/>
+
+            <TextBlock Text="Beskrivelse:" Margin="0,10,0,0" FontFamily="Cambria"/>
+            <TextBox Text="{Binding ProductDescription, UpdateSourceTrigger=PropertyChanged}" Height="50" FontFamily="Cambria"/>
+            <TextBlock Text="{Binding ProductDescriptionError}" Foreground="Red" FontFamily="Cambria"/>
+            <TextBlock Text=" "/>
+            
+            <TextBlock Text="Pris:" Margin="0,10,0,0" FontFamily="Cambria"/>
+            <TextBox Text="{Binding ProductPrice, UpdateSourceTrigger=PropertyChanged}" FontFamily="Cambria"/>
+            <TextBlock Text="{Binding ProductPriceError}" Foreground="Red" FontFamily="Cambria"/>
+            <TextBlock Text=" "/>
+            
+            <Button Content="Tilføj Produkt" 
+                    Margin="0,10,0,0"
+                    Command="{Binding AddProductCommand}" Width="100"
+                    FontFamily="Cambria"/>
+        </StackPanel>
+    </Grid>
+</Window>

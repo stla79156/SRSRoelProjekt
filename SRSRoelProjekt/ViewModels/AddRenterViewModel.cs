@@ -9,12 +9,12 @@ using System.Linq;
 using System.Runtime.Intrinsics.Arm;
 using System.Text;
 using System.Windows;
+using System.Windows.Input;
+  
 
 namespace SRSRoelProjekt.ViewModels
 {
-    using System.Collections.ObjectModel;
-    using System.Windows.Input;
-    using System.Windows;
+   
 
     public class AddRenterViewModel : ViewModelBase
     {

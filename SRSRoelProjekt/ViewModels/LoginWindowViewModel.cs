@@ -75,7 +75,7 @@ namespace SRSRoelProjekt.ViewModels
                 }
                 else
                 {
-                    var renterWindow = new RenterWindow();
+                    var renterWindow = new RenterWindow(renter);
                     renterWindow.Show();
                     CloseAction?.Invoke(true);
                 }
