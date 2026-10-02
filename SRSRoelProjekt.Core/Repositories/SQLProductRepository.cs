@@ -19,7 +19,7 @@ namespace SRSRoelProjekt.Core.Repositories
             {
                 conn.Open();
 
-                var cmd = new SqlCommand("SELECT ProductNumber, ProductName, ProductDescription, Price, EAN13Number FROM Products", conn);
+                var cmd = new SqlCommand("SELECT ProductNumber, ProductName, ProductDescription, Price, EAN13Number, RackNumber FROM Products", conn);
                 var reader = cmd.ExecuteReader();
 
                 while (reader.Read())

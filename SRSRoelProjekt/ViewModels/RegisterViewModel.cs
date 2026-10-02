@@ -14,25 +14,26 @@ namespace SRSRoelProjekt.ViewModels
     {
         private readonly IProductRepository _productRepo;
         private readonly IDialogService _dialogService;
-        private int _productNumber;
+        private int? _productNumber;
         private string _productName;
         private string _productDescription;
-        private decimal _price;
-        private int rackNumber;
+        private decimal? _price;
+        private int? rackNumber;
 
-        public string ProductNumber
+        public string? ProductNumber
         {
-            get => _productNumber.ToString();
+            get => _productNumber?.ToString();
             set
             {
-                if (int.TryParse(value, out int parsedValue))
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    _productNumber = null;
+                    OnPropertyChanged();
+                }
+                else if (int.TryParse(value, out int parsedValue))
                 {
                     _productNumber = parsedValue;
                     OnPropertyChanged();
-                }
-                else
-                {
-                    // Handle invalid input (e.g., show an error message)
                 }
             }
         }
@@ -57,7 +58,7 @@ namespace SRSRoelProjekt.ViewModels
             }
         }
 
-        public decimal Price
+        public decimal? Price
         {
             get => _price;
             set
@@ -67,13 +68,21 @@ namespace SRSRoelProjekt.ViewModels
             }
         }
 
-        public int RackNumber
-        { get { return rackNumber; } set { rackNumber = value; } }
+        public int? RackNumber
+        {
+            get => rackNumber;
+            set
+            {
+                rackNumber = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ObservableCollection<Product> Products { get; set; }
-        public Product SelectedProduct { get; set; }
-
+        public Product? SelectedProduct { get; set; }
         public ICommand SearchProductCommand { get; }
+        public ICommand ClearSelectedProductCommand { get; }
+        public ICommand AddProductToCartCommand { get; }
 
         public RegisterViewModel()
         {
@@ -81,7 +90,9 @@ namespace SRSRoelProjekt.ViewModels
             Products = new ObservableCollection<Product>();
             _productRepo = new SQLProductRepository();
 
-            SearchProductCommand = new RelayCommand(GetProductByProductNumber);
+            SearchProductCommand = new RelayCommand(SearchProduct);
+            ClearSelectedProductCommand = new RelayCommand(ClearSelectedProduct);
+            AddProductToCartCommand = new RelayCommand(AddProductToCart);
 
         }
 
@@ -95,8 +106,14 @@ namespace SRSRoelProjekt.ViewModels
             }
         }*/
 
-        private void GetProductByProductNumber()
+        private void SearchProduct()
         {
+            if (string.IsNullOrWhiteSpace(ProductNumber))
+            {
+                _dialogService.ShowMessage("Indtast et produktnummer.");
+                return;
+            }
+
             SelectedProduct = _productRepo.GetProductByProductNumber(ProductNumber);
 
             if (SelectedProduct != null)
@@ -115,17 +132,32 @@ namespace SRSRoelProjekt.ViewModels
             }
             else
             {
-                _dialogService.ShowMessage("Product not found.");
+                _dialogService.ShowMessage("Produkt ikke fundet.");
+                ClearSelectedProduct();
             }
         }
 
-        private void ClearFields()
+        private void AddProductToCart()
+        {
+            if (SelectedProduct == null)
+            {
+                _dialogService.ShowMessage("Vælg et produkt først.");
+                return;
+            }
+            // Here you would add the product to the cart.
+            // For now, we just show a message.
+            _dialogService.ShowMessage($"Produkt '{SelectedProduct.ProductName}' tilføjet til kurven.");
+            ClearSelectedProduct();
+        }
+
+        private void ClearSelectedProduct()
         {
             ProductNumber = string.Empty;
             ProductName = string.Empty;
             ProductDescription = string.Empty;
-            Price = 0;
-            RackNumber = 0;
+            Price = null;
+            RackNumber = null;
+            SelectedProduct = null;
             OnPropertyChanged(nameof(ProductNumber));
             OnPropertyChanged(nameof(ProductName));
             OnPropertyChanged(nameof(ProductDescription));

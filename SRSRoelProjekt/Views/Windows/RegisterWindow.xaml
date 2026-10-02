@@ -9,33 +9,39 @@
     
     <!-- Register Window Content -->
     <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="*"/>   
-        </Grid.ColumnDefinitions>
-
-        <!-- Left Column -->
-        <Grid Grid.Column="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20*"/>
-                <RowDefinition Height="10*"/>
-                <RowDefinition Height="55*"/>
-                <RowDefinition Height="15*"/>
-            </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="85*"/>
             
-            <!-- Header -->
-            <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#2C3E50"/>
-            <TextBlock Grid.Row="0" Text="Indtast produktnummer" Foreground="White" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,0,0,25"/>
-            <TextBox Grid.Row="0" Text ="{Binding ProductNumber}" Width="200" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,25,0,0"/>
+        </Grid.RowDefinitions>
 
-            <!-- Titel til info om produkt -->
-            <TextBlock Grid.Row="1" Text="Info om produkt" Foreground="Black" FontSize="24" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5"/>
+        <!-- Header -->
+        <Grid Grid.Row="0" Background="#2C3E50">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+            
+            <TextBlock Grid.Column="0" Text="Kasse Terminal" FontFamily="Cambria" FontWeight="Bold" Foreground="White" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <TextBlock Grid.Column="1" Text="Kurv" FontFamily="Cambria" FontWeight="Bold" Foreground="White" FontSize="24" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Grid>
 
-            <!-- Info om produkt -->
-            <Grid Grid.Row="2" Grid.Column="0">
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="6*"/>
+                <ColumnDefinition Width="4*"/>
+            </Grid.ColumnDefinitions>
+
+            <!-- Kasse Terminal -->
+            <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="20*"/>
+                    <RowDefinition Height="15*"/>
+                    <RowDefinition Height="25*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="10*"/>
+                    <RowDefinition Height="20*"/>
+
                 </Grid.RowDefinitions>
 
                 <Grid.ColumnDefinitions>
@@ -43,20 +49,41 @@
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
 
-                <TextBlock Text="{Binding ProductName}" Grid.Row="0" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                
+                <Border Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="LightGray" BorderThickness="1"/>
+
+
+                <!-- Indtast Produktnummer -->
+                <TextBlock Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" FontSize="16" FontFamily="Cambria" Text="Indtast Produktnummer:" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,30"/>
+                <TextBox Grid.Column="0" Grid.Row="0" Width="100" Grid.ColumnSpan="2" Text="{Binding ProductNumber, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,20,70,0"/>
+                <Button Grid.Column="0" Grid.Row="0" Command="{Binding SearchProductCommand}" Width="50" Grid.ColumnSpan="2" Content="Søg" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="100,20,0,0"/>
+
+                <!-- Vis ProduktNavn -->
+                <TextBlock Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" FontSize="14" FontFamily="Cambria" Text="Produkt Navn" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                <TextBox Grid.Column="0" Grid.Row="1" Width="400" Height="25" FontSize="12" FontFamily="Cambria" Text="{Binding ProductName, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,15,0,0"/>
+
+                <!-- Vis ProduktBeskrivelse -->
+                <TextBlock Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" FontSize="14" FontFamily="Cambria" Text="Produkt Beskrivelse" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                <TextBox Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" FontSize="12" FontFamily="Cambria" Width="400" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center" Text="{Binding ProductDescription, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True" TextWrapping="Wrap" Margin="0,15,0,0"/>
+
+                <!-- Vis Pris -->
+                <TextBlock Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Width="160" Grid.Row="3" FontSize="14" FontFamily="Cambria" Text="Pris" TextAlignment="Left" />
+                <TextBox Grid.Column="1" Grid.Row="3" FontSize="12" FontFamily="Cambria" Width="160" Height="30" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+
+                <!-- Vis Reolnummer -->
+                <TextBlock Grid.Column="0" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Center" Width="160" Text="Reolnummer" FontSize="14" FontFamily="Cambria" TextAlignment="Left"/>
+                <TextBox Grid.Column="1" Grid.Row="4" FontSize="12" Width="160" Height="30" FontFamily="Cambria" Text="{Binding RackNumber, UpdateSourceTrigger=PropertyChanged}" IsReadOnly="True"/>
+
+                <!-- Handling Buttons -->
+                <Button Grid.Column="0" Grid.Row="5" FontFamily="Cambria" Content="Ryd Valg" Command="{Binding ClearSelectedProductCommand}" Width="160" Height="40" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <Button Grid.Column="1" Grid.Row="5" FontFamily="Cambria" Content="Tilføj til Kurv" Command="{Binding AddProductToCartCommand}" Width="160" Height="40" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Grid>
-            
-        </Grid>
 
-        <!-- Right Column -->
-        <Grid Grid.Column="1">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="20*"/>
-                <RowDefinition Height="70*"/>
-                <RowDefinition Height="10*"/>
-            </Grid.RowDefinitions>
-
+            <Grid Grid.Column="1" Background="#F5F5F5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="80*"/>
+                    <RowDefinition Height="20*"/>
+                </Grid.RowDefinitions>
+            </Grid>
         </Grid>
     </Grid>
 </Window>
