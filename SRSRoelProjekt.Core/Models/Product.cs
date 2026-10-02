@@ -10,6 +10,7 @@ namespace SRSRoelProjekt.Core.Models
         public string ProductName { get; set; }
         public string ProductDescription { get; set; }
         public decimal Price { get; set; }
+        public bool IsSold { get; set; }
         public string EAN13Number { get; set; }
         public int RackNumber { get; set; }
 

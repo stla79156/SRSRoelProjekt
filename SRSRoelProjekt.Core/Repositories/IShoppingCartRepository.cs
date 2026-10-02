@@ -7,8 +7,8 @@ namespace SRSRoelProjekt.Core.Repositories
 {
     public interface IShoppingCartRepository
     {
-        List<Product> GetShoppingCartItems();
-        void AddProductToCart(Product product);
-        void RemoveProductFromCart(Product product);
+        List<ShoppingCartItem> GetShoppingCartItems(int shoppingCartId);
+        void AddProductToCart(int shoppingCartId, Product product);
+        void RemoveProductFromCart(int shoppingCartId, int productNumber);
     }
 }

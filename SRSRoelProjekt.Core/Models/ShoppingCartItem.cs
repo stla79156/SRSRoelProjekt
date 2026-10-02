@@ -8,5 +8,7 @@ namespace SRSRoelProjekt.Core.Models
     {
         public int ShoppingCartId { get; set; }
         public int ProductNumber { get; set; }
+
+        public Product Product { get; set; }
     }
 }

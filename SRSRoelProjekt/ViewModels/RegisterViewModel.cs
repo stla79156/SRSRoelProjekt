@@ -14,6 +14,7 @@ namespace SRSRoelProjekt.ViewModels
     {
         private readonly IProductRepository _productRepo;
         private readonly IDialogService _dialogService;
+        private readonly IShoppingCartRepository _shoppingCartRepo;
         private int? _productNumber;
         private string _productName;
         private string _productDescription;
@@ -79,20 +80,26 @@ namespace SRSRoelProjekt.ViewModels
         }
 
         public ObservableCollection<Product> Products { get; set; }
+        public ObservableCollection<ShoppingCartItem> ShoppingCartItems { get; set; } 
         public Product? SelectedProduct { get; set; }
+        public ShoppingCartItem? SelectedShoppingCartItem { get; set; }
         public ICommand SearchProductCommand { get; }
         public ICommand ClearSelectedProductCommand { get; }
         public ICommand AddProductToCartCommand { get; }
+        public ICommand RemoveProductFromCartCommand { get; }
 
         public RegisterViewModel()
         {
             _dialogService = new DialogService();
             Products = new ObservableCollection<Product>();
+            ShoppingCartItems = new ObservableCollection<ShoppingCartItem>();
             _productRepo = new SQLProductRepository();
+            _shoppingCartRepo = new SQLShoppingCartRepository();
 
             SearchProductCommand = new RelayCommand(SearchProduct);
             ClearSelectedProductCommand = new RelayCommand(ClearSelectedProduct);
             AddProductToCartCommand = new RelayCommand(AddProductToCart);
+            RemoveProductFromCartCommand = new RelayCommand(RemoveProductFromCart);
 
         }
 
@@ -140,14 +147,30 @@ namespace SRSRoelProjekt.ViewModels
         private void AddProductToCart()
         {
             if (SelectedProduct == null)
-            {
-                _dialogService.ShowMessage("Vælg et produkt først.");
                 return;
+
+            _shoppingCartRepo.AddProductToCart(1, SelectedProduct);
+
+            LoadShoppingCart();
+        }
+
+        private void RemoveProductFromCart()
+        {
+            if (SelectedShoppingCartItem == null)
+                return;
+
+            _shoppingCartRepo.RemoveProductFromCart(1, SelectedShoppingCartItem.ProductNumber);
+
+            ShoppingCartItems.Remove(SelectedShoppingCartItem);
+        }
+
+        private void LoadShoppingCart()
+        {
+
+            foreach (var item in _shoppingCartRepo.GetShoppingCartItems(1))
+            {
+                ShoppingCartItems.Add(item);
             }
-            // Here you would add the product to the cart.
-            // For now, we just show a message.
-            _dialogService.ShowMessage($"Produkt '{SelectedProduct.ProductName}' tilføjet til kurven.");
-            ClearSelectedProduct();
         }
 
         private void ClearSelectedProduct()

@@ -29,6 +29,7 @@ namespace SRSRoelProjekt.Core.Repositories
                      ProductName,
                      ProductDescription,
                      Price,
+                     IsSold,
                      EAN13Number,
                      RackNumber
               FROM Products
@@ -47,8 +48,9 @@ namespace SRSRoelProjekt.Core.Repositories
                         ProductName = reader.GetString(1),
                         ProductDescription = reader.GetString(2),
                         Price = reader.GetDecimal(3),
-                        EAN13Number = reader.GetString(4),
-                        RackNumber = reader.GetInt32(5)
+                        IsSold = reader.GetBoolean(4),
+                        EAN13Number = reader.GetString(5),
+                        RackNumber = reader.GetInt32(6)
                     });
                 }
             }
@@ -64,7 +66,7 @@ namespace SRSRoelProjekt.Core.Repositories
             {
                 conn.Open();
 
-                var cmd = new SqlCommand("SELECT ProductNumber, ProductName, ProductDescription, Price, EAN13Number, RackNumber FROM Products", conn);
+                var cmd = new SqlCommand("SELECT ProductNumber, ProductName, ProductDescription, Price, IsSold, EAN13Number, RackNumber FROM Products", conn);
                 var reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -75,8 +77,9 @@ namespace SRSRoelProjekt.Core.Repositories
                         ProductName = reader.GetString(1),
                         ProductDescription = reader.GetString(2),
                         Price = reader.GetDecimal(3),
-                        EAN13Number = reader.GetString(4),
-                        RackNumber = reader.GetInt32(5),
+                        IsSold = reader.GetBoolean(4),
+                        EAN13Number = reader.GetString(5),
+                        RackNumber = reader.GetInt32(6),
                     });
 
                 }
@@ -91,15 +94,16 @@ namespace SRSRoelProjekt.Core.Repositories
 
                 var insertCmd = new SqlCommand(
                 @"INSERT INTO Products
-          (ProductName, ProductDescription, Price, RackNumber)
-          OUTPUT INSERTED.ProductNumber
-          VALUES
-          (@ProductName, @ProductDescription, @Price, @RackNumber)",
+                (ProductName, ProductDescription, Price, IsSold, RackNumber)
+                OUTPUT INSERTED.ProductNumber
+                VALUES
+                (@ProductName, @ProductDescription, @Price, @IsSold, @RackNumber)",
                 conn);
 
                 insertCmd.Parameters.AddWithValue("@ProductName", product.ProductName);
                 insertCmd.Parameters.AddWithValue("@ProductDescription", product.ProductDescription);
                 insertCmd.Parameters.AddWithValue("@Price", product.Price);
+                insertCmd.Parameters.AddWithValue("@IsSold", product.IsSold = false);
                 insertCmd.Parameters.AddWithValue("@RackNumber", product.RackNumber);
 
                 int generatedProductNumber =
@@ -142,13 +146,14 @@ namespace SRSRoelProjekt.Core.Repositories
                 conn.Open();
 
                 var cmd = new SqlCommand(
-                    "UPDATE Products SET ProductName=@ProductName, ProductDescription=@ProductDescription, Price=@Price, EAN13Number=@EAN13Number, RackNumber=@RackNumber WHERE ProductNumber=@ProductNumber",
+                    "UPDATE Products SET ProductName=@ProductName, ProductDescription=@ProductDescription, Price=@Price, IsSold=@IsSold, EAN13Number=@EAN13Number, RackNumber=@RackNumber WHERE ProductNumber=@ProductNumber",
                     conn);
 
                 cmd.Parameters.AddWithValue("@ProductNumber", product.ProductNumber);
                 cmd.Parameters.AddWithValue("@ProductName", product.ProductName);
                 cmd.Parameters.AddWithValue("@ProductDescription", product.ProductDescription);
                 cmd.Parameters.AddWithValue("@Price", product.Price);
+                cmd.Parameters.AddWithValue("@IsSold", product.IsSold);
                 cmd.Parameters.AddWithValue("@EAN13Number", product.EAN13Number);
                 cmd.Parameters.AddWithValue("@RackNumber", product.RackNumber);
 
@@ -164,9 +169,9 @@ namespace SRSRoelProjekt.Core.Repositories
 
                 var cmd = new SqlCommand(
                     @"SELECT ProductNumber, ProductName, ProductDescription,
-                     Price, EAN13Number, RackNumber
-              FROM Products
-              WHERE ProductNumber = @ProductNumber",
+                    Price, IsSold, EAN13Number, RackNumber
+                    FROM Products
+                    WHERE ProductNumber = @ProductNumber",
                     conn);
 
                 cmd.Parameters.AddWithValue("@ProductNumber", productNumber);
@@ -181,8 +186,9 @@ namespace SRSRoelProjekt.Core.Repositories
                         ProductName = reader.GetString(1),
                         ProductDescription = reader.GetString(2),
                         Price = reader.GetDecimal(3),
-                        EAN13Number = reader.GetString(4),
-                        RackNumber = reader.GetInt32(5)
+                        IsSold = reader.GetBoolean(4),
+                        EAN13Number = reader.GetString(5),
+                        RackNumber = reader.GetInt32(6)
                     };
                 }
                 return null;
