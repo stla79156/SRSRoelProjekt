@@ -66,18 +66,31 @@
                         FontSize="14" FontFamily="Cambria" 
                         HorizontalAlignment="Left"/>
 
-            <TextBox    Text="{Binding EmployeeName}"
+            <TextBox    Text="{Binding EmployeeName, UpdateSourceTrigger=PropertyChanged}"
                         Margin="0,5,5,10" Height="25" Width="250" 
                         HorizontalAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
 
-
+          
+            
+            
+            
             <TextBlock  Text="Brugernavn" Foreground="#7E93A8"
                         FontSize="14" FontFamily="Cambria"
                         HorizontalAlignment="left"/>
 
-            <TextBox    Text="{Binding EmployeeUserName}"
-                        Margin="0,5,5,20" Height="25" Width="250" 
+
+
+            <TextBox    Text="{Binding EmployeeUserName, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="0,5,5,5" Height="25" Width="250" 
                         HorizontalAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
+
+            <TextBlock  Text="{Binding EmployeeUserNameError}"
+              Margin="5,0,0,20"
+              Height="20"
+              Width="250"
+              HorizontalAlignment="Left"
+              VerticalAlignment="Center"
+              Foreground="Red" />
 
             <Button     Content="Tilføj ny medarbejder"
                         Command="{Binding AddEmployeeCommand}"

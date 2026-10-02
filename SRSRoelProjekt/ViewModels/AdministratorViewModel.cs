@@ -48,15 +48,48 @@ namespace SRSRoelProjekt.ViewModels
             private string _employeeUserName;
             public string EmployeeUserName
             {
-                get => _employeeUserName;
-                set
-                {
-                    _employeeUserName = value;
-                    OnPropertyChanged();
-                }
-            }
+            get => _employeeUserName;
+            set
+            {
+                _employeeUserName = value;
 
-            public ICommand AddEmployeeCommand { get; }
+                EmployeeUserNameError = string.Empty;
+
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    EmployeeUserNameError = string.Empty;
+                }
+                else if (value.Any(char.IsLetter))
+                {
+                    EmployeeUserNameError =
+                    "Brugernavnet må kun indeholde præcis 6 tal";
+                }
+                else
+                {
+                    EmployeeUserNameError = string.Empty;
+                }
+
+                OnPropertyChanged();
+            }
+        }
+
+
+
+      
+
+        private string _employeeUserNameError;
+
+        public string EmployeeUserNameError
+        {
+            get => _employeeUserNameError;
+            set
+            {
+                _employeeUserNameError = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ICommand AddEmployeeCommand { get; }
 
             public ICommand RemoveEmployeeCommand { get; }
 
@@ -85,19 +118,82 @@ namespace SRSRoelProjekt.ViewModels
 
             private void AddEmployee(object parameter)
             {
-                if (string.IsNullOrWhiteSpace(EmployeeName))
+
+            string formattedName = EmployeeName;
+
+           
+
+
+
+            if (!string.IsNullOrWhiteSpace(EmployeeName))
+            {
+                formattedName =
+                EmployeeName.Substring(0, 1).ToUpper() +
+                EmployeeName.Substring(1).ToLower();
+            }
+
+            if (string.IsNullOrWhiteSpace(EmployeeName))
                 {
                     _dialogService.ShowMessage("Indtast et navn.");
                     return;
                 }
 
-                if (string.IsNullOrWhiteSpace(EmployeeUserName))
+            if (EmployeeName.Any(char.IsDigit))
+            {
+                _dialogService.ShowMessage(
+                "Navnet må ikke indeholde tal.");
+
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(EmployeeUserName))
                 {
                     _dialogService.ShowMessage("Indtast et brugernavn.");
                     return;
                 }
 
-                Employee employee = new Employee
+
+            if (EmployeeUserName.Length != 6 ||
+                !EmployeeUserName.All(char.IsDigit))
+            {
+                _dialogService.ShowMessage(
+                "Medarbejderens brugernavn skal bestå af præcis 6 tal.");
+
+                return;
+            }
+
+
+            if (_employeeRepository.GetEmployees()
+.Any(e => e.EmployeeUserName == EmployeeUserName))
+            {
+                _dialogService.ShowMessage(
+                "Brugernavnet findes allerede.");
+
+                return;
+            }
+
+
+            if (_employeeRepository.GetEmployees()
+                 .Any(e => e.EmployeeUserName == EmployeeUserName))
+            {
+                _dialogService.ShowMessage(
+                "Brugernavnet findes allerede.");
+
+                return;
+            }
+
+            if (!IsValidUsername(EmployeeUserName))
+            {
+                _dialogService.ShowMessage(
+                "Medarbejderens brugernavn skal bestå af præcis 6 tal.");
+
+                return;
+            }
+
+            
+
+
+            Employee employee = new Employee
                 {
                     EmployeeName = EmployeeName,
                     EmployeeUserName = EmployeeUserName
@@ -148,6 +244,33 @@ namespace SRSRoelProjekt.ViewModels
 
                 _dialogService.ShowMessage("Medarbejder fjernet.");
             }
+
+
+        private bool IsEmployeeUsername(string username)
+        {
+            return !string.IsNullOrWhiteSpace(username)
+            && char.IsDigit(username[0]);
         }
+
+        
+
+        public bool IsValidUsername(string username)
+        {
+            if (IsEmployeeUsername(username))
+            {
+                return !string.IsNullOrWhiteSpace(username)
+                       && username.Length == 6
+                       && username.All(char.IsDigit);
+            }
+            return false;
+        }
+
+
+
+
+
+
+
+    }
     
 }
