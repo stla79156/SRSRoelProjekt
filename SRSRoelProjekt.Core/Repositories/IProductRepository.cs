@@ -14,6 +14,7 @@ namespace SRSRoelProjekt.Core.Repositories
         void AddProduct(Product product);
         void RemoveProduct(Product product);
         void UpdateProduct(Product product);
+        Product GetProductByProductNumber(string productNumber);
 
     }
 }
