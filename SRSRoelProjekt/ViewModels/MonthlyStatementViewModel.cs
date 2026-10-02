@@ -19,7 +19,10 @@ namespace SRSRoelProjekt.ViewModels
 {
     public class MonthlyStatementViewModel : ViewModelBase
     {
+        private MainViewModel _main;
 
+        public ObservableCollection<Renter> Renters { get; } = new();
+        public ObservableCollection<RenterStatement> Statements { get; } = new();
         public ObservableCollection<MonthItem> Months { get; } = new()
         {
             new MonthItem { MonthNumber = 1, MonthName = "Januar" },
@@ -36,13 +39,70 @@ namespace SRSRoelProjekt.ViewModels
             new MonthItem { MonthNumber = 12, MonthName = "December" }
         };
 
-        
+        public ObservableCollection<SortOption> SortOptions { get; } = new()
+        {
+            new SortOption { Name = "Lejernavn" },
+            new SortOption { Name = "Salgsdato" },
+            new SortOption { Name = "Pris" },
+            new SortOption { Name = "Reolnummer" }
+        };
+
         public MonthlyStatementViewModel()
         {
-            SelectedMonth = Months[DateTime.Now.Month - 1];
-        }
+            int monthToShow = DateTime.Now.Day < 20
+                ? DateTime.Now.AddMonths(-1).Month
+                : DateTime.Now.Month;
 
-        //private MonthItem _selectedMonth;
+            SelectedMonth = Months.First(m => m.MonthNumber == monthToShow);
+
+            SelectedSortOption = SortOptions[0];
+
+            Statements.Add(new RenterStatement
+            {
+                RenterName = "Rasmus",
+                RackCount = 2,
+                TotalSales = 430,
+                Commission = 43,
+                RackAmount = 1650,
+                FinalAmount = -1263,
+
+                Products =
+{
+new SoldProduct
+{
+ProductName = "Vase",
+SoldDate = DateTime.Now,
+Price = 125
+},
+new SoldProduct
+{
+ProductName = "Jakke",
+SoldDate = DateTime.Now,
+Price = 305
+}
+}
+            });
+
+        }
+        //public MonthlyStatementViewModel(MainViewModel main)
+        //{
+        //    _main = main;
+
+        //    int monthToShow = DateTime.Now.Day < 20
+        //    ? DateTime.Now.AddMonths(-1).Month
+        //    : DateTime.Now.Month;
+
+        //    SelectedMonth = Months.First(m => m.MonthNumber == monthToShow);
+
+        //    SelectedSortOption = SortOptions[0];
+        //}
+
         public MonthItem SelectedMonth { get; set; }
+
+        public SortOption SelectedSortOption { get; set; }
+        
+        
     }
+
+
 }

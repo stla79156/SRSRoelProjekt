@@ -16,9 +16,9 @@ namespace SRSRoelProjekt.Views.Windows
     /// <summary>
     /// Interaction logic for MonlthyStatementWindow.xaml
     /// </summary>
-    public partial class MonlthyStatementWindow : Window
+    public partial class MonthlyStatementWindow : Window
     {
-        public MonlthyStatementWindow()
+        public MonthlyStatementWindow()
         {
             InitializeComponent();
             DataContext = new MonthlyStatementViewModel();
