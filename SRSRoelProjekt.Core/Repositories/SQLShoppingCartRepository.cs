@@ -64,22 +64,49 @@ namespace SRSRoelProjekt.Core.Repositories
 
         public void AddProductToCart(int shoppingCartId, Product product)
         {
-            using (var conn = new SqlConnection(_connectionString))
+            if (shoppingCartId == null)
             {
-                conn.Open();
-
-                var cmd = new SqlCommand(
-                    @"INSERT INTO ShoppingCartItem
-              (ShoppingCartId, ProductNumber)
-              VALUES
-              (@ShoppingCartId, @ProductNumber)",
-                    conn);
-
-                cmd.Parameters.AddWithValue("@ShoppingCartId", shoppingCartId);
-                cmd.Parameters.AddWithValue("@ProductNumber", product.ProductNumber);
-
-                cmd.ExecuteNonQuery();
+                shoppingCartId = CreateShoppingCart();
             }
+
+            using SqlConnection conn = new SqlConnection(_connectionString);
+
+            string query = @"
+        INSERT INTO ShoppingCartItem
+        (
+            ShoppingCartId,
+            ProductNumber
+        )
+        VALUES
+        (
+            @ShoppingCartId,
+            @ProductNumber
+        )";
+
+            SqlCommand cmd = new SqlCommand(query, conn);
+
+            cmd.Parameters.AddWithValue("@ShoppingCartId", shoppingCartId);
+            cmd.Parameters.AddWithValue("@ProductNumber", product.ProductNumber);
+
+            conn.Open();
+            cmd.ExecuteNonQuery();
+        }
+
+        public int CreateShoppingCart()
+        {
+            using SqlConnection conn = new SqlConnection(_connectionString);
+
+            string query = @"
+        INSERT INTO ShoppingCart
+        DEFAULT VALUES;
+        
+        SELECT SCOPE_IDENTITY();";
+
+            SqlCommand cmd = new SqlCommand(query, conn);
+
+            conn.Open();
+
+            return Convert.ToInt32(cmd.ExecuteScalar());
         }
 
         public void RemoveProductFromCart(
@@ -101,6 +128,21 @@ namespace SRSRoelProjekt.Core.Repositories
 
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        public void ClearShoppingCart(int shoppingCartId)
+        {
+            using SqlConnection connection = new SqlConnection(_connectionString);
+
+            string query = @"
+        DELETE FROM ShoppingCartItem
+        WHERE ShoppingCartId = @ShoppingCartId";
+
+            SqlCommand command = new SqlCommand(query, connection);
+            command.Parameters.AddWithValue("@ShoppingCartId", shoppingCartId);
+
+            connection.Open();
+            command.ExecuteNonQuery();
         }
     }
 }

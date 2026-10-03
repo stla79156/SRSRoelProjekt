@@ -4,7 +4,8 @@
         Title="Shelf Information"
         Height="300"
         Width="350"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen">
 
     <StackPanel Margin="20">
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SRSRoelProjekt.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -9,22 +10,22 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SRSRoelProjekt.ViewModels;
-using SRSRoelProjekt.Views.Windows;
 
 namespace SRSRoelProjekt.Views.Windows
 {
     /// <summary>
-    /// Interaction logic for RegisterWindow.xaml
+    /// Interaction logic for PaymentMethodWindow.xaml
     /// </summary>
-    public partial class RegisterWindow : Window
+    public partial class PaymentMethodWindow : Window
     {
-        
+        public PaymentMethodViewModel ViewModel { get; }
 
-        public RegisterWindow()
+        public PaymentMethodWindow()
         {
             InitializeComponent();
-            DataContext = new RegisterViewModel();
+
+            ViewModel = new PaymentMethodViewModel(this);
+            DataContext = ViewModel;
         }
     }
 }

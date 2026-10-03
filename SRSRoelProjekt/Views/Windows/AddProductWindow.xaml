@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SRSRoelProjekt.Views.Windows"
         mc:Ignorable="d"
-        Title="AddProductWindow" Height="350" Width="400">
+        Title="AddProductWindow" Height="350" Width="400"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel Margin="20">
             <TextBlock Text="Produktnavn:" Margin="0,10,0,0" FontFamily="Cambria"/>

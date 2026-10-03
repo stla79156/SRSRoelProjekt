@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows;
 using System.Windows.Input;
+using SRSRoelProjekt.Core.Repositories;
 
 
 namespace SRSRoelProjekt.ViewModels
@@ -12,6 +13,7 @@ namespace SRSRoelProjekt.ViewModels
     public class HeaderBarViewModel : ViewModelBase
     {
         private readonly IDialogService _dialogService;
+        private readonly IShoppingCartRepository _shoppingCartRepo;
 
         public RelayCommand LogOutCommand { get; }
 
@@ -28,6 +30,7 @@ namespace SRSRoelProjekt.ViewModels
                 return;
 
             Application.Current.Shutdown();
+            _shoppingCartRepo.ClearShoppingCart(1); // Clear the shopping cart when logging out
         }
 
         // Application.Current.Shutdown(); //  Application.Current.Shutdown(); skal ersttes med  new LoginWindow().Show(); når login er implementeret

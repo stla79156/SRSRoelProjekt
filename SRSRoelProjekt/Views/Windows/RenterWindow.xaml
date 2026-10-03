@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:SRSRoelProjekt.Views.Windows"
         xmlns:views="clr-namespace:SRSRoelProjekt.Views.UserControls" 
         mc:Ignorable="d"
-        Title="RenterWindow" Height="450" Width="800">
+        Title="RenterWindow" Height="450" Width="800"
+        WindowStartupLocation="CenterScreen">
     
     <Grid>
         <Grid.RowDefinitions>

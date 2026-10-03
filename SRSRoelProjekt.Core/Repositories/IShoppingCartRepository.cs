@@ -10,5 +10,7 @@ namespace SRSRoelProjekt.Core.Repositories
         List<ShoppingCartItem> GetShoppingCartItems(int shoppingCartId);
         void AddProductToCart(int shoppingCartId, Product product);
         void RemoveProductFromCart(int shoppingCartId, int productNumber);
+        void ClearShoppingCart(int shoppingCartId);
+        int CreateShoppingCart();
     }
 }

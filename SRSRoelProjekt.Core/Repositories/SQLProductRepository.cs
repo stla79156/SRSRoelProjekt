@@ -171,7 +171,7 @@ namespace SRSRoelProjekt.Core.Repositories
                     @"SELECT ProductNumber, ProductName, ProductDescription,
                     Price, IsSold, EAN13Number, RackNumber
                     FROM Products
-                    WHERE ProductNumber = @ProductNumber",
+                    WHERE ProductNumber = @ProductNumber AND IsSold = 0",
                     conn);
 
                 cmd.Parameters.AddWithValue("@ProductNumber", productNumber);

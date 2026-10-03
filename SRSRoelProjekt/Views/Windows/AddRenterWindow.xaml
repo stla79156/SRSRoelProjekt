@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SRSRoelProjekt.Views"
         mc:Ignorable="d"
-        Title="AddRenterWindow" Height="400" Width="400">
+        Title="AddRenterWindow" Height="400" Width="400"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <StackPanel Margin="20">
 
