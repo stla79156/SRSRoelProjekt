@@ -43,10 +43,15 @@ namespace SRSRoelProjekt.Core.Models
         }
     }
 
+            int remainder = sum % 10;
+            int checkDigit = (remainder == 0) ? 0 : 10 - remainder;
+
+            // Sætter den fulde 13-cifrede kode på produktet
+            this.EAN13Number = first12Digits + checkDigit;
+        }
 
 
-
-
+    }
 
 
 }
