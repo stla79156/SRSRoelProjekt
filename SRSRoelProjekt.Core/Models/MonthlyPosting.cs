@@ -14,6 +14,6 @@ namespace SRSRoelProjekt.Core.Models
 
         public DateTime PostedDate { get; set; }
 
-        public string EmployeeName { get; set; }
+        public int EmployeeId { get; set; }
     }
 }

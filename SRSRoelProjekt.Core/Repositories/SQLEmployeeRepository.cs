@@ -133,7 +133,37 @@ namespace SRSRoelProjekt.Core.Repositories
             return null;
         }
 
+        public Employee GetEmployeeById(int employeeId)
+        {
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
 
+                var cmd = new SqlCommand(
+                    @"SELECT EmployeeId,
+                     EmployeeName,
+                     EmployeeUserName
+              FROM Employees
+              WHERE EmployeeId = @EmployeeId",
+                    conn);
+
+                cmd.Parameters.AddWithValue("@EmployeeId", employeeId);
+
+                var reader = cmd.ExecuteReader();
+
+                if (reader.Read())
+                {
+                    return new Employee
+                    {
+                        EmployeeId = reader.GetInt32(0),
+                        EmployeeName = reader.GetString(1),
+                        EmployeeUserName = reader.GetString(2)
+                    };
+                }
+            }
+
+            return null;
+        }
 
     }
 }       

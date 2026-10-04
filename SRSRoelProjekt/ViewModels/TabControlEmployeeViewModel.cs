@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows;
+using System.Windows.Media.Media3D;
 
 namespace SRSRoelProjekt.ViewModels
 {
@@ -18,5 +20,7 @@ namespace SRSRoelProjekt.ViewModels
             MonthlyStatementViewModel = monthlyStatementViewModel;
             AdministratorViewModel = administratorViewModel;
         }
+
+        
     }
 }

@@ -24,7 +24,7 @@ namespace SRSRoelProjekt.ViewModels
         private readonly IProductRepository _productRepository;
         private readonly IDialogService _dialogService;
         private readonly IMonthlyPostingRepository _monthlyPostingRepository;
-
+        private readonly IEmployeeRepository _employeeRepository;
         private readonly Employee _loggedInEmployee;
 
 
@@ -78,7 +78,7 @@ namespace SRSRoelProjekt.ViewModels
                 SelectedMonth.MonthNumber,
                 DateTime.Now.Year,
                 DateTime.Now,
-                _loggedInEmployee.EmployeeName);
+                _loggedInEmployee.EmployeeId);
 
             LoadStatements();
 
@@ -92,6 +92,7 @@ namespace SRSRoelProjekt.ViewModels
             _renterRepository = new SqlRenterRepository();
             _rackRepository = new SQLRackRepository();
             _productRepository = new SQLProductRepository();
+            _employeeRepository = new SQLEmployeeRepository();
             _dialogService = new DialogService(); // Initialiserer DialogService
             _monthlyPostingRepository = new SqlMonthlyPostingRepository();
 
@@ -119,15 +120,19 @@ namespace SRSRoelProjekt.ViewModels
             TotalMonthlyRackRent = 0;
 
             var posting = _monthlyPostingRepository.GetPosting(
-                            SelectedMonth.MonthNumber,
-                            DateTime.Now.Year);
+    SelectedMonth.MonthNumber,
+    DateTime.Now.Year);
 
             if (posting != null)
             {
                 IsMonthPosted = true;
 
+                var employee =
+                    _employeeRepository.GetEmployeeById(
+                        posting.EmployeeId);
+
                 PostedInfo =
-                    $"Bogført {posting.PostedDate:dd-MM-yyyy HH:mm} af {posting.EmployeeName}";
+                    $"Bogført {posting.PostedDate:dd-MM-yyyy HH:mm} af {employee.EmployeeName}";
             }
             else
             {

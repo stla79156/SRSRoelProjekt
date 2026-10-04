@@ -25,7 +25,21 @@ namespace SRSRoelProjekt.Views.TabControl
 
             DataContext = new TabControlRenterViewModel(
             new RenterWindowViewModel(renter),
-            new MonthlyStatementRenterViewModel());
+            new MonthlyStatementRenterViewModel(renter));
+        }
+        private bool _resizing;
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (_resizing)
+                return;
+
+            _resizing = true;
+
+            Height = Width / 1.6;
+
+            _resizing = false;
         }
     }
+
 }

@@ -84,9 +84,10 @@ namespace SRSRoelProjekt.ViewModels
             if (posting != null)
             {
                 IsMonthPosted = true;
+                
 
                 PostedInfo =
-                    $"Bogført {posting.PostedDate:dd-MM-yyyy HH:mm} af {posting.EmployeeName}";
+                    $"Bogført {posting.PostedDate:dd-MM-yyyy HH:mm}";
             }
             else
             {
