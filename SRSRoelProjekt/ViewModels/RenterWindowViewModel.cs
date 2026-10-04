@@ -156,7 +156,7 @@ namespace SRSRoelProjekt.ViewModels
 
             foreach (var product in
                      _productRepository.GetProductsByRack(
-                         SelectedRack.RackNumber))
+                         SelectedRack.RackNumber).Where(p => !p.IsSold))
             {
                 Products.Add(product);
             }

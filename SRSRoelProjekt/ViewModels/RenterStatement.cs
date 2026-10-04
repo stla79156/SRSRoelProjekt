@@ -13,9 +13,17 @@ namespace SRSRoelProjekt.ViewModels
 {
     public class RenterStatement : ViewModelBase
     {
-        public bool IsPosted { get; set; }
+        private bool _isPosted;
 
-       
+        public bool IsPosted
+        {
+            get => _isPosted;
+            set
+            {
+                _isPosted = value;
+                OnPropertyChanged();
+            }
+        }
 
         public string PostedBy { get; set; }
 

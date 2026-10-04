@@ -23,6 +23,11 @@ namespace SRSRoelProjekt.ViewModels
         private readonly IRackRepository _rackRepository;
         private readonly IProductRepository _productRepository;
         private readonly IDialogService _dialogService;
+        private readonly IMonthlyPostingRepository _monthlyPostingRepository;
+
+        private readonly Employee _loggedInEmployee;
+
+
         public ICommand PostMonthCommand { get; }
 
         public ObservableCollection<RenterStatement> Statements { get; }
@@ -44,14 +49,7 @@ namespace SRSRoelProjekt.ViewModels
         new MonthItem { MonthNumber = 12, MonthName = "December" }
     };
 
-        public ObservableCollection<SortOption> SortOptions { get; } = new()
-    {
-        new SortOption { Name = "Lejernavn" },
-        new SortOption { Name = "Salgsdato" },
-        new SortOption { Name = "Pris" },
-        new SortOption { Name = "Reolnummer" }
-    };
-
+        
         private MonthItem _selectedMonth;
         public MonthItem SelectedMonth
         {
@@ -65,26 +63,22 @@ namespace SRSRoelProjekt.ViewModels
             }
         }
 
-        private SortOption _selectedSortOption;
-        public SortOption SelectedSortOption
-        {
-            get => _selectedSortOption;
-            set
-            {
-                _selectedSortOption = value;
-                OnPropertyChanged();
-
-                LoadStatements();
-            }
-        }
+       
 
         private void PostMonth()
         {
+            if (IsMonthPosted)
+            {
+                _dialogService.ShowMessage(
+                    $"Måneden er allerede bogført.\n{PostedInfo}");
+
+                return;
+            }
             _monthlyPostingRepository.CreatePosting(
                 SelectedMonth.MonthNumber,
                 DateTime.Now.Year,
                 DateTime.Now,
-                _main.CurrentEmployee.Name);
+                _loggedInEmployee.EmployeeName);
 
             LoadStatements();
 
@@ -94,10 +88,13 @@ namespace SRSRoelProjekt.ViewModels
 
         public MonthlyStatementViewModel()
         {
+            
             _renterRepository = new SqlRenterRepository();
             _rackRepository = new SQLRackRepository();
             _productRepository = new SQLProductRepository();
             _dialogService = new DialogService(); // Initialiserer DialogService
+            _monthlyPostingRepository = new SqlMonthlyPostingRepository();
+
 
             PostMonthCommand =new RelayCommand(PostMonth);
 
@@ -108,18 +105,36 @@ namespace SRSRoelProjekt.ViewModels
             SelectedMonth =
                 Months.First(m => m.MonthNumber == monthToShow);
 
-            SelectedSortOption = SortOptions[0];
+           
 
             LoadStatements();
         }
 
         private void LoadStatements()
         {
-            Statements.Clear();
-
+           
             TotalMonthlySales = 0;
             TotalMonthlyCommission = 0;
             TotalMonthlyRackRent = 0;
+
+            var posting = _monthlyPostingRepository.GetPosting(
+                            SelectedMonth.MonthNumber,
+                            DateTime.Now.Year);
+
+            if (posting != null)
+            {
+                IsMonthPosted = true;
+
+                PostedInfo =
+                    $"Bogført {posting.PostedDate:dd-MM-yyyy HH:mm} af {posting.EmployeeName}";
+            }
+            else
+            {
+                IsMonthPosted = false;
+
+                PostedInfo = "Ikke bogført";
+            }
+            Statements.Clear();
 
             var renters = _renterRepository.GetRenters();
 
@@ -173,7 +188,8 @@ namespace SRSRoelProjekt.ViewModels
                     TotalSales = totalSales,
                     Commission = commission,
                     RackAmount = rackAmount,
-                    FinalAmount = finalAmount
+                    FinalAmount = finalAmount,
+                    IsPosted = IsMonthPosted
                 });
 
                 // Company totals
@@ -187,9 +203,12 @@ namespace SRSRoelProjekt.ViewModels
                 TotalMonthlyCommission +
                 TotalMonthlyRackRent;
 
-        }
 
+
+        }
         
+
+
 
         public string CurrentDate
         {
@@ -236,6 +255,31 @@ namespace SRSRoelProjekt.ViewModels
             set
             {
                 _companyMonthlyIncome = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isMonthPosted;
+
+        public bool IsMonthPosted
+        {
+            get => _isMonthPosted;
+            set
+            {
+                
+                _isMonthPosted = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _postedInfo;
+
+        public string PostedInfo
+        {
+            get => _postedInfo;
+            set
+            {
+                _postedInfo = value;
                 OnPropertyChanged();
             }
         }

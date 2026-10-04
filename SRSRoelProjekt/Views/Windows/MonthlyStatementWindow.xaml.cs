@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SRSRoelProjekt.Core.Models;
 using SRSRoelProjekt.ViewModels;
 
 namespace SRSRoelProjekt.Views.Windows

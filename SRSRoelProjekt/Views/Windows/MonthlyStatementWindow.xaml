@@ -22,9 +22,9 @@
             <Grid>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="30*"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0"
@@ -109,6 +109,7 @@
                                     <TextBlock Grid.Column="2"
                                                Text="Pris"
                                                FontWeight="Bold"/>
+                                    
 
                                 </Grid>
 
@@ -138,6 +139,7 @@
                                                 <TextBlock Grid.Column="2"
                                                            Text="{Binding Price,
                                                            StringFormat={}{0:N2} kr.}"/>
+                                               
 
                                             </Grid>
 
@@ -146,7 +148,7 @@
                                     </ItemsControl.ItemTemplate>
 
                                 </ItemsControl>
-
+                            
                                 <Separator Margin="0,10"/>
 
                                 <!-- Totals -->
@@ -214,7 +216,7 @@
                                                                      Value="True">
 
                                                             <Setter Property="Fill"
-                                                                    Value="LimeGreen"/>
+                                                                    Value="Green"/>
 
                                                         </DataTrigger>
 
@@ -269,10 +271,70 @@
                            FontWeight="Bold"
                            Margin="0,0,0,15"/>
 
+                <Separator Margin="0,10,0,0"/>
+
+                <TextBlock Text="{Binding PostedInfo}"
+                           FontWeight="Bold"
+                           Margin="0,0,0,10">
+
+                    <TextBlock.Style>
+
+                        <Style TargetType="TextBlock">
+
+                            <Setter Property="Foreground"
+                                    Value="Red"/>
+
+                            <Style.Triggers>
+
+                                <DataTrigger Binding="{Binding IsMonthPosted}"
+                                             Value="True">
+
+                                    <Setter Property="Foreground"
+                                            Value="Green"/>
+
+                                </DataTrigger>
+
+                            </Style.Triggers>
+
+                        </Style>
+
+                    </TextBlock.Style>
+
+                </TextBlock>
+
                 <Button Content="Bogfør måned"
                         Command="{Binding PostMonthCommand}"
                         Width="150"
-                        HorizontalAlignment="Right"/>
+                        HorizontalAlignment="Right">
+
+                    <Button.Style>
+
+                        <Style TargetType="Button">
+
+                            <Setter Property="IsEnabled"
+                    Value="True"/>
+
+                            <Style.Triggers>
+
+                                <DataTrigger Binding="{Binding IsMonthPosted}"
+                             Value="True">
+
+                                    <Setter Property="IsEnabled"
+                            Value="False"/>
+
+                                    <Setter Property="Content"
+                            Value="Bogført"/>
+
+                                </DataTrigger>
+
+                            </Style.Triggers>
+
+                        </Style>
+
+                    </Button.Style>
+
+                </Button>
+
 
             </StackPanel>
 
