@@ -47,6 +47,7 @@ namespace SRSRoelProjekt.ViewModels
             _employeeRepo = new SQLEmployeeRepository();
             _renterRepo = new SqlRenterRepository();
             LoginCommand = new RelayCommand(Login);
+            _dialogService = new DialogService();
         }
 
         private void Login(object parameter)

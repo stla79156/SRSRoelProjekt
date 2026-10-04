@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using SRSRoelProjekt.Views.Windows;
+using System.Configuration;
 using System.Data;
 using System.Windows;
 
@@ -9,6 +10,9 @@ namespace SRSRoelProjekt
     /// </summary>
     public partial class App : Application
     {
+      
+
+
     }
 
 }

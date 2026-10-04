@@ -1,0 +1,33 @@
+﻿<Window x:Class="SRSRoelProjekt.Views.Windows.RegisterWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SRSRoelProjekt.Views.Windows"
+        mc:Ignorable="d"
+        Title="RegisterWindow" Height="450" Width="800">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Grid -->
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="6*" />
+                <RowDefinition Height="2*" />
+            </Grid.RowDefinitions>
+            
+            <TextBlock Grid.Row="0" Text="Indtast produktnummer:" HorizontalAlignment="Center" Margin="0,10,0,10"/>
+            <TextBox Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Center" Text="Produktnummer:" />
+        </Grid>
+        
+        <!-- Right Grid -->
+        <Grid Grid.Column="1">
+            
+        </Grid>
+    </Grid>
+</Window>

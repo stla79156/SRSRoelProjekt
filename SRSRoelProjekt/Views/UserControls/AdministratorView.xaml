@@ -1,0 +1,93 @@
+﻿<UserControl x:Class="SRSRoelProjekt.Views.UserControls.AdministratorView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SRSRoelProjekt.Views.UserControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+
+        <!-- Titel -->
+        <TextBlock  Grid.Row="0"
+                    Grid.ColumnSpan="2"
+                    Text="Administrator"
+                    FontSize="24"
+                    FontWeight="Bold"
+                    Foreground="#7E93A8"
+                    FontFamily="Cambria"
+                    Margin="20,10,0,20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+
+        <Button Grid.Row="1" Grid.ColumnSpan="1" 
+            Content="Slet medarbejder"
+                        Command="{Binding RemoveEmployeeCommand}"
+                        Margin="0,10,0,40"
+                        Width="200"
+                        Height="35" Background="Lightblue" BorderBrush="SkyBlue" 
+                        Foreground="#2C3E50" FontSize="18"
+                        FontFamily="Cambria" 
+                        HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
+
+
+
+
+        <!-- Medarbejderliste -->
+        <ListBox Grid.Row="1"
+                Grid.Column="0"
+                Margin="10,10,10,100"
+            
+                ItemsSource="{Binding Employees}"
+                SelectedItem="{Binding SelectedEmployee}"
+                 BorderThickness="1"/>
+
+        <StackPanel Grid.Row="1"
+                    Grid.Column="1">
+
+            <TextBlock  Text="Tilføj ny medarbejder til liste" Foreground="#7E93A8"
+                        FontSize="18" FontFamily="Cambria" 
+                        HorizontalAlignment="Center" Margin="0,0,0,10"/>
+
+            <TextBlock  Text="Navn" Foreground="#7E93A8"
+                        FontSize="14" FontFamily="Cambria" 
+                        HorizontalAlignment="Left"/>
+
+            <TextBox    Text="{Binding EmployeeName}"
+                        Margin="0,5,5,10" Height="25" Width="250" 
+                        HorizontalAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
+
+
+            <TextBlock  Text="Brugernavn" Foreground="#7E93A8"
+                        FontSize="14" FontFamily="Cambria"
+                        HorizontalAlignment="left"/>
+
+            <TextBox    Text="{Binding EmployeeUserName}"
+                        Margin="0,5,5,20" Height="25" Width="250" 
+                        HorizontalAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
+
+            <Button     Content="Tilføj ny medarbejder"
+                        Command="{Binding AddEmployeeCommand}"
+                        Height="35" 
+                        Margin="0,0,0,10" Width="220"
+                        Background="Lightblue" BorderBrush="SkyBlue" 
+                        Foreground="#2C3E50" FontSize="18"
+                        FontFamily="Cambria"
+                        HorizontalAlignment="Center"/>
+
+
+
+
+
+        </StackPanel>
+    </Grid>
+</UserControl>
