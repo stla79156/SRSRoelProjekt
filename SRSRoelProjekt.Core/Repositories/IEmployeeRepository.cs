@@ -11,6 +11,8 @@ namespace SRSRoelProjekt.Core.Repositories
 
         Employee GetEmployeeByUsername(string username);
 
+        Employee GetEmployeeById(int employeeId);
+
         void AddEmployee(Employee employee);
         void UpdateEmployee(Employee employee);
         void RemoveEmployee(Employee employee);

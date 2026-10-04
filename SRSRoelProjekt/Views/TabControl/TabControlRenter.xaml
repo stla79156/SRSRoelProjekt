@@ -6,7 +6,13 @@
         xmlns:local="clr-namespace:SRSRoelProjekt.Views.TabControl"
         xmlns:views="clr-namespace:SRSRoelProjekt.Views"
         mc:Ignorable="d"
-        Title="TabControlRenter" Height="450" Width="800">
+        Title="TabControlEmployee" Height="800" Width="1200"
+        MinWidth="1200"
+        MinHeight="750"
+        MaxWidth="1568"
+        MaxHeight="980"
+        SizeChanged="Window_SizeChanged"
+        >
     <TabControl>
         <TabControl.Resources>
             <Style TargetType="TabItem">
@@ -14,22 +20,44 @@
                     <Setter.Value>
                         <ControlTemplate TargetType="TabItem">
                             <Border x:Name="Border"
-                    Background="LightBlue"
-                    BorderBrush="LightSkyBlue"
-                    BorderThickness="1"
-                    Padding="10,5">
+                  Background="GhostWhite"
+                  BorderBrush="SteelBlue"
+                  BorderThickness="1"
+                  Padding="10,5">
                                 <ContentPresenter
-                    ContentSource="Header"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"/>
+                  ContentSource="Header"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center"/>
                             </Border>
 
                             <ControlTemplate.Triggers>
-                                <Trigger Property="IsSelected" Value="True">
+
+                                <Trigger Property="IsMouseOver"
+                                          Value="True">
+
                                     <Setter TargetName="Border"
-                            Property="Background"
-                            Value="GhostWhite"/>
+                                          Property="Background"
+                                          Value="LightCyan"/>
+
+                                    <Setter TargetName="Border"
+                                          Property="BorderBrush"
+                                          Value="DeepSkyBlue"/>
+
                                 </Trigger>
+
+                                <Trigger Property="IsSelected"
+                                       Value="True">
+
+                                    <Setter TargetName="Border"
+                                          Property="Background"
+                                          Value="LightBlue"/>
+
+                                    <Setter TargetName="Border"
+                                          Property="BorderBrush"
+                                          Value="SkyBlue"/>
+
+                                </Trigger>
+
                             </ControlTemplate.Triggers>
                         </ControlTemplate>
                     </Setter.Value>

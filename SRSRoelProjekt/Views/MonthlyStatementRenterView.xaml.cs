@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using SRSRoelProjekt.ViewModels;
 
 namespace SRSRoelProjekt.Views
 {
@@ -21,6 +22,7 @@ namespace SRSRoelProjekt.Views
         public MonthlyStatementRenterView()
         {
             InitializeComponent();
+            
         }
     }
 }

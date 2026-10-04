@@ -29,5 +29,19 @@ namespace SRSRoelProjekt.Views.TabControl
                 new MonthlyStatementViewModel(employee),
                 new AdministratorViewModel(employee));
         }
+
+        private bool _resizing;
+
+        private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if (_resizing)
+                return;
+
+            _resizing = true;
+
+            Height = Width / 1.6;
+
+            _resizing = false;
+        }
     }
 }

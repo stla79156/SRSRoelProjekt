@@ -11,7 +11,7 @@ namespace SRSRoelProjekt.Core.Repositories
             int monthNumber,
             int yearNumber,
             DateTime postedDate,
-            string employeeName);
+            int employeeId);
 
         MonthlyPosting? GetPosting(
             int monthNumber,
