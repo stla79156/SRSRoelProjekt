@@ -11,7 +11,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SRSRoelProjekt.Views.UserControls
+namespace SRSRoelProjekt.Views
 {
     /// <summary>
     /// Interaction logic for AdministratorView.xaml

@@ -1,5 +1,4 @@
-﻿using SRSRoelProjekt.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -9,19 +8,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SRSRoelProjekt.Views.Windows
+namespace SRSRoelProjekt.Views
 {
     /// <summary>
-    /// Interaction logic for AdministratorWindow.xaml
+    /// Interaction logic for MonthlyStatementRenter.xaml
     /// </summary>
-    public partial class AdministratorWindow : Window
+    public partial class MonthlyStatementRenterView : UserControl
     {
-        public AdministratorWindow()
+        public MonthlyStatementRenterView()
         {
             InitializeComponent();
-            DataContext = new AdministratorViewModel();
         }
     }
 }

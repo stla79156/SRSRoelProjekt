@@ -11,6 +11,7 @@ using System.Linq;
 using SRSRoelProjekt.Core.Services;
 using SRSRoelProjekt.Views.Windows;
 using SRSRoelProjekt.Views.TabControl;
+using SRSRoelProjekt.UI.Services;
 
 namespace SRSRoelProjekt.ViewModels
 {

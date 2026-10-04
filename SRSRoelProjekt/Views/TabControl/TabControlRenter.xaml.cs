@@ -24,7 +24,8 @@ namespace SRSRoelProjekt.Views.TabControl
             InitializeComponent();
 
             DataContext = new TabControlRenterViewModel(
-            new RenterWindowViewModel(renter));
+            new RenterWindowViewModel(renter),
+            new MonthlyStatementRenterViewModel());
         }
     }
 }

@@ -48,5 +48,9 @@
         <TabItem Header="Månedsopgørelse" FontSize="16">
             <views:MonthlyStatementView DataContext="{Binding MonthlyStatementViewModel}"/>
         </TabItem>
+
+        <TabItem Header="MedarbejderOversigt" FontSize="16">
+            <views:AdministratorView DataContext="{Binding AdministratorViewModel}"/>
+        </TabItem>
     </TabControl>
 </Window>

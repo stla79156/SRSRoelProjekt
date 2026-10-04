@@ -7,10 +7,12 @@ namespace SRSRoelProjekt.ViewModels
     public class TabControlRenterViewModel : ViewModelBase
     {
         public RenterWindowViewModel RenterWindowViewModel { get; }
+        public MonthlyStatementRenterViewModel MonthlyStatementRenterViewModel { get; }
 
-        public TabControlRenterViewModel(RenterWindowViewModel renterWindowViewModel)
+        public TabControlRenterViewModel(RenterWindowViewModel renterWindowViewModel, MonthlyStatementRenterViewModel monthlyStatementRenterViewModel)
         {
             RenterWindowViewModel = renterWindowViewModel;
+            MonthlyStatementRenterViewModel = monthlyStatementRenterViewModel;
         }
     }
 }

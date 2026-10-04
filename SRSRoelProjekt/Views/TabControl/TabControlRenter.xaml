@@ -41,5 +41,9 @@
             <views:RenterView DataContext="{Binding RenterWindowViewModel}"/>
         </TabItem>
 
+        <TabItem Header="Månedsoversigt" FontSize="16">
+            <views:MonthlyStatementRenterView DataContext="{Binding MonthlyStatementRenterViewModel}"/>
+        </TabItem>
+
     </TabControl>
 </Window>

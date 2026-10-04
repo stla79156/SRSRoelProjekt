@@ -25,7 +25,8 @@ namespace SRSRoelProjekt.Views.TabControl
             DataContext = new TabControlEmployeeViewModel(
                 new MainViewModel(),
                 new RegisterViewModel(),
-                new MonthlyStatementViewModel());
+                new MonthlyStatementViewModel(),
+                new AdministratorViewModel());
         }
     }
 }
