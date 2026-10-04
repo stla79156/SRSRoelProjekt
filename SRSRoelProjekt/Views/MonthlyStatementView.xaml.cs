@@ -11,17 +11,16 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SRSRoelProjekt.ViewModels;
 
-namespace SRSRoelProjekt.Views.Windows
+namespace SRSRoelProjekt.Views
 {
     /// <summary>
-    /// Interaction logic for MonlthyStatementWindow.xaml
+    /// Interaction logic for MonlthyStatementView.xaml
     /// </summary>
-    public partial class MonthlyStatementWindow : Window
+    public partial class MonthlyStatementView : UserControl
     {
-        public MonthlyStatementWindow()
+        public MonthlyStatementView()
         {
             InitializeComponent();
-            DataContext = new MonthlyStatementViewModel();
         }
 
         

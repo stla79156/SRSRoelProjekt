@@ -11,28 +11,27 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace SRSRoelProjekt
+namespace SRSRoelProjekt.Views
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainView.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainView : UserControl
     {
 
 
-        private FloorPlanViewModel MyFloorPlan;
-        public MainWindow()
+        //private FloorPlanViewModel MyFloorPlan;
+        public MainView()
         {
             InitializeComponent();
-            DataContext = new MainViewModel();
         }
         
 
 
-        public FloorPlanViewModel MyFloorPlanControl
+        /*public FloorPlanViewModel MyFloorPlanControl
         {
             get { return MyFloorPlan; }
-        }
+        }*/
 
         /*public void SaveRackReservation(string renterName)
         {

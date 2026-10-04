@@ -10,6 +10,7 @@ using SRSRoelProjekt.Core.Models;
 using System.Linq;
 using SRSRoelProjekt.Core.Services;
 using SRSRoelProjekt.Views.Windows;
+using SRSRoelProjekt.Views.TabControl;
 
 namespace SRSRoelProjekt.ViewModels
 {
@@ -60,8 +61,8 @@ namespace SRSRoelProjekt.ViewModels
                 }
                 else
                 {
-                    var mainWindow = new MainWindow();
-                    mainWindow.Show();
+                    var tabControlEmployee = new TabControlEmployee();  
+                    tabControlEmployee.Show();
                     CloseAction?.Invoke(true);
                 }
             }
@@ -75,8 +76,8 @@ namespace SRSRoelProjekt.ViewModels
                 }
                 else
                 {
-                    var renterWindow = new RenterWindow(renter);
-                    renterWindow.Show();
+                    var tabControlRenter = new TabControlRenter(renter);
+                    tabControlRenter.Show();
                     CloseAction?.Invoke(true);
                 }
             }

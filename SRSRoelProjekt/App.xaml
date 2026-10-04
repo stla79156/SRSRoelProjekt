@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:vm="clr-namespace:SRSRoelProjekt.ViewModels"
              xmlns:views="clr-namespace:SRSRoelProjekt.Views.UserControls"
-             StartupUri="Views/Windows/MonthlyStatementWindow.xaml">
+             StartupUri="Views/Windows/LoginWindow.xaml">
 
     <Application.Resources>
 

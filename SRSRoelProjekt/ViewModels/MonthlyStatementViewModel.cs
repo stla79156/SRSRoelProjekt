@@ -23,6 +23,10 @@ namespace SRSRoelProjekt.ViewModels
         private readonly IRackRepository _rackRepository;
         private readonly IProductRepository _productRepository;
         private readonly IDialogService _dialogService;
+        private readonly IMonthlyPostingRepository _monthlyPostingRepository;
+        private readonly Employee _loggedInEmployee = new Employee { EmployeeName = "Admin" }; // Hardcoded employee for demonstration
+
+
         public ICommand PostMonthCommand { get; }
 
         public ObservableCollection<RenterStatement> Statements { get; }
@@ -77,14 +81,20 @@ namespace SRSRoelProjekt.ViewModels
                 LoadStatements();
             }
         }
-
         private void PostMonth()
         {
+            if (IsMonthPosted)
+            {
+                _dialogService.ShowMessage(
+                    $"Måneden er allerede bogført.\n{PostedInfo}");
+
+                return;
+            }
             _monthlyPostingRepository.CreatePosting(
                 SelectedMonth.MonthNumber,
                 DateTime.Now.Year,
                 DateTime.Now,
-                _main.CurrentEmployee.Name);
+                _loggedInEmployee.EmployeeName);
 
             LoadStatements();
 
@@ -98,8 +108,11 @@ namespace SRSRoelProjekt.ViewModels
             _rackRepository = new SQLRackRepository();
             _productRepository = new SQLProductRepository();
             _dialogService = new DialogService(); // Initialiserer DialogService
+            _monthlyPostingRepository = new SqlMonthlyPostingRepository();
 
-            PostMonthCommand =new RelayCommand(PostMonth);
+
+
+            PostMonthCommand = new RelayCommand(PostMonth);
 
             int monthToShow = DateTime.Now.Day < 20
                 ? DateTime.Now.AddMonths(-1).Month
@@ -120,6 +133,24 @@ namespace SRSRoelProjekt.ViewModels
             TotalMonthlySales = 0;
             TotalMonthlyCommission = 0;
             TotalMonthlyRackRent = 0;
+
+            var posting = _monthlyPostingRepository.GetPosting(
+                            SelectedMonth.MonthNumber,
+                            DateTime.Now.Year);
+
+            if (posting != null)
+            {
+                IsMonthPosted = true;
+
+                PostedInfo =
+                    $"Bogført {posting.PostedDate:dd-MM-yyyy HH:mm} af {posting.EmployeeName}";
+            }
+            else
+            {
+                IsMonthPosted = false;
+
+                PostedInfo = "Ikke bogført";
+            }
 
             var renters = _renterRepository.GetRenters();
 
@@ -189,7 +220,7 @@ namespace SRSRoelProjekt.ViewModels
 
         }
 
-        
+
 
         public string CurrentDate
         {
@@ -236,6 +267,30 @@ namespace SRSRoelProjekt.ViewModels
             set
             {
                 _companyMonthlyIncome = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isMonthPosted;
+
+        public bool IsMonthPosted
+        {
+            get => _isMonthPosted;
+            set
+            {
+                _isMonthPosted = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _postedInfo;
+
+        public string PostedInfo
+        {
+            get => _postedInfo;
+            set
+            {
+                _postedInfo = value;
                 OnPropertyChanged();
             }
         }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -11,20 +10,20 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using SRSRoelProjekt.ViewModels;
-using SRSRoelProjekt.Core.Models;
-using SRSRoelProjekt.Core.Services;
+using SRSRoelProjekt.Views.Windows;
 
-namespace SRSRoelProjekt.Views.Windows
+namespace SRSRoelProjekt.Views
 {
     /// <summary>
-    /// Interaction logic for RenterWindow.xaml
+    /// Interaction logic for RegisterWindow.xaml
     /// </summary>
-    public partial class RenterWindow : Window
+    public partial class RegisterView : UserControl
     {
-        public RenterWindow(Renter renter)
+        
+
+        public RegisterView()
         {
             InitializeComponent();
-            DataContext = new RenterWindowViewModel(renter);
         }
     }
 }

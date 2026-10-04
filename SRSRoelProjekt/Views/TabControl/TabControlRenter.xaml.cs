@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SRSRoelProjekt.Core.Models;
+using SRSRoelProjekt.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -9,22 +11,20 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using SRSRoelProjekt.ViewModels;
-using SRSRoelProjekt.Views.Windows;
 
-namespace SRSRoelProjekt.Views.Windows
+namespace SRSRoelProjekt.Views.TabControl
 {
     /// <summary>
-    /// Interaction logic for RegisterWindow.xaml
+    /// Interaction logic for TabControlRenter.xaml
     /// </summary>
-    public partial class RegisterWindow : Window
+    public partial class TabControlRenter : Window
     {
-        
-
-        public RegisterWindow()
+        public TabControlRenter(Renter renter)
         {
             InitializeComponent();
-            DataContext = new RegisterViewModel();
+
+            DataContext = new TabControlRenterViewModel(
+            new RenterWindowViewModel(renter));
         }
     }
 }

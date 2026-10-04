@@ -1,10 +1,12 @@
-﻿<Window x:Class="SRSRoelProjekt.Views.Windows.MonthlyStatementWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Månedsopgørelse"
-        Height="700"
-        Width="1000"
-        WindowStartupLocation="CenterScreen">
+﻿<UserControl x:Class="SRSRoelProjekt.Views.MonthlyStatementView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             d:DesignHeight="700"
+             d:DesignWidth="1000">
+
 
     <Grid>
 
@@ -22,9 +24,9 @@
             <Grid>
 
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="2*"/>
-                    <ColumnDefinition Width="1*"/>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="40*"/>
+                    <ColumnDefinition Width="30*"/>
+                    <ColumnDefinition Width="30*"/>
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0"
@@ -110,6 +112,7 @@
                                                Text="Pris"
                                                FontWeight="Bold"/>
 
+
                                 </Grid>
 
                                 <!-- Product List -->
@@ -139,6 +142,7 @@
                                                            Text="{Binding Price,
                                                            StringFormat={}{0:N2} kr.}"/>
 
+
                                             </Grid>
 
                                         </DataTemplate>
@@ -146,7 +150,6 @@
                                     </ItemsControl.ItemTemplate>
 
                                 </ItemsControl>
-
                                 <Separator Margin="0,10"/>
 
                                 <!-- Totals -->
@@ -197,7 +200,7 @@
 
                                         <TextBlock Text="Bogført: "
                                                    FontWeight="Bold"
-                                                   Margin="0,0,5,0"/>           
+                                                   Margin="0,0,5,0"/>
 
                                         <Ellipse Width="15"
                                                  Height="15">
@@ -214,7 +217,7 @@
                                                                      Value="True">
 
                                                             <Setter Property="Fill"
-                                                                    Value="LimeGreen"/>
+                                                                    Value="Green"/>
 
                                                         </DataTrigger>
 
@@ -269,10 +272,70 @@
                            FontWeight="Bold"
                            Margin="0,0,0,15"/>
 
+                <Separator Margin="0,10,0,0"/>
+
+                <TextBlock Text="{Binding PostedInfo}"
+                           FontWeight="Bold"
+                           Margin="0,0,0,10">
+
+                    <TextBlock.Style>
+
+                        <Style TargetType="TextBlock">
+
+                            <Setter Property="Foreground"
+                                    Value="Red"/>
+
+                            <Style.Triggers>
+
+                                <DataTrigger Binding="{Binding IsMonthPosted}"
+                                             Value="True">
+
+                                    <Setter Property="Foreground"
+                                            Value="Green"/>
+
+                                </DataTrigger>
+
+                            </Style.Triggers>
+
+                        </Style>
+
+                    </TextBlock.Style>
+
+                </TextBlock>
+
                 <Button Content="Bogfør måned"
                         Command="{Binding PostMonthCommand}"
                         Width="150"
-                        HorizontalAlignment="Right"/>
+                        HorizontalAlignment="Right">
+
+                    <Button.Style>
+
+                        <Style TargetType="Button">
+
+                            <Setter Property="IsEnabled"
+                    Value="True"/>
+
+                            <Style.Triggers>
+
+                                <DataTrigger Binding="{Binding IsMonthPosted}"
+                             Value="True">
+
+                                    <Setter Property="IsEnabled"
+                            Value="False"/>
+
+                                    <Setter Property="Content"
+                            Value="Bogført"/>
+
+                                </DataTrigger>
+
+                            </Style.Triggers>
+
+                        </Style>
+
+                    </Button.Style>
+
+                </Button>
+
 
             </StackPanel>
 
@@ -280,4 +343,4 @@
 
     </Grid>
 
-</Window>
+</UserControl>
