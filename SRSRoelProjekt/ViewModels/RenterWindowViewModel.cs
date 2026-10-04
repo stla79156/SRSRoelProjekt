@@ -24,7 +24,7 @@ namespace SRSRoelProjekt.ViewModels
 
         public ObservableCollection<Product> Products { get; }
             = new ObservableCollection<Product>();
-        public RelayCommand LogOutCommand { get; }
+      
         private Rack _selectedRack;
 
         public Rack SelectedRack
@@ -79,17 +79,10 @@ namespace SRSRoelProjekt.ViewModels
                 new RelayCommand(OpenAddProductWindow, CanAddProduct);
             RemoveProductCommand =
                 new RelayCommand(RemoveProduct, CanRemoveProduct);
-            LogOutCommand = new RelayCommand(LogOut);
+            
 
         }
-        private void LogOut()
-        {
-            bool confirm = _dialogService.ShowConfirm("Er du sikker på at du vil logge af?");
-            if (!confirm)
-                return;
-
-            Application.Current.Shutdown();
-        }
+       
 
         private bool CanAddProduct()
         {

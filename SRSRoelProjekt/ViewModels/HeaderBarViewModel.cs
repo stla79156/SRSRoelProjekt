@@ -15,22 +15,12 @@ namespace SRSRoelProjekt.ViewModels
         private readonly IDialogService _dialogService;
         private readonly IShoppingCartRepository _shoppingCartRepo;
 
-        public RelayCommand LogOutCommand { get; }
-
         public HeaderBarViewModel(IDialogService dialogService)
         {
             _dialogService = dialogService;
-            LogOutCommand = new RelayCommand(LogOut);
         }
 
-        private void LogOut()
-        {
-            bool confirm = _dialogService.ShowConfirm("Er du sikker på at du vil logge af?");
-            if (!confirm)
-                return;
-
-            Application.Current.Shutdown();
-        }
+        
 
         // Application.Current.Shutdown(); //  Application.Current.Shutdown(); skal ersttes med  new LoginWindow().Show(); når login er implementeret
     }

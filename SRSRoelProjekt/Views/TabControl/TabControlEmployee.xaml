@@ -13,7 +13,13 @@
         MaxHeight="980"
         SizeChanged="Window_SizeChanged"
         >
-   <TabControl>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <TabControl Grid.Row="0">
         <TabControl.Resources>
             <Style TargetType="TabItem">
                 <Setter Property="Template">
@@ -81,4 +87,20 @@
             <views:AdministratorView DataContext="{Binding AdministratorViewModel}"/>
         </TabItem>
     </TabControl>
+        <Button Grid.Row="0" Content="Log af" 
+        Command="{Binding LogOutCommand}" 
+        Foreground="#2C3E50" FontWeight="Bold" 
+        FontSize="18"  Margin="5" MinWidth="150" 
+        MinHeight="30" MaxHeight="60" MaxWidth="200" 
+        HorizontalAlignment="Right"
+        VerticalAlignment="Top"
+        Background=" Lightblue" BorderBrush="SkyBlue" 
+        FontFamily="Cambria"/>
+
+        <Image Grid.Row="0" Source="/Images/Logo.png" 
+       Panel.ZIndex="100"
+       Width="150" Height="30"
+       HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5"/>
+
+    </Grid>
 </Window>
