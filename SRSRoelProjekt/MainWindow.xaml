@@ -8,7 +8,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800"
         MinHeight="650"
-        MinWidth="1000">
+        MinWidth="1000"
+        WindowStartupLocation="CenterScreen">
 
      <!--⭐ MainViewModel som DataContext 
     <Window.DataContext>

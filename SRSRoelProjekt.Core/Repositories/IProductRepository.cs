@@ -10,6 +10,7 @@ namespace SRSRoelProjekt.Core.Repositories
         List<Product> GetProductsByRack(int rackNumber);
 
         List<Product> GetProducts();
+        List<Product> GetSoldProducts(int month);
 
         //void SaveProducts(List<Product> products);
 
@@ -17,6 +18,7 @@ namespace SRSRoelProjekt.Core.Repositories
         void RemoveProduct(Product product);
         void UpdateProduct(Product product);
         Product GetProductByProductNumber(string productNumber);
+
 
     }
 }

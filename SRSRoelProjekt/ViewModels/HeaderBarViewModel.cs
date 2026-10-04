@@ -30,7 +30,6 @@ namespace SRSRoelProjekt.ViewModels
                 return;
 
             Application.Current.Shutdown();
-            _shoppingCartRepo.ClearShoppingCart(1); // Clear the shopping cart when logging out
         }
 
         // Application.Current.Shutdown(); //  Application.Current.Shutdown(); skal ersttes med  new LoginWindow().Show(); når login er implementeret

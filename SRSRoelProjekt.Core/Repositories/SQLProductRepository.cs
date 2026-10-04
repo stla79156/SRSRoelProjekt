@@ -146,7 +146,15 @@ namespace SRSRoelProjekt.Core.Repositories
                 conn.Open();
 
                 var cmd = new SqlCommand(
-                    "UPDATE Products SET ProductName=@ProductName, ProductDescription=@ProductDescription, Price=@Price, IsSold=@IsSold, EAN13Number=@EAN13Number, RackNumber=@RackNumber WHERE ProductNumber=@ProductNumber",
+                    @"UPDATE Products 
+                        SET ProductName=@ProductName, 
+                        ProductDescription=@ProductDescription, 
+                        Price=@Price, 
+                        IsSold=@IsSold, 
+                        SoldDate=@SoldDate,
+                        EAN13Number=@EAN13Number, 
+                        RackNumber=@RackNumber 
+                    WHERE ProductNumber=@ProductNumber",
                     conn);
 
                 cmd.Parameters.AddWithValue("@ProductNumber", product.ProductNumber);
@@ -154,6 +162,8 @@ namespace SRSRoelProjekt.Core.Repositories
                 cmd.Parameters.AddWithValue("@ProductDescription", product.ProductDescription);
                 cmd.Parameters.AddWithValue("@Price", product.Price);
                 cmd.Parameters.AddWithValue("@IsSold", product.IsSold);
+                cmd.Parameters.AddWithValue("@SoldDate",
+                product.SoldDate.HasValue? product.SoldDate.Value : DBNull.Value);
                 cmd.Parameters.AddWithValue("@EAN13Number", product.EAN13Number);
                 cmd.Parameters.AddWithValue("@RackNumber", product.RackNumber);
 
@@ -193,6 +203,52 @@ namespace SRSRoelProjekt.Core.Repositories
                 }
                 return null;
             }
+        }
+        public List<Product> GetSoldProducts(int month)
+        {
+            var products = new List<Product>();
+
+            using (var conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                var cmd = new SqlCommand(
+                    @"SELECT ProductNumber,
+                     ProductName,
+                     ProductDescription,
+                     Price,
+                     IsSold,
+                     SoldDate,
+                     EAN13Number,
+                     RackNumber
+              FROM Products
+              WHERE IsSold = 1
+              AND MONTH(SoldDate) = @Month",
+                    conn);
+
+                cmd.Parameters.AddWithValue("@Month", month);
+
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    products.Add(new Product
+                    {
+                        ProductNumber = reader.GetInt32(0),
+                        ProductName = reader.GetString(1),
+                        ProductDescription = reader.GetString(2),
+                        Price = reader.GetDecimal(3),
+                        IsSold = reader.GetBoolean(4),
+                        SoldDate = reader.IsDBNull(5)
+                            ? null
+                            : reader.GetDateTime(5),
+                        EAN13Number = reader.GetString(6),
+                        RackNumber = reader.GetInt32(7)
+                    });
+                }
+            }
+
+            return products;
         }
     }
 }

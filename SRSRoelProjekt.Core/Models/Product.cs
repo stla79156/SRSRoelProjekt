@@ -11,6 +11,7 @@ namespace SRSRoelProjekt.Core.Models
         public string ProductDescription { get; set; }
         public decimal Price { get; set; }
         public bool IsSold { get; set; }
+        public DateTime? SoldDate { get; set; }
         public string EAN13Number { get; set; }
         public int RackNumber { get; set; }
 
@@ -41,14 +42,9 @@ namespace SRSRoelProjekt.Core.Models
             // Sætter den fulde 13-cifrede kode på produktet
             this.EAN13Number = first12Digits + checkDigit;
         }
-    }
+    
 
-            int remainder = sum % 10;
-            int checkDigit = (remainder == 0) ? 0 : 10 - remainder;
-
-            // Sætter den fulde 13-cifrede kode på produktet
-            this.EAN13Number = first12Digits + checkDigit;
-        }
+        
 
 
     }

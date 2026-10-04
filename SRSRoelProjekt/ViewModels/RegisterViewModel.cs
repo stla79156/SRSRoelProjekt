@@ -249,6 +249,7 @@ namespace SRSRoelProjekt.ViewModels
             foreach (var cartItem in ShoppingCartItems)
             {
                 cartItem.Product.IsSold = true;
+                cartItem.Product.SoldDate = DateTime.Now;
                 _productRepo.UpdateProduct(cartItem.Product);
             }
 

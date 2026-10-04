@@ -1,17 +1,23 @@
 ﻿<Window x:Class="SRSRoelProjekt.Views.Windows.MonthlyStatementWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MonthlyStatementWindow"
-        Height="450"
-        Width="800">
+        Title="Månedsopgørelse"
+        Height="700"
+        Width="1000"
+        WindowStartupLocation="CenterScreen">
 
     <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="80"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Border Grid.Row="0" Background="#2C3E50">
+        <!-- HEADER -->
+
+        <Border Grid.Row="0"
+                Background="#2C3E50">
 
             <Grid>
 
@@ -22,167 +28,251 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0"
-                   Text="Månedsopgørelse"
-                   FontWeight="Bold"
-                   Foreground="White"
-                   FontSize="24"
-                   VerticalAlignment="Center"
-                   HorizontalAlignment="Center"/>
+                           Text="Månedsopgørelse"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           FontSize="24"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"/>
 
-                <ComboBox Grid.Column="1"
-                  Margin="10"
-                  ItemsSource="{Binding Months}"
-                  DisplayMemberPath="MonthName"
-                  SelectedItem="{Binding SelectedMonth}" />
+                <TextBlock Grid.Column="1"
+                           Text="{Binding CurrentDate}"
+                           FontWeight="Bold"
+                           Foreground="White"
+                           FontSize="18"
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"/>
 
                 <ComboBox Grid.Column="2"
-                  Margin="10"
-                  ItemsSource="{Binding SortOptions}"
-                  DisplayMemberPath="Name"
-                  SelectedItem="{Binding SelectedSortOption}" />
+                          Margin="10"
+                          ItemsSource="{Binding Months}"
+                          DisplayMemberPath="MonthName"
+                          SelectedItem="{Binding SelectedMonth}" />
 
             </Grid>
 
         </Border>
-        <Border Grid.Row="1"
-        BorderBrush="Black"
-        BorderThickness="1"
-        Margin="10">
 
-            <StackPanel Margin="10">
+        <!-- RENTER STATEMENTS -->
 
-                <ItemsControl Grid.Row="1"
-              ItemsSource="{Binding Statements}">
+        <ScrollViewer Grid.Row="1"
+                      Margin="10"
+                      VerticalScrollBarVisibility="Auto">
 
-                    <ItemsControl.ItemTemplate>
+            <ItemsControl ItemsSource="{Binding Statements}">
 
-                        <DataTemplate>
+                <ItemsControl.ItemTemplate>
 
-                            <Border BorderBrush="Black"
-                    BorderThickness="1"
-                    Margin="5"
-                    Padding="5">
+                    <DataTemplate>
 
-                                <StackPanel>
+                        <Border BorderBrush="Black"
+                                BorderThickness="1"
+                                Margin="5"
+                                Padding="10">
 
-                                    <TextBlock FontWeight="Bold"
-                               Text="{Binding RenterName}" />
+                            <StackPanel>
+
+                                <TextBlock Text="{Binding RenterName}"
+                                           FontWeight="Bold"
+                                           FontSize="18"/>
+
+                                <StackPanel Orientation="Horizontal"
+                                            Margin="0,5">
+
+                                    <TextBlock Text="Antal reoler: "
+                                               FontWeight="Bold"/>
+
+                                    <TextBlock Text="{Binding RackCount}"/>
 
                                 </StackPanel>
 
-                            </Border>
+                                <Separator Margin="0,5"/>
 
-                        </DataTemplate>
+                                <!-- Product Header -->
 
-                    </ItemsControl.ItemTemplate>
+                                <Grid Margin="0,5">
 
-                </ItemsControl>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="3*"/>
+                                        <ColumnDefinition Width="2*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
 
-                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Grid.Column="0"
+                                               Text="Produktnavn"
+                                               FontWeight="Bold"/>
 
-                    <TextBlock Text="Antal reoler: "
-               FontWeight="Bold"/>
+                                    <TextBlock Grid.Column="1"
+                                               Text="Dato Solgt"
+                                               FontWeight="Bold"/>
 
-                    <TextBlock Text="{Binding RackCount}" />
+                                    <TextBlock Grid.Column="2"
+                                               Text="Pris"
+                                               FontWeight="Bold"/>
 
-                </StackPanel>
+                                </Grid>
 
-                <Separator Margin="0,10"/>
+                                <!-- Product List -->
 
-                <Grid Margin="0,5">
+                                <ItemsControl ItemsSource="{Binding Products}">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*" />
-                        <ColumnDefinition Width="2*" />
-                        <ColumnDefinition Width="1*" />
-                    </Grid.ColumnDefinitions>
+                                    <ItemsControl.ItemTemplate>
 
-                    <TextBlock Grid.Column="0"
-               Text="Produktnavn"
-               FontWeight="Bold"/>
+                                        <DataTemplate>
 
-                    <TextBlock Grid.Column="1"
-               Text="Dato Solgt"
-               FontWeight="Bold"/>
+                                            <Grid Margin="0,2">
 
-                    <TextBlock Grid.Column="2"
-               Text="Pris"
-               FontWeight="Bold"/>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="3*"/>
+                                                    <ColumnDefinition Width="2*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                </Grid.ColumnDefinitions>
 
-                </Grid>
+                                                <TextBlock Grid.Column="0"
+                                                           Text="{Binding ProductName}"/>
 
-                <ItemsControl ItemsSource="{Binding Products}">
+                                                <TextBlock Grid.Column="1"
+                                                           Text="{Binding SoldDate,
+                                                           StringFormat=dd-MM-yyyy}"/>
 
-                    <ItemsControl.ItemTemplate>
+                                                <TextBlock Grid.Column="2"
+                                                           Text="{Binding Price,
+                                                           StringFormat={}{0:N2} kr.}"/>
 
-                        <DataTemplate>
+                                            </Grid>
 
-                            <Grid Margin="0,2">
+                                        </DataTemplate>
 
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="3*" />
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="1*" />
-                                </Grid.ColumnDefinitions>
+                                    </ItemsControl.ItemTemplate>
 
-                                <TextBlock Grid.Column="0"
-                           Text="{Binding ProductName}" />
+                                </ItemsControl>
 
-                                <TextBlock Grid.Column="1"
-                           Text="{Binding SoldDate}" />
+                                <Separator Margin="0,10"/>
 
-                                <TextBlock Grid.Column="2"
-                           Text="{Binding Price}" />
+                                <!-- Totals -->
 
-                            </Grid>
+                                <StackPanel HorizontalAlignment="Right">
 
-                        </DataTemplate>
+                                    <StackPanel Orientation="Horizontal">
 
-                    </ItemsControl.ItemTemplate>
+                                        <TextBlock Text="Total salg: "
+                                                   FontWeight="Bold"/>
 
-                </ItemsControl>
+                                        <TextBlock Text="{Binding TotalSales,
+                                                          StringFormat={}{0:N2} kr.}"/>
 
-                <TextBlock Text="Total salg: "
-               FontWeight="Bold"/>
+                                    </StackPanel>
 
-                    <TextBlock Text="{Binding TotalSales}" />
+                                    <StackPanel Orientation="Horizontal">
 
-                    <TextBlock Text=" kr."/>
+                                        <TextBlock Text="Kommission (10%): "
+                                                   FontWeight="Bold"/>
 
-                </StackPanel>
+                                        <TextBlock Text="{Binding Commission,
+                                                          StringFormat={}{0:N2} kr.}"/>
 
-                <StackPanel Orientation="Horizontal">
+                                    </StackPanel>
 
-                    <TextBlock Text="Kommission: "
-               FontWeight="Bold"/>
+                                    <StackPanel Orientation="Horizontal">
 
-                    <TextBlock Text="{Binding Commission}" />
+                                        <TextBlock Text="Reol beløb: "
+                                                   FontWeight="Bold"/>
 
-                    <TextBlock Text=" kr."/>
+                                        <TextBlock Text="{Binding RackAmount,
+                                                          StringFormat={}{0:N2} kr.}"/>
 
-                </StackPanel>
+                                    </StackPanel>
 
-                <StackPanel Orientation="Horizontal">
+                                    <StackPanel Orientation="Horizontal">
 
-                    <TextBlock Text="Reol beløb: "
-               FontWeight="Bold"/>
+                                        <TextBlock Text="Saldo: "
+                                                   FontWeight="Bold"/>
 
-                    <TextBlock Text="{Binding RackAmount}" />
+                                        <TextBlock Text="{Binding FinalAmount,
+                                                          StringFormat={}{0:N2} kr.}"/>
 
-                    <TextBlock Text=" kr."/>
+                                    </StackPanel>
 
-                </StackPanel>
+                                    <StackPanel Orientation="Horizontal">
 
-                <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="Bogført: "
+                                                   FontWeight="Bold"
+                                                   Margin="0,0,5,0"/>           
 
-                    <TextBlock Text="Saldo: "
-               FontWeight="Bold"/>
+                                        <Ellipse Width="15"
+                                                 Height="15">
 
-                    <TextBlock Text="{Binding FinalAmount}" />
+                                            <Ellipse.Style>
+                                                <Style TargetType="Ellipse">
 
-                    <TextBlock Text=" kr."/>
+                                                    <Setter Property="Fill"
+                                                            Value="Red"/>
 
-                </StackPanel>
+                                                    <Style.Triggers>
+
+                                                        <DataTrigger Binding="{Binding IsPosted}"
+                                                                     Value="True">
+
+                                                            <Setter Property="Fill"
+                                                                    Value="LimeGreen"/>
+
+                                                        </DataTrigger>
+
+                                                    </Style.Triggers>
+
+                                                </Style>
+                                            </Ellipse.Style>
+
+                                        </Ellipse>
+
+                                    </StackPanel>
+                                </StackPanel>
+
+                            </StackPanel>
+
+                        </Border>
+
+                    </DataTemplate>
+
+                </ItemsControl.ItemTemplate>
+
+            </ItemsControl>
+
+        </ScrollViewer>
+
+        <!-- MONTH SUMMARY + BUTTON -->
+
+        <Border Grid.Row="2"
+                BorderBrush="Black"
+                BorderThickness="1"
+                Margin="10"
+                Padding="10">
+
+            <StackPanel>
+
+                <TextBlock Text="Månedens oversigt"
+                           FontWeight="Bold"
+                           FontSize="18"
+                           Margin="0,0,0,10"/>
+
+                <TextBlock Text="{Binding TotalMonthlySales,
+                                  StringFormat=Samlet salg: {0:N2} kr.}"/>
+
+                <TextBlock Text="{Binding TotalMonthlyCommission,
+                                  StringFormat=Samlet kommission: {0:N2} kr.}"/>
+
+                <TextBlock Text="{Binding TotalMonthlyRackRent,
+                                  StringFormat=Samlet reolleje: {0:N2} kr.}"/>
+
+                <TextBlock Text="{Binding CompanyMonthlyIncome,
+                                  StringFormat=Virksomhedens indtjening: {0:N2} kr.}"
+                           FontWeight="Bold"
+                           Margin="0,0,0,15"/>
+
+                <Button Content="Bogfør måned"
+                        Command="{Binding PostMonthCommand}"
+                        Width="150"
+                        HorizontalAlignment="Right"/>
 
             </StackPanel>
 
@@ -191,4 +281,3 @@
     </Grid>
 
 </Window>
-    
