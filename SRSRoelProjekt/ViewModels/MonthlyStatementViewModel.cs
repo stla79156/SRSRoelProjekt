@@ -24,7 +24,8 @@ namespace SRSRoelProjekt.ViewModels
         private readonly IProductRepository _productRepository;
         private readonly IDialogService _dialogService;
         private readonly IMonthlyPostingRepository _monthlyPostingRepository;
-        private readonly Employee _loggedInEmployee = new Employee { EmployeeName = "Admin" }; // Hardcoded employee for demonstration
+
+        private readonly Employee _loggedInEmployee;
 
 
         public ICommand PostMonthCommand { get; }
@@ -48,14 +49,7 @@ namespace SRSRoelProjekt.ViewModels
         new MonthItem { MonthNumber = 12, MonthName = "December" }
     };
 
-        public ObservableCollection<SortOption> SortOptions { get; } = new()
-    {
-        new SortOption { Name = "Lejernavn" },
-        new SortOption { Name = "Salgsdato" },
-        new SortOption { Name = "Pris" },
-        new SortOption { Name = "Reolnummer" }
-    };
-
+        
         private MonthItem _selectedMonth;
         public MonthItem SelectedMonth
         {
@@ -69,18 +63,8 @@ namespace SRSRoelProjekt.ViewModels
             }
         }
 
-        private SortOption _selectedSortOption;
-        public SortOption SelectedSortOption
-        {
-            get => _selectedSortOption;
-            set
-            {
-                _selectedSortOption = value;
-                OnPropertyChanged();
+       
 
-                LoadStatements();
-            }
-        }
         private void PostMonth()
         {
             if (IsMonthPosted)
@@ -104,6 +88,7 @@ namespace SRSRoelProjekt.ViewModels
 
         public MonthlyStatementViewModel()
         {
+            
             _renterRepository = new SqlRenterRepository();
             _rackRepository = new SQLRackRepository();
             _productRepository = new SQLProductRepository();
@@ -121,15 +106,14 @@ namespace SRSRoelProjekt.ViewModels
             SelectedMonth =
                 Months.First(m => m.MonthNumber == monthToShow);
 
-            SelectedSortOption = SortOptions[0];
+           
 
             LoadStatements();
         }
 
         private void LoadStatements()
         {
-            Statements.Clear();
-
+           
             TotalMonthlySales = 0;
             TotalMonthlyCommission = 0;
             TotalMonthlyRackRent = 0;
@@ -151,6 +135,7 @@ namespace SRSRoelProjekt.ViewModels
 
                 PostedInfo = "Ikke bogført";
             }
+            Statements.Clear();
 
             var renters = _renterRepository.GetRenters();
 
@@ -204,7 +189,8 @@ namespace SRSRoelProjekt.ViewModels
                     TotalSales = totalSales,
                     Commission = commission,
                     RackAmount = rackAmount,
-                    FinalAmount = finalAmount
+                    FinalAmount = finalAmount,
+                    IsPosted = IsMonthPosted
                 });
 
                 // Company totals
@@ -218,7 +204,10 @@ namespace SRSRoelProjekt.ViewModels
                 TotalMonthlyCommission +
                 TotalMonthlyRackRent;
 
+
+
         }
+        
 
 
 
@@ -278,6 +267,7 @@ namespace SRSRoelProjekt.ViewModels
             get => _isMonthPosted;
             set
             {
+                
                 _isMonthPosted = value;
                 OnPropertyChanged();
             }
