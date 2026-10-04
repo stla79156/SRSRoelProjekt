@@ -86,9 +86,10 @@ namespace SRSRoelProjekt.ViewModels
                 $"Måned {SelectedMonth.MonthName} er bogført.");
         }
 
-        public MonthlyStatementViewModel()
+        public MonthlyStatementViewModel(Employee employee)
         {
-            
+            _loggedInEmployee = employee;
+
             _renterRepository = new SqlRenterRepository();
             _rackRepository = new SQLRackRepository();
             _productRepository = new SQLProductRepository();

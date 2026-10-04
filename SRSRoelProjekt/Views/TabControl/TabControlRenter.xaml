@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SRSRoelProjekt.Views.TabControl"
         xmlns:views="clr-namespace:SRSRoelProjekt.Views"
         mc:Ignorable="d"
-        Title="TabControlEmployee" Height="450" Width="800">
+        Title="TabControlRenter" Height="450" Width="800">
     <TabControl>
         <TabControl.Resources>
             <Style TargetType="TabItem">

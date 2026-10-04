@@ -63,7 +63,7 @@ namespace SRSRoelProjekt.ViewModels
                 }
                 else
                 {
-                    var tabControlEmployee = new TabControlEmployee();  
+                    var tabControlEmployee = new TabControlEmployee(employee);  
                     tabControlEmployee.Show();
                     CloseAction?.Invoke(true);
                 }

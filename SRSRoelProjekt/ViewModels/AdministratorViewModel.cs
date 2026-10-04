@@ -11,18 +11,14 @@ using System.Windows.Input;
 
 namespace SRSRoelProjekt.ViewModels
 {
-   
-    
+    public class AdministratorViewModel : ViewModelBase
+    {
+        private readonly SQLEmployeeRepository _employeeRepository;
+        private readonly IDialogService _dialogService;
 
+        public ObservableCollection<Employee> Employees { get; }
 
-        public class AdministratorViewModel : ViewModelBase
-        {
-            private readonly SQLEmployeeRepository _employeeRepository;
-            private readonly IDialogService _dialogService;
-
-            public ObservableCollection<Employee> Employees { get; }
-
-            private Employee _selectedEmployee;
+        private Employee _selectedEmployee;
             public Employee SelectedEmployee
             {
                 get => _selectedEmployee;
@@ -33,101 +29,124 @@ namespace SRSRoelProjekt.ViewModels
                 }
             }
 
-            private string _employeeName;
-            public string EmployeeName
+        private string _employeeName;
+        public string EmployeeName
+        {
+            get => _employeeName;
+            set
             {
-                get => _employeeName;
-                set
-                {
-                    _employeeName = value;
-                    OnPropertyChanged();
-                }
+                _employeeName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private string _employeeUserName;
+        public string EmployeeUserName
+        {
+            get => _employeeUserName;
+            set
+            {
+                _employeeUserName = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private bool _isAdmin;
+        public bool IsAdmin
+        {
+            get => _isAdmin;
+            set
+            {
+                _isAdmin = value;
+                OnPropertyChanged();
+            }
+        }
+
+        private Employee _loggedInEmployee;
+
+        public ICommand AddEmployeeCommand { get; }
+
+        public ICommand RemoveEmployeeCommand { get; }
+
+        public AdministratorViewModel(Employee employee)
+        {
+            _loggedInEmployee = employee;
+            _employeeRepository = new SQLEmployeeRepository();
+            _dialogService = new DialogService();
+
+            Employees = new ObservableCollection<Employee>();
+
+            IsAdmin = false;
+
+            AddEmployeeCommand = new RelayCommand(AddEmployee);
+            RemoveEmployeeCommand = new RelayCommand(RemoveEmployee);
+
+            LoadEmployees();
+        }
+
+        private void LoadEmployees()
+        {
+            Employees.Clear();
+
+            foreach (var employee in _employeeRepository.GetEmployees())
+            {
+                Employees.Add(employee);
+            }
+        }
+
+        private void AddEmployee(object parameter)
+        {
+            if (string.IsNullOrWhiteSpace(EmployeeName))
+            {
+                _dialogService.ShowMessage("Indtast et navn.");
+                return;
             }
 
-            private string _employeeUserName;
-            public string EmployeeUserName
+            if (string.IsNullOrWhiteSpace(EmployeeUserName))
             {
-                get => _employeeUserName;
-                set
-                {
-                    _employeeUserName = value;
-                    OnPropertyChanged();
-                }
+                _dialogService.ShowMessage("Indtast et brugernavn.");
+                return;
             }
 
-            public ICommand AddEmployeeCommand { get; }
-
-            public ICommand RemoveEmployeeCommand { get; }
-
-            public AdministratorViewModel()
+            if (_loggedInEmployee.IsAdmin == false)
             {
-                _employeeRepository = new SQLEmployeeRepository();
-                _dialogService = new DialogService();
-
-                Employees = new ObservableCollection<Employee>();
-
-                AddEmployeeCommand = new RelayCommand(AddEmployee);
-                RemoveEmployeeCommand = new RelayCommand(RemoveEmployee);
-
-                LoadEmployees();
+                _dialogService.ShowMessage("Du har ikke tilladelse til at tilføje medarbejdere.");
+                return;
             }
 
-            private void LoadEmployees()
+            Employee employee = new Employee
             {
-                Employees.Clear();
+                EmployeeName = EmployeeName,
+                EmployeeUserName = EmployeeUserName,
+                IsAdmin = IsAdmin
+            };
 
-                foreach (var employee in _employeeRepository.GetEmployees())
-                {
-                    Employees.Add(employee);
-                }
+            _employeeRepository.AddEmployee(employee);
+
+            EmployeeName = string.Empty;
+            EmployeeUserName = string.Empty;
+            IsAdmin = false;
+
+            OnPropertyChanged(nameof(EmployeeName));
+            OnPropertyChanged(nameof(EmployeeUserName));
+            OnPropertyChanged(nameof(IsAdmin));
+
+            LoadEmployees();
+
+            _dialogService.ShowMessage("Medarbejder oprettet.");
+        }
+
+        private void RemoveEmployee(object parameter)
+        {
+            if (SelectedEmployee == null)
+            {
+                _dialogService.ShowMessage("Vælg en medarbejder.");
+                return;
             }
 
-            private void AddEmployee(object parameter)
+            if (_loggedInEmployee.IsAdmin == false)
             {
-                if (string.IsNullOrWhiteSpace(EmployeeName))
-                {
-                    _dialogService.ShowMessage("Indtast et navn.");
-                    return;
-                }
-
-                if (string.IsNullOrWhiteSpace(EmployeeUserName))
-                {
-                    _dialogService.ShowMessage("Indtast et brugernavn.");
-                    return;
-                }
-
-                Employee employee = new Employee
-                {
-                    EmployeeName = EmployeeName,
-                    EmployeeUserName = EmployeeUserName
-                };
-
-                _employeeRepository.AddEmployee(employee);
-
-                EmployeeName = string.Empty;
-                EmployeeUserName = string.Empty;
-
-                OnPropertyChanged(nameof(EmployeeName));
-                OnPropertyChanged(nameof(EmployeeUserName));
-
-                LoadEmployees();
-
-                _dialogService.ShowMessage("Medarbejder oprettet.");
-            }
-
-            private void RemoveEmployee(object parameter)
-            {
-                if (SelectedEmployee == null)
-                {
-                    _dialogService.ShowMessage("Vælg en medarbejder.");
-                    return;
-                }
-            if (SelectedEmployee.EmployeeId == 4 ||
-                SelectedEmployee.EmployeeId == 5)
-            {
-                _dialogService.ShowMessage(
-                "Du kan ikke slette en administrator.");
-
+                _dialogService.ShowMessage("Du har ikke tilladelse til at fjerne medarbejdere.");
                 return;
             }
 
@@ -135,17 +154,16 @@ namespace SRSRoelProjekt.ViewModels
             bool confirm = _dialogService.ShowConfirm(
                 $"Er du sikker på at du vil fjerne {SelectedEmployee.EmployeeName}?");
 
-                if (!confirm)
-                {
-                    return;
-                }
-
-                _employeeRepository.RemoveEmployee(SelectedEmployee);
-
-                LoadEmployees();
-
-                _dialogService.ShowMessage("Medarbejder fjernet.");
+            if (!confirm)
+            {
+                return;
             }
+
+            _employeeRepository.RemoveEmployee(SelectedEmployee);
+
+            LoadEmployees();
+
+            _dialogService.ShowMessage("Medarbejder fjernet.");
         }
-    
+    }
 }

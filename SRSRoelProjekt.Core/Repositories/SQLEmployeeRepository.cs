@@ -24,7 +24,7 @@ namespace SRSRoelProjekt.Core.Repositories
             {
                 conn.Open();
 
-                var cmd = new SqlCommand("SELECT EmployeeId, EmployeeName, EmployeeUserName FROM Employees", conn);
+                var cmd = new SqlCommand("SELECT EmployeeId, EmployeeName, EmployeeUserName, IsAdmin FROM Employees", conn);
                 var reader = cmd.ExecuteReader();
 
                 while (reader.Read())
@@ -34,7 +34,7 @@ namespace SRSRoelProjekt.Core.Repositories
                         EmployeeId = reader.GetInt32(0),
                         EmployeeName = reader.GetString(1),
                         EmployeeUserName = reader.GetString(2),
-                        
+                        IsAdmin = reader.GetBoolean(3)
                     });
 
                 }
@@ -60,12 +60,12 @@ namespace SRSRoelProjekt.Core.Repositories
                 conn.Open();
 
                 var cmd = new SqlCommand(
-                    "INSERT INTO Employees (EmployeeName, EmployeeUserName) VALUES (@EmployeeName, @EmployeeUserName)",
+                    "INSERT INTO Employees (EmployeeName, EmployeeUserName, IsAdmin) VALUES (@EmployeeName, @EmployeeUserName, @IsAdmin)",
                     conn);
-
              
                 cmd.Parameters.AddWithValue("@EmployeeName", employee.EmployeeName);
                 cmd.Parameters.AddWithValue("@EmployeeUserName", employee.EmployeeUserName);
+                cmd.Parameters.AddWithValue("@IsAdmin", employee.IsAdmin);
 
                 cmd.ExecuteNonQuery();
             }
@@ -110,7 +110,7 @@ namespace SRSRoelProjekt.Core.Repositories
                 conn.Open();
 
                 var cmd = new SqlCommand(
-                "SELECT EmployeeId, EmployeeName, EmployeeUserName " +
+                "SELECT EmployeeId, EmployeeName, EmployeeUserName, IsAdmin " +
                 "FROM Employees " +
                 "WHERE EmployeeUserName = @Username",
                 conn); // her har jeg ændret parameteren til @Username for at matche SQL-forespørgslen til kun at hente en enkelt medarbejder baseret på brugernavnet
@@ -125,7 +125,8 @@ namespace SRSRoelProjekt.Core.Repositories
                     {
                         EmployeeId = reader.GetInt32(0),
                         EmployeeName = reader.GetString(1),
-                        EmployeeUserName = reader.GetString(2)
+                        EmployeeUserName = reader.GetString(2),
+                        IsAdmin = reader.GetBoolean(3)
                     };
                 }
             }

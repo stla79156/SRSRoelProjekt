@@ -10,6 +10,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using SRSRoelProjekt.Core.Models;
 
 namespace SRSRoelProjekt.Views.TabControl
 {
@@ -18,15 +19,15 @@ namespace SRSRoelProjekt.Views.TabControl
     /// </summary>
     public partial class TabControlEmployee : Window
     {
-        public TabControlEmployee()
+        public TabControlEmployee(Employee employee)
         {
             InitializeComponent();
 
             DataContext = new TabControlEmployeeViewModel(
                 new MainViewModel(),
-                new RegisterViewModel(),
-                new MonthlyStatementViewModel(),
-                new AdministratorViewModel());
+                new RegisterViewModel(employee),
+                new MonthlyStatementViewModel(employee),
+                new AdministratorViewModel(employee));
         }
     }
 }

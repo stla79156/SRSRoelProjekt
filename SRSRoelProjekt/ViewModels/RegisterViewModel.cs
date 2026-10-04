@@ -23,6 +23,8 @@ namespace SRSRoelProjekt.ViewModels
         private decimal? _price;
         private int? rackNumber;
         private int? _currentShoppingCartId;
+        private readonly Employee _loggedInEmployee;
+
         public string? ProductNumber
         {
             get => _productNumber?.ToString();
@@ -82,7 +84,7 @@ namespace SRSRoelProjekt.ViewModels
         }
 
         public ObservableCollection<Product> Products { get; set; }
-        public ObservableCollection<ShoppingCartItem> ShoppingCartItems { get; set; } 
+        public ObservableCollection<ShoppingCartItem> ShoppingCartItems { get; set; }
         public Product? SelectedProduct { get; set; }
         public ShoppingCartItem? SelectedShoppingCartItem { get; set; }
         public ICommand SearchProductCommand { get; }
@@ -92,8 +94,10 @@ namespace SRSRoelProjekt.ViewModels
         public ICommand CheckoutCommand { get; }
 
 
-        public RegisterViewModel()
+        public RegisterViewModel(Employee employee)
         {
+            _loggedInEmployee = employee;
+
             _dialogService = new DialogService();
             Products = new ObservableCollection<Product>();
             ShoppingCartItems = new ObservableCollection<ShoppingCartItem>();
