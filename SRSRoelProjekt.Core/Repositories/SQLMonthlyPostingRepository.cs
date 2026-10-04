@@ -6,7 +6,8 @@ using System.Text;
 
 namespace SRSRoelProjekt.Core.Repositories
 {
-    public class SqlMonthlyPostingRepository : IMonthlyPostingRepository
+    public class SqlMonthlyPostingRepository
+    : IMonthlyPostingRepository
     {
         private readonly string _connectionString =
             "Server=localhost;Database=SRSRoelProjekt;Trusted_Connection=True;TrustServerCertificate=True;";
