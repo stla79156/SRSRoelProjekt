@@ -16,7 +16,7 @@ namespace SRSRoelProjekt.Core.Repositories
             int monthNumber,
             int yearNumber,
             DateTime postedDate,
-            string employeeName)
+            int employeeId)
         {
             using var conn =
                 new SqlConnection(_connectionString);
@@ -29,14 +29,14 @@ namespace SRSRoelProjekt.Core.Repositories
             MonthNumber,
             YearNumber,
             PostedDate,
-            EmployeeName
+            EmployeeId
         )
         VALUES
         (
             @MonthNumber,
             @YearNumber,
             @PostedDate,
-            @EmployeeName
+            @EmployeeId
         )",
             conn);
 
@@ -53,8 +53,8 @@ namespace SRSRoelProjekt.Core.Repositories
                 postedDate);
 
             cmd.Parameters.AddWithValue(
-                "@EmployeeName",
-                employeeName);
+                "@EmployeeId",
+                employeeId);
 
             cmd.ExecuteNonQuery();
         }
@@ -69,14 +69,17 @@ namespace SRSRoelProjekt.Core.Repositories
             conn.Open();
 
             var cmd = new SqlCommand(
-            @"SELECT MonthlyPostingId,
-                 MonthNumber,
-                 YearNumber,
-                 PostedDate,
-                 EmployeeName
-          FROM MonthlyPosting
-          WHERE MonthNumber = @MonthNumber
-          AND YearNumber = @YearNumber",
+            @"SELECT mp.MonthlyPostingId,
+                mp.MonthNumber,
+                mp.YearNumber,
+                mp.PostedDate,
+                mp.EmployeeId,
+                e.EmployeeName
+                FROM MonthlyPosting mp
+                INNER JOIN Employees e
+                ON mp.EmployeeId = e.EmployeeId
+                WHERE mp.MonthNumber = @MonthNumber
+                AND mp.YearNumber = @YearNumber",
             conn);
 
             cmd.Parameters.AddWithValue(
@@ -97,7 +100,7 @@ namespace SRSRoelProjekt.Core.Repositories
                     MonthNumber = reader.GetInt32(1),
                     YearNumber = reader.GetInt32(2),
                     PostedDate = reader.GetDateTime(3),
-                    EmployeeName = reader.GetString(4)
+                    EmployeeId = reader.GetInt32(4)
                 };
             }
 
