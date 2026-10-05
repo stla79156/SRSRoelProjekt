@@ -66,9 +66,7 @@
 
                 <StackPanel>
 
-                    <TextBlock Text="{Binding Statement.RenterName}"
-                               FontWeight="Bold"
-                               FontSize="18"/>
+                   
 
                     <StackPanel Orientation="Horizontal"
                                 Margin="0,5">
