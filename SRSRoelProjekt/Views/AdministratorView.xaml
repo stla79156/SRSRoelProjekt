@@ -71,9 +71,12 @@
                         FontSize="14" FontFamily="Cambria"
                         HorizontalAlignment="left"/>
 
-            <TextBox    Text="{Binding EmployeeUserName}"
-                        Margin="0,5,5,20" Height="25" Width="250" 
+            <TextBox    Text="{Binding EmployeeUserName, UpdateSourceTrigger=PropertyChanged}"
+                        Margin="0,5,5,0" Height="25" Width="250" 
                         HorizontalAlignment="Center" BorderBrush="Black" BorderThickness="1"/>
+            <TextBlock  Text="{Binding EmployeeUserNameError}" 
+                        HorizontalAlignment="Center"
+                        Margin="0,5,5,0" FontSize="12" Foreground="Red"/>
 
             <TextBlock Text="Vælg rolle: " Foreground="#7E93A8"
                        FontSize="14" FontFamily="Cambria" Margin="0,0,0,10"

@@ -116,7 +116,8 @@ namespace SRSRoelProjekt.ViewModels
         {
             return !string.IsNullOrWhiteSpace(Name)
                    && IsValidEmail(Email)
-                   && IsValidPhoneNumber(PhoneNumber);
+                   && IsValidPhoneNumber(PhoneNumber)
+                   && IsValidUsername(Username);
         }
 
         private bool IsValidEmail(string email)

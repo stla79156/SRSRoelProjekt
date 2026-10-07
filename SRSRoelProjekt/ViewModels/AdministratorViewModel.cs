@@ -48,8 +48,15 @@ namespace SRSRoelProjekt.ViewModels
             {
                 _employeeUserName = value;
                 OnPropertyChanged();
+                OnPropertyChanged(nameof(EmployeeUserNameError));
             }
         }
+
+        public string EmployeeUserNameError =>
+            string.IsNullOrWhiteSpace(EmployeeUserName) || IsValidUsername(EmployeeUserName)
+                ? string.Empty
+                : "Ugyldigt brugernavn, skal bestå af præcis 6 tal \n" +
+                  "Eksempel: 123456";
 
         private bool _isAdmin;
         public bool IsAdmin
