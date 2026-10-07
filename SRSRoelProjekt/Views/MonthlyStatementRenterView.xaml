@@ -29,7 +29,7 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0"
-                           Text="Min månedsopgørelse"
+                           Text="Min månedsoversigt"
                            FontWeight="Bold"
                            Foreground="White"
                            FontSize="24"
