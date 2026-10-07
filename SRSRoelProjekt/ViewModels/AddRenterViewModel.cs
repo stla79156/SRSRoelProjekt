@@ -1,5 +1,6 @@
 ﻿using SRSRoelProjekt.Commands;
 using SRSRoelProjekt.Core.Models;
+using SRSRoelProjekt.Core.Repositories;
 using SRSRoelProjekt.Views;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,7 @@ namespace SRSRoelProjekt.ViewModels
         private string _phoneNumber = string.Empty;
         private string _username = string.Empty;
 
+        private readonly IRenterRepository _renterRepository;
         private readonly ObservableCollection<Renter> _renters;
         private readonly MainViewModel _main;
         private readonly LoginWindowViewModel _loginWindowViewModel;
@@ -93,17 +95,19 @@ namespace SRSRoelProjekt.ViewModels
         public string UsernameError =>
             string.IsNullOrWhiteSpace(Username) || IsValidUsername(Username)
                 ? string.Empty
-                : "Ugyldigt brugernavn";
+                : "Ugyldigt brugernavn. Skal være to bogstaver og 4 tal. \neks: AA1234";
 
         public RelayCommand AddRenterCommand { get; }
         public RelayCommand CancelCommand { get; }
 
         public AddRenterViewModel(
             ObservableCollection<Renter> renters,
-            MainViewModel main)
+            MainViewModel main,
+            IRenterRepository renterRepository)
         {
             _renters = renters;
             _main = main;
+            _renterRepository = renterRepository;
 
             AddRenterCommand =
                 new RelayCommand(AddRenter, CanAddRenter);
@@ -160,18 +164,17 @@ namespace SRSRoelProjekt.ViewModels
         {
             var renter = new Renter
             {
-                RenterId = _main.RenterService.GenerateNewId(_renters),
                 Name = Name,
                 Email = Email,
                 PhoneNumber = PhoneNumber,
                 Username = Username,
             };
 
-            _main.RenterService.AddRenter(renter);
+            _renterRepository.AddRenter(renter);
 
             _renters.Clear();
 
-            foreach (var r in _main.RenterService.GetRenters()) 
+            foreach (var r in _renterRepository.GetRenters()) 
             {
                 _renters.Add(r);
             }

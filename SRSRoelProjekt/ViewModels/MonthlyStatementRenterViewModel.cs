@@ -62,7 +62,6 @@ namespace SRSRoelProjekt.ViewModels
         };
 
         private MonthItem _selectedMonth;
-
         public MonthItem SelectedMonth
         {
             get => _selectedMonth;
@@ -84,7 +83,6 @@ namespace SRSRoelProjekt.ViewModels
             if (posting != null)
             {
                 IsMonthPosted = true;
-                
 
                 PostedInfo =
                     $"Bogført {posting.PostedDate:dd-MM-yyyy HH:mm}";
@@ -146,7 +144,7 @@ namespace SRSRoelProjekt.ViewModels
                 IsPosted = IsMonthPosted
             };
         }
-
+        //Bruges i xaml
         public string CurrentDate
         {
             get => DateTime.Now.ToString("dd-MM-yyyy");

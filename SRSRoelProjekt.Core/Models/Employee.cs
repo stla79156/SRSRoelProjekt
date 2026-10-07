@@ -12,6 +12,7 @@ namespace SRSRoelProjekt.Core.Models
         public string EmployeeUserName { get; set; }
         public bool IsAdmin { get; set; }
 
+        //bruges i xaml
         public override string ToString()
         {
             if (IsAdmin == true)

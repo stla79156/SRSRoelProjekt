@@ -44,12 +44,6 @@ namespace SRSRoelProjekt.UI.Services
         }
 
 
-        /* public void ShowMessage(string message)
-         {
-             MessageBox.Show(message, "Besked", MessageBoxButton.OK, MessageBoxImage.Information);
-         }*/
-
-
         public void ShowMessage(String message)
         {
             var vm = new InfoDialogViewModel(message);
@@ -76,14 +70,6 @@ namespace SRSRoelProjekt.UI.Services
             };
             dialog.ShowDialog();
         }
-
-
-
-
-
-
-
-
 
 
         public void CloseDialog(object viewModel)

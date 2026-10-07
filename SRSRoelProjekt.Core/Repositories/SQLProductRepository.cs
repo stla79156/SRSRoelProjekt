@@ -12,10 +12,6 @@ namespace SRSRoelProjekt.Core.Repositories
                 "Server=localhost;Database=SRSRoelProjekt;Trusted_Connection=True;TrustServerCertificate=True;";
 
 
-
-
-
-
         public List<Product> GetProductsByRack(int rackNumber)
         {
             var products = new List<Product>();
@@ -58,34 +54,6 @@ namespace SRSRoelProjekt.Core.Repositories
             return products;
         }
 
-        public List<Product> GetProducts()
-        {
-            var products = new List<Product>();
-
-            using (var conn = new SqlConnection(_connectionString))
-            {
-                conn.Open();
-
-                var cmd = new SqlCommand("SELECT ProductNumber, ProductName, ProductDescription, Price, IsSold, EAN13Number, RackNumber FROM Products", conn);
-                var reader = cmd.ExecuteReader();
-
-                while (reader.Read())
-                {
-                    products.Add(new Product
-                    {
-                        ProductNumber = reader.GetInt32(0),
-                        ProductName = reader.GetString(1),
-                        ProductDescription = reader.GetString(2),
-                        Price = reader.GetDecimal(3),
-                        IsSold = reader.GetBoolean(4),
-                        EAN13Number = reader.GetString(5),
-                        RackNumber = reader.GetInt32(6),
-                    });
-
-                }
-            }
-            return products;
-        }
         public void AddProduct(Product product)
         {
             using (var conn = new SqlConnection(_connectionString))

@@ -46,77 +46,15 @@ namespace SRSRoelProjekt.ViewModels
 
         }
 
-
-
-
-
-        /*public Renter SelectedRenter
-        {
-            get => _selectedRenter;
-            set
-            {
-                _selectedRenter = value;
-                _main.SelectedRenter = value;
-                OnPropertyChanged();
-                HighlightRenterShelves();
-
-                bool showTooltips = _selectedRenter == null;
-
-                foreach (var rack in _main.FloorPlanViewModel.Racks)
-                {
-                    rack.CanShowInfo = showTooltips;
-                }
-
-                /*bool hasSelectedRenter = _selectedRenter != null;
-
-                foreach (var rack in _main.FloorPlanViewModel.Racks)
-                {
-                    if (hasSelectedRenter && rack.Status == RackStatus.Reserved && rack.RenterId != _selectedRenter?.RenterId)
-                    {
-                        rack.IsReservedByAnotherRenter = true;
-                    }
-                }
-            }
-        }*/
-
-
-        public Renter SelectedRenter
-        {
-            get => _main.SelectedRenter;
-            set => _main.SelectedRenter = value;
-        }
-
         private void OpenAddRenterWindow()
         {
 
             bool ok = _dialogService.ShowConfirm("Vil du tilføje en ny lejer?");
             if (!ok) return;
 
-            var win = new AddRenterWindow(_main.Renters, _main);
+            var win = new AddRenterWindow(_main.Renters, _main, _renterRepo);
             win.ShowDialog();
         }
-
-        /*private void StopRental()
-        {
-            if (SelectedRenter == null)
-            {
-                _dialogService.ShowMessage("Vælg en lejer først.");
-                return;
-            }
-            else
-            if (_main.RackViewModel.IsSelected == false)
-            {
-                _dialogService.ShowMessage("Vælg en reol først.");
-                return;
-            }
-
-            bool confirm = _dialogService.ShowConfirm(
-                $"Vil du fjerne reol {_main.RackViewModel.RackNumber} fra lejer '{SelectedRenter.Name}'?"
-            );
-
-            if (!confirm)
-                return;
-        }*/
 
         public void StopRentalForRenter()
         {
@@ -189,14 +127,6 @@ namespace SRSRoelProjekt.ViewModels
             if (!confirm) return;
 
 
-            
-            // Fjern reol-reservationer
-            //_main.FloorPlanViewModel.ClearRenterRack(_main.SelectedRenter.RenterId);
-
-            // ⭐ GEM I JSON
-            //_main.RenterService.RemoveRenter(_main.SelectedRenter.RenterId);
-
-            // Fjern fra SQL
             _renterRepo.RemoveRenter(_main.SelectedRenter);
 
             Renters.Clear(); // Fjern alle lejere
@@ -262,24 +192,11 @@ namespace SRSRoelProjekt.ViewModels
                 }
                 rack.IsHighlighted = false;
             }
-            OnPropertyChanged(nameof(SelectedRenter));
+            OnPropertyChanged(nameof(_main.SelectedRenter));
 
         }
 
-        
-
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }

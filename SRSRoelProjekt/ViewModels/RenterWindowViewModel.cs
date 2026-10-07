@@ -155,6 +155,7 @@ namespace SRSRoelProjekt.ViewModels
             }
         }
 
+        //Bruges i xaml
         public string WelcomeText =>
     _loggedInRenter == null
         ? "Velkommen"

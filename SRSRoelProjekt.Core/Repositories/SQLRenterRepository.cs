@@ -70,7 +70,8 @@ namespace SRSRoelProjekt.Core.Repositories
                 }
             }
 
-            public void UpdateRenter(Renter renter)
+        //Ville blive brugt hvis vi implimenterede et window til lejerne, hvor de kunne opdatere deres informationer.
+        public void UpdateRenter(Renter renter)
             {
                 using (var conn = new SqlConnection(_connectionString))
                 {
@@ -91,37 +92,37 @@ namespace SRSRoelProjekt.Core.Repositories
             }
 
 
-        public Renter GetRenterByUsername(string username)
-        {
-            using (var conn = new SqlConnection(_connectionString))
+            public Renter GetRenterByUsername(string username)
             {
-                conn.Open();
-
-                var cmd = new SqlCommand(
-                "SELECT RenterId, Name, Email, PhoneNumber, Username " +
-                "FROM Renters " +
-                "WHERE Username = @Username",
-                conn);
-
-                cmd.Parameters.AddWithValue("@Username", username);
-
-                var reader = cmd.ExecuteReader();
-
-                if (reader.Read())
+                using (var conn = new SqlConnection(_connectionString))
                 {
-                    return new Renter
-                    {
-                        RenterId = reader.GetInt32(0),
-                        Name = reader.GetString(1),
-                        Email = reader.GetString(2),
-                        PhoneNumber = reader.GetString(3),
-                        Username = reader.GetString(4)
-                    };
-                }
-            }
+                    conn.Open();
 
-            return null;
-        }
+                    var cmd = new SqlCommand(
+                    "SELECT RenterId, Name, Email, PhoneNumber, Username " +
+                    "FROM Renters " +
+                    "WHERE Username = @Username",
+                    conn);
+
+                    cmd.Parameters.AddWithValue("@Username", username);
+
+                    var reader = cmd.ExecuteReader();
+
+                    if (reader.Read())
+                    {
+                        return new Renter
+                        {
+                            RenterId = reader.GetInt32(0),
+                            Name = reader.GetString(1),
+                            Email = reader.GetString(2),
+                            PhoneNumber = reader.GetString(3),
+                            Username = reader.GetString(4)
+                        };
+                    }
+                }
+
+                return null;
+            }
 
     }
 }

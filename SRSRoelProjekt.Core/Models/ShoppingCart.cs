@@ -6,6 +6,6 @@ namespace SRSRoelProjekt.Core.Models
 {
     public class ShoppingCart
     {
-        public int ShoppingCartId { get; set; }
+        public int ShoppingCartId { get; set; } //Bliver brugt i database, til at connecte en samlet shoppingcart med shoppingcartItems.
     }
 }

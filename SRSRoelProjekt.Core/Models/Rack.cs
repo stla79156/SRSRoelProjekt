@@ -13,6 +13,7 @@ namespace SRSRoelProjekt.Core.Models
         public DateTime? EndDate { get; set; }
         public DateTime? AvailableFrom { get; set; }
 
+        //Bliver brugt i xaml
         public string DisplayText => $"Reol {RackNumber}";
     }
 }

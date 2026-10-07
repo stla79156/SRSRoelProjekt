@@ -1,4 +1,5 @@
 ﻿using SRSRoelProjekt.Core.Models;
+using SRSRoelProjekt.Core.Repositories;
 using SRSRoelProjekt.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -21,11 +22,11 @@ namespace SRSRoelProjekt.Views
     /// </summary>
     public partial class AddRenterWindow : Window
     {
-        public AddRenterWindow(ObservableCollection<Renter> renters, MainViewModel main)
+        public AddRenterWindow(ObservableCollection<Renter> renters, MainViewModel main, IRenterRepository renterRepository)
         {
             InitializeComponent();
 
-            var vm = new AddRenterViewModel(renters, main);
+            var vm = new AddRenterViewModel(renters, main, renterRepository);
 
             vm.CloseAction = result =>
             {

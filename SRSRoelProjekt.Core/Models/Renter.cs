@@ -16,6 +16,7 @@ namespace SRSRoelProjekt.Core.Models
 
         public string Username { get; set; }
 
+        //Bliver brugt i xaml
         public string DisplayText => $"{RenterId} - {Name}";
 
         

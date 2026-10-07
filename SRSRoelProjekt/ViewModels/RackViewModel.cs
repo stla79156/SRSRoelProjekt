@@ -50,6 +50,7 @@ namespace SRSRoelProjekt.ViewModels
         }
         public bool WithHanger { get; set; }
 
+        //Bruges i xaml til at vise "b" på reolen hvis den har bøjle
         public string DisplayText => WithHanger
         ? $"{RackNumber}\nb"
         : RackNumber.ToString();
@@ -102,7 +103,6 @@ namespace SRSRoelProjekt.ViewModels
             Status switch
             {
                 RackStatus.Available => Brushes.LightGreen,
-               //RackStatus.Selected => Brushes.Blue
                 RackStatus.Reserved => Brushes.Red,
                 RackStatus.EndingSoon => Brushes.Yellow,
                 _ => Brushes.Gray
@@ -117,44 +117,6 @@ namespace SRSRoelProjekt.ViewModels
         public double BorderThickness =>
             IsHighlighted ? 3 : 1;
 
-        /*public bool IsReservedByAnotherRenter =>
-           _main.SelectedRenter != null &&
-           Status == RackStatus.Reserved &&
-           RenterId != _main.SelectedRenter.RenterId;*/
-
-        /*public string TooltipText
-        {
-            get
-            {
-                if (_main.SelectedRenter == null)
-                    return "Klik for info";
-
-                if (IsReservedByAnotherRenter)
-                    return "Reolen er reserveret af en anden lejer";
-
-                return null;
-            }
-        }*/
-
-        /*private bool _isReservedByAnotherRenter;
-
-        public bool IsReservedByAnotherRenter
-        {
-            get => _isReservedByAnotherRenter;
-            set
-            {
-                _isReservedByAnotherRenter = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(ToolTipTextReservedRack));
-            }
-        }*/
-
-        /*public string TooltipText =>
-            _main.SelectedRenter == null ? "Klik for info" : "Reolen er reserveret af en anden lejer";
-
-        public string ToolTipTextReservedRack =>
-            IsReservedByAnotherRenter ? "Reolen er reserveret af en anden lejer" : null;*/
-
-
+        
     }
 }

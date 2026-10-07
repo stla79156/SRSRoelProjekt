@@ -113,8 +113,6 @@ namespace SRSRoelProjekt.ViewModels
 
         }
 
-      
-
         private void SearchProduct()
         {
             if (string.IsNullOrWhiteSpace(ProductNumber))
@@ -238,7 +236,7 @@ namespace SRSRoelProjekt.ViewModels
                 return;
 
             int paymentMethodId =
-                paymentWindow.ViewModel.SelectedPaymentMethodId;
+                paymentWindow.ViewModel.SelectedPaymentMethod.PaymentMethodId;
 
             Payment payment = new Payment
             {

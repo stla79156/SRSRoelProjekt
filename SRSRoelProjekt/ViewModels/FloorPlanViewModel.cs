@@ -16,24 +16,11 @@ namespace SRSRoelProjekt.ViewModels
     public class FloorPlanViewModel : ViewModelBase
     {
         private readonly IRackRepository _rackRepository;
-
-
         public ObservableCollection<RackViewModel> Racks { get; } = new();
 
         public RelayCommand RackClickedCommand { get; }
 
         private MainViewModel _main;
-
-        private Rack _selectedRack;
-        public Rack SelectedRack
-        {
-            get => _selectedRack;
-            set
-            {
-                _selectedRack = value;
-                OnPropertyChanged();
-            }
-        }
 
         public FloorPlanViewModel(MainViewModel main, IRackRepository rackRepository)
         {
@@ -45,16 +32,6 @@ namespace SRSRoelProjekt.ViewModels
 
             CreateRackLayout();
             UpdateTooltips();
-
-            //click for info on racks becomes true. this disables when a renter is selected in the combo box.
-            /*foreach (var rack in Racks)
-            {
-                rack.Tool = true;
-            }*/
-
-            
-
-
 
         }
 
@@ -142,13 +119,7 @@ namespace SRSRoelProjekt.ViewModels
             }
         }
 
-        //Asign racks with hangers based on their rack numbers
-        /*private readonly HashSet<int> racksWithHangers =
-        [
-            21, 30, 41, 42, 43, 54, 67, 68, 69, 70, 
-            71, 72, 73, 74, 75, 76, 77, 78, 79, 80
-        ];*/
-
+       
         public void HighlightRenterShelves(int renterId)
         {
             foreach (var rack in Racks)
@@ -177,40 +148,7 @@ namespace SRSRoelProjekt.ViewModels
                 rack.IsSelected = false;
             }
         }
-        public void SaveReservation(RackViewModel selectedRack, string renterName)
-        {
-            selectedRack.RenterName = renterName;
-            selectedRack.Status = RackStatus.Reserved;
-        }
-
-        private DateTime CalculateAvailableFrom(DateTime endDate)
-        {
-            if (endDate.Day < 20)
-            {
-                return new DateTime(
-                    endDate.Year,
-                    endDate.Month,
-                    1).AddMonths(1);
-            }
-
-            return new DateTime(
-                endDate.Year,
-                endDate.Month,
-                1).AddMonths(2);
-        }
-
-        
-
-        public void ClearRenterRack(string renterName)
-        {
-            foreach (var rack in Racks.Where(x => x.RenterName == renterName))
-            {
-                rack.RenterName = null;
-                rack.Status = RackStatus.Available;
-                rack.IsHighlighted = false;
-            }
-        }
-
+       
         public void UpdateTooltips()
         {
             foreach (var rack in Racks)
@@ -237,24 +175,6 @@ namespace SRSRoelProjekt.ViewModels
             }
         }
 
-        /*private bool _canShowInfo;
-
-        public bool CanShowInfo
-        {
-            get => _canShowInfo;
-            set
-            {
-                _canShowInfo = value;
-                OnPropertyChanged();
-                OnPropertyChanged(nameof(TooltipText));
-            }
-        }*/
-
-
-
-
     }
-
-
    
 }

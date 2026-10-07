@@ -13,9 +13,6 @@ namespace SRSRoelProjekt.Core.Repositories
 
 
 
-
-
-
         public List<Employee> GetEmployees()
         {
             var employees = new List<Employee>();
@@ -41,17 +38,6 @@ namespace SRSRoelProjekt.Core.Repositories
             }
             return employees;
         }
-
-
-
-
-
-
-
-
-
-
-
 
         public void AddEmployee(Employee employee)
         {

@@ -34,20 +34,20 @@ namespace SRSRoelProjekt.ViewModels
             = new();
 
         public ObservableCollection<MonthItem> Months { get; } = new()
-    {
-        new MonthItem { MonthNumber = 1, MonthName = "Januar" },
-        new MonthItem { MonthNumber = 2, MonthName = "Februar" },
-        new MonthItem { MonthNumber = 3, MonthName = "Marts" },
-        new MonthItem { MonthNumber = 4, MonthName = "April" },
-        new MonthItem { MonthNumber = 5, MonthName = "Maj" },
-        new MonthItem { MonthNumber = 6, MonthName = "Juni" },
-        new MonthItem { MonthNumber = 7, MonthName = "Juli" },
-        new MonthItem { MonthNumber = 8, MonthName = "August" },
-        new MonthItem { MonthNumber = 9, MonthName = "September" },
-        new MonthItem { MonthNumber = 10, MonthName = "Oktober" },
-        new MonthItem { MonthNumber = 11, MonthName = "November" },
-        new MonthItem { MonthNumber = 12, MonthName = "December" }
-    };
+        {
+            new MonthItem { MonthNumber = 1, MonthName = "Januar" },
+            new MonthItem { MonthNumber = 2, MonthName = "Februar" },
+            new MonthItem { MonthNumber = 3, MonthName = "Marts" },
+            new MonthItem { MonthNumber = 4, MonthName = "April" },
+            new MonthItem { MonthNumber = 5, MonthName = "Maj" },
+            new MonthItem { MonthNumber = 6, MonthName = "Juni" },
+            new MonthItem { MonthNumber = 7, MonthName = "Juli" },
+            new MonthItem { MonthNumber = 8, MonthName = "August" },
+            new MonthItem { MonthNumber = 9, MonthName = "September" },
+            new MonthItem { MonthNumber = 10, MonthName = "Oktober" },
+            new MonthItem { MonthNumber = 11, MonthName = "November" },
+            new MonthItem { MonthNumber = 12, MonthName = "December" }
+        };
 
         
         private MonthItem _selectedMonth;
@@ -62,8 +62,6 @@ namespace SRSRoelProjekt.ViewModels
                 LoadStatements();
             }
         }
-
-       
 
         private void PostMonth()
         {
@@ -97,8 +95,6 @@ namespace SRSRoelProjekt.ViewModels
             _dialogService = new DialogService(); // Initialiserer DialogService
             _monthlyPostingRepository = new SqlMonthlyPostingRepository();
 
-
-
             PostMonthCommand = new RelayCommand(PostMonth);
 
             int monthToShow = DateTime.Now.Day < 20
@@ -107,8 +103,6 @@ namespace SRSRoelProjekt.ViewModels
 
             SelectedMonth =
                 Months.First(m => m.MonthNumber == monthToShow);
-
-           
 
             LoadStatements();
         }
@@ -121,8 +115,8 @@ namespace SRSRoelProjekt.ViewModels
             TotalMonthlyRackRent = 0;
 
             var posting = _monthlyPostingRepository.GetPosting(
-    SelectedMonth.MonthNumber,
-    DateTime.Now.Year);
+                            SelectedMonth.MonthNumber,
+                            DateTime.Now.Year);
 
             if (posting != null)
             {
@@ -141,6 +135,7 @@ namespace SRSRoelProjekt.ViewModels
 
                 PostedInfo = "Ikke bogført";
             }
+
             Statements.Clear();
 
             var renters = _renterRepository.GetRenters();
@@ -209,14 +204,9 @@ namespace SRSRoelProjekt.ViewModels
             CompanyMonthlyIncome =
                 TotalMonthlyCommission +
                 TotalMonthlyRackRent;
-
-
-
         }
         
-
-
-
+        //Bruges i xaml
         public string CurrentDate
         {
             get => DateTime.Now.ToString("dd-MM-yyyy");
