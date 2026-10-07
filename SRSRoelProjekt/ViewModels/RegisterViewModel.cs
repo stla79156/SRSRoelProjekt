@@ -167,6 +167,7 @@ namespace SRSRoelProjekt.ViewModels
                 SelectedProduct);
 
             LoadShoppingCart();
+            ClearSelectedProduct();
         }
 
         private void RemoveProductFromCart()

@@ -96,9 +96,23 @@ namespace SRSRoelProjekt.ViewModels
 
         private void AddEmployee(object parameter)
         {
+
+            if (_loggedInEmployee.IsAdmin == false)
+            {
+                _dialogService.ShowMessage("Du har ikke tilladelse til at tilføje medarbejdere.");
+                return;
+            }
+
             if (string.IsNullOrWhiteSpace(EmployeeName))
             {
                 _dialogService.ShowMessage("Indtast et navn.");
+                return;
+            }
+
+            if (EmployeeName.Any(char.IsDigit))
+            {
+                _dialogService.ShowMessage(
+                "Navnet må ikke indeholde tal.");
                 return;
             }
 
@@ -108,11 +122,21 @@ namespace SRSRoelProjekt.ViewModels
                 return;
             }
 
-            if (_loggedInEmployee.IsAdmin == false)
+            if (!IsValidUsername(EmployeeUserName))
             {
-                _dialogService.ShowMessage("Du har ikke tilladelse til at tilføje medarbejdere.");
+                _dialogService.ShowMessage(
+                "Medarbejderens brugernavn skal bestå af præcis 6 tal.");
                 return;
             }
+
+            if (_employeeRepository.GetEmployees()
+                .Any(e => e.EmployeeUserName == EmployeeUserName))
+            {
+                _dialogService.ShowMessage(
+                "Brugernavnet findes allerede.");
+                return;
+            }
+
 
             Employee employee = new Employee
             {
@@ -134,6 +158,12 @@ namespace SRSRoelProjekt.ViewModels
             LoadEmployees();
 
             _dialogService.ShowMessage("Medarbejder oprettet.");
+        }
+
+        private bool IsValidUsername(string username)
+        {
+            return username.Length == 6 &&
+            username.All(char.IsDigit);
         }
 
         private void RemoveEmployee(object parameter)
