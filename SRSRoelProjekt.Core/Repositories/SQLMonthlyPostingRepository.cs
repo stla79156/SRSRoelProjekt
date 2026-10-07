@@ -12,11 +12,7 @@ namespace SRSRoelProjekt.Core.Repositories
         private readonly string _connectionString =
             "Server=localhost;Database=SRSRoelProjekt;Trusted_Connection=True;TrustServerCertificate=True;";
 
-        public void CreatePosting(
-            int monthNumber,
-            int yearNumber,
-            DateTime postedDate,
-            int employeeId)
+        public void CreatePosting(int monthNumber, int yearNumber, DateTime postedDate, int employeeId)
         {
             using var conn =
                 new SqlConnection(_connectionString);
