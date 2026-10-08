@@ -10,8 +10,11 @@
              MaxWidth="1000"
              >
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-    <ItemsControl ItemsSource="{Binding Racks}">
+        <ItemsControl ItemsSource="{Binding Racks}" Grid.Row="0">
 
         <ItemsControl.ItemsPanel>
             <ItemsPanelTemplate>
@@ -44,6 +47,6 @@
         </ItemsControl.ItemTemplate>
 
     </ItemsControl>
-
-</Grid>
+       
+    </Grid>
 </UserControl>
