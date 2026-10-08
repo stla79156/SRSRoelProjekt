@@ -18,16 +18,18 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
+        <Border Grid.Row="0" Grid.ColumnSpan="2" Background="#2C3E50" BorderThickness="1"/>
 
         <!-- Titel -->
         <TextBlock  Grid.Row="0"
                     Grid.ColumnSpan="2"
+                   
                     Text="Administrator"
                     FontSize="24"
                     FontWeight="Bold"
-                    Foreground="#7E93A8"
+                    Foreground="White"
                     FontFamily="Cambria"
-                    Margin="20,10,0,20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                    Margin="80,20,0,20" HorizontalAlignment="Left" VerticalAlignment="Center"/>
 
         <Button Grid.Row="1" Grid.ColumnSpan="1" 
             Content="Slet medarbejder"
@@ -45,14 +47,15 @@
         <!-- Medarbejderliste -->
         <ListBox Grid.Row="1"
                 Grid.Column="0"
-                Margin="10,10,10,100"
+                Margin="10,5,10,100"
             
                 ItemsSource="{Binding Employees}"
                 SelectedItem="{Binding SelectedEmployee}"
                  BorderThickness="1"/>
 
         <StackPanel Grid.Row="1"
-                    Grid.Column="1">
+                    Grid.Column="1"
+                    Margin="0,40,0,0">
 
             <TextBlock  Text="Tilføj ny medarbejder til liste" Foreground="#7E93A8"
                         FontSize="18" FontFamily="Cambria" 
@@ -87,7 +90,6 @@
                 <RadioButton Content="Administrator"
                          GroupName="EmployeeRole"
                          Checked="Admin_Checked"/>
-                 
                 <RadioButton Content="Medarbejder"
                          GroupName="EmployeeRole"
                          IsChecked="True"
